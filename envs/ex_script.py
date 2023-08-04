@@ -46,43 +46,21 @@ for _ in range(10):
 	obs, rew, term, _, info = env_1.step(action = [-0.9])
 	print(info)
 
-##############################################################
-####################### Example 2 ############################
-##############################################################
-print("\n\n" + "env 2 test:" + "\n\n")
-
-def _parametrized_dyn(X: np.float32, params: base_params_obj):
-	P = params
-	return np.float32([P.r * X * (1 - X / P.K)])
-
-_params = {'r': 2, 'K': 1}
-
-env_2 = general_env(
-	metadata = _metadata,
-	dyn_fn = _parametrized_dyn, 
-	dyn_params = _params, 
-	non_stationary = False, 
-	non_stationarities = {},
-	)
-
-env_2.reset()
-for _ in range(10):
-	obs, rew, term, _, info = env_2.step(action = [-0.9])
-	print(info)
-
 
 ##############################################################
 ####################### Example 3 ############################
 ##############################################################
 print("\n\n" + "env 3 test:" + "\n\n")
 
-def _other_parametrized_dyn(X: np.float32, params: dict):
+_params = {'r': 2, 'K': 1}
+
+def _parametrized_dyn(X: np.float32, params: dict):
 	P = params
 	return np.float32([P["r"] * X * (1 - X / P["K"])])
 
 env_3 = general_env(
 	metadata = _metadata,
-	dyn_fn = _other_parametrized_dyn, 
+	dyn_fn = _parametrized_dyn, 
 	dyn_params = _params, 
 	non_stationary = False, 
 	non_stationarities = {},
@@ -92,4 +70,38 @@ env_3.reset()
 for _ in range(10):
 	obs, rew, term, _, info = env_3.step(action = [-0.9])
 	print(info)
+
+
+##############################################################
+####################### Example 4 ############################
+##############################################################
+print("\n\n" + "env 4 test:" + "\n\n")
+
+def _r(t):
+	return 1 + t/1000
+
+
+env_4 = general_env(
+	metadata = _metadata,
+	dyn_fn = _parametrized_dyn, 
+	dyn_params = _params, 
+	non_stationary = True, 
+	non_stationarities = {"r": _r},
+	)
+
+env_4.reset()
+for _ in range(10):
+	obs, rew, term, _, info = env_4.step(action = [-0.9])
+	print(info)
+
+
+
+
+
+
+
+
+
+
+
 

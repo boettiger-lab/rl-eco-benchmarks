@@ -21,6 +21,12 @@ args =
 output = np.ndarray of length n.
 """
 
+NOT_SUPP_PARAM_WARN_FN = lambda params: f""" params problem:
+
+A non-supported params argument was passed: {params.__repr__}.
+
+Use a base_params_obj or a dict instead.
+"""
 
 class base_params_obj(base_metadata):
 
@@ -58,7 +64,8 @@ def make_params_obj(
 		[
 			(key, type(value), value) for key, value in params_dict.items()
 		],
-		bases = (base_params_obj, )
+		bases = (base_params_obj, ),
+		frozen=True,
 		)()
 
 
@@ -77,40 +84,69 @@ class dynamical_system:
 		#
 		# warnings
 		self.dyn_fn_struc_warning = DYN_FN_STRUC_WARN
+		self.not_supported_params_wrn = NOT_SUPP_PARAM_WARN_FN
 		#
 		self.n = n
 		#
-		self.dyn_params = make_params_obj(dyn_params)
-		self.parametrized = (len(dyn_params) > 0)
-		#
 		self.standard_state = np.float32(self.n * [0.5]) # for checks
-		#
-		self._raw_dyn_fn = dyn_fn
-		self.dyn_fn = self._make_dyn_fn(dyn_fn)
 		#
 		self.non_stationary = non_stationary
 		self.non_stationarities = non_stationarities
 		#
+		self.dyn_params = make_params_obj(dyn_params)
+		self.parametrized = (len(dyn_params) > 0)
+		#
+		self._raw_dyn_fn = dyn_fn
+		self.dyn_fn = self._make_dyn_fn(dyn_fn)
+		#
 		self.run_checks()
 
-	def dyn_param_vals(self):
-		return self.dyn_params.get_vals()
+	def dyn_param_vals(self, t=0):
+		if not self.non_stationary:
+			return self.dyn_params.get_vals()
+		else: # if it IS non-stationary
+			return self.new_param_vals(
+				{
+				param_name: non_stat_val(t) for param_name, non_stat_val in self.non_stationarities
+				}
+			)
 
-	def _make_dyn_fn(self, fn: Callable):
-		""" makes the dynamic function callable in a standardizedx way """
-		self.check_n_set_parametrization_format()
+	def _support_parameters(self, fn: Callable):
+		# self.check_n_set_parametrization_format()
 		if self.parametrized:
-			if self.parametrization_type == 'base_params_obj':
-				def d_fn(*args, params): return fn(*args, params)
+				def d_fn(*args, params): 
+					if isinstance(params, base_params_obj):
+						return fn(*args, params=params.param_vals())
+					elif isinstance(params, dict):
+						return fn(*args, params=params)
+					else:
+						raise Warning(self.not_supported_params_wrn_fn(params))
 				return d_fn
-			elif self.parametrization_type == 'dict':
-				def d_fn(*args, params): return fn(*args, params.param_vals())
-				return d_fn
-			else:
-				raise Warning("Something went wrong loading the dynamical_system.parametrization_type")
 		else:
 			def d_fn(*args, params): return fn(*args)
 			return d_fn
+
+	def _support_t_dependence(self, fn: Callable):
+		if not self.non_stationary:
+			def d_fn(*args, params, t): return fn(*args, params=params)
+			return d_fn
+		else: # it IS non-stationary
+			def d_fn(*args, params, t): 
+				return fn(
+					*args, 
+					params=params.new_param_vals(
+						**{
+						p_name: nonstationarity(t) 
+						for p_name, nonstationarity in self.non_stationarities.items()
+						})
+					)
+			return d_fn
+
+	def _make_dyn_fn(self, fn: Callable):
+		""" makes the dynamic function callable in a standardizedx way """
+		return self._support_t_dependence(
+			self._support_parameters(fn)
+		)
 
 	def check_n_set_parametrization_format(self):
 		""" checks whether dyn_fn accepts parameters in one of the allowed formats (if it does at all) """
@@ -124,7 +160,7 @@ class dynamical_system:
 				)
 				self.parametrization_type = 'base_params_obj'
 			except:
-				try_dict = True # fall back to P = dict
+				try_dict = True # fall back to params = dict
 			if try_dict:
 				try:
 					dyn_fn_output = self._raw_dyn_fn(
@@ -154,12 +190,12 @@ class dynamical_system:
 				"  {param_name: fn = t -> param_value }"
 				)
 
-		dyn_fn_output = self.dyn_fn(*self.standard_state, params=self.dyn_params)
+		dyn_fn_output = self.dyn_fn(*self.standard_state, params=self.dyn_params, t=0)
 
 		assert isinstance(dyn_fn_output, np.ndarray), self.dyn_fn_struc_warning
 		assert len(dyn_fn_output) == self.n, self.dyn_fn_struc_warning
 
 
-		fn_purity(self.dyn_fn, *self.standard_state, params = self.dyn_params)
+		fn_purity(self.dyn_fn, *self.standard_state, params = self.dyn_params, t=0)
 		
 

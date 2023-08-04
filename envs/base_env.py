@@ -85,6 +85,7 @@ class general_env:
 			* self.pop, 
 			# ok to pass empty parameters object, backend deals with that.
 			params=self.env_dyn_obj.dyn_params,
+			t=self.timestep,
 		)
 		#
 		# check for early end
