@@ -1,7 +1,7 @@
 import setuptools
 
 setuptools.setup(
-	name="rl-eco-benchmarks",
+	name="rl_eco_benchmarks",
 	version="0.0.1",
 	license="MIT",
 	description="Benchmarks DRL algorithms on a variety of ecological control problems",

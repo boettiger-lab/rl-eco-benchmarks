@@ -6,8 +6,8 @@ from gymnasium import spaces
 from typing import Callable, Dict, Union
 
 # in-house imports
-from dynamical_system import dynamical_system
-from metadata import envMetadata
+from rl_eco_benchmarks.dynamical_system import dynamical_system
+from rl_eco_benchmarks.metadata import envMetadata
 
 class general_env:
 	""" what all our envs will have in common """

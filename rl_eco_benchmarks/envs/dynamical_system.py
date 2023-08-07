@@ -5,8 +5,8 @@ from typing import Dict, Union, Callable
 from dataclasses import make_dataclass
 
 # in-house imports
-from metadata import base_metadata
-from checks import fn_purity
+from rl_eco_benchmarks.metadata import base_metadata
+from rl_eco_benchmarks.checks import fn_purity
 
 # Warning messages:
 
