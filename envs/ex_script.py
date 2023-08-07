@@ -1,6 +1,6 @@
 import numpy as np
 from dynamical_system import base_params_obj
-from base_env import general_env
+from base_env import eco_env, ray_eco_env
 from util import dict_pretty_print
 
 ##############################################################
@@ -34,7 +34,7 @@ _metadata = {
 	'_prices': np.ones(1, dtype=np.float32),
 }
 
-env_1 = general_env(
+env_1 = eco_env(
 	metadata = _metadata,
 	dyn_fn = _unparametrized_dyn, 
 	dyn_params = {}, 
@@ -59,7 +59,7 @@ def _parametrized_dyn(X: np.float32, params: dict):
 	P = params
 	return np.float32([P["r"] * X * (1 - X / P["K"])])
 
-env_2 = general_env(
+env_2 = eco_env(
 	metadata = _metadata,
 	dyn_fn = _parametrized_dyn, 
 	dyn_params = _params, 
@@ -82,7 +82,7 @@ def _r(t):
 	return 1 + t/1000
 
 
-env_3 = general_env(
+env_3 = eco_env(
 	metadata = _metadata,
 	dyn_fn = _parametrized_dyn, 
 	dyn_params = _params, 
@@ -135,7 +135,7 @@ _params_4 = {'rx': 1, 'ry': 2, 'rz': 0.1}
 
 _non_stationarities_4 = {'rx': _rx}
 
-env_4 = general_env(
+env_4 = eco_env(
 	metadata = _metadata_4,
 	dyn_fn = _dyn_4, 
 	dyn_params = _params_4, 
@@ -149,5 +149,22 @@ for _ in range(10):
 	dict_pretty_print({**info, 'state': obs}, dict_name = "step info")
 
 
+##############################################################
+####################### Example 5 ############################
+##############################################################
 
+_config_5 = {
+	'metadata': _metadata_4,
+	'dyn_fn': _dyn_4,
+	'dyn_params': _params_4,
+	'non_stationary': True,
+	'non_stationarities': _non_stationarities_4,
+}
+
+env_5 = ray_eco_env(config=_config_5)
+
+env_5.reset()
+for _ in range(10):
+	obs, rew, term, _, info = env_5.step(action = [-1])
+	dict_pretty_print({**info, 'state': obs}, dict_name = "step info")
 
