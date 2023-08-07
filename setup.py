@@ -7,7 +7,7 @@ setuptools.setup(
 	description="Benchmarks DRL algorithms on a variety of ecological control problems",
 	author="Felipe Montealegre-Mora",
 	author_email="felimomouni@gmail.com",
-	url="https://github.com/boettiger-lab/rl-eco-benchmarks",
+	url="https://github.com/boettiger-lab/rl_eco_benchmarks",
 	keywords=[
 		"deep reinforcement learning",
 		"reinforcement learning",
