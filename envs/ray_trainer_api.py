@@ -1,4 +1,14 @@
-
+from ray.rllib.algorithms.a2c import A2CConfig
+from ray.rllib.algorithms.a3c import A3CConfig
+from ray.rllib.algorithms.maml import MAMLConfig
+from ray.rllib.algorithms.apex_dqn.apex_dqn import ApexDQNConfig
+from ray.rllib.algorithms.dqn.dqn import DQNConfig
+from ray.rllib.algorithms.ddpg.ddpg import DDPGConfig
+from ray.rllib.algorithms.td3 import TD3Config
+from ray.rllib.algorithms.ars import ARSConfig
+from ray.rllib.algorithms.appo import APPOConfig
+from ray.rllib.algorithms.ddppo import DDPPOConfig
+from ray.rllib.algorithms.ppo import PPOConfig
 
 class ray_trainer:
 	""" an RL agent training on one of ray's algorithms. """
@@ -31,13 +41,14 @@ class ray_trainer:
 		config_dict = {
 			'a2c': A2CConfig,
 			'a3c': A3CConfig,
+			'appo': APPOConfig,
+			'ddppo': DDPPOConfig,
 			'ppo': PPOConfig
 			'maml': MAMLConfig,
 			'apex': ApexDQNConfig,
 			'dqn': DQNConfig,
 			'ddpg': DDPGConfig,
 			'td3': TD3Config,
-			'sac': SACConfig,
 			'ars': ARSConfig,
 		}
 		return config_dict[self.algo_name]()
