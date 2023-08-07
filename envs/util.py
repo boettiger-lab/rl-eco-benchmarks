@@ -8,9 +8,9 @@ def iter_pretty_print(iterable_obj):
 
 def dict_pretty_print(D: dict, indent_lvl: int = 0, indent_size: int = 2, verbose:bool =False, dict_name: str=""):
   """ RStudio terminal doesn't like json.dumps so do it manual """
-  preamble = dict_name
-  if len(preamble)>0:
-    preamble += " = "
+  if len(dict_name)==0:
+    dict_name = "dict"
+  preamble = dict_name + " = "
   if (indent_lvl == 0):
     if verbose:
       print("Using 3 decimal places.")

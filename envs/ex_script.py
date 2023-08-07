@@ -45,7 +45,8 @@ env_1 = general_env(
 env_1.reset()
 for _ in range(10):
 	obs, rew, term, _, info = env_1.step(action = [-0.9])
-	dict_pretty_print({**info, 'state': obs})
+	pop = env_1.state_to_pop(obs)
+	dict_pretty_print({**info, 'population': pop})
 
 
 ##############################################################
@@ -70,7 +71,8 @@ env_2 = general_env(
 env_2.reset()
 for _ in range(10):
 	obs, rew, term, _, info = env_2.step(action = [-0.9])
-	dict_pretty_print({**info, 'state': obs})
+	pop = env_2.state_to_pop(obs)
+	dict_pretty_print({**info, 'population': pop})
 
 
 ##############################################################
@@ -93,7 +95,8 @@ env_3 = general_env(
 env_3.reset()
 for _ in range(10):
 	obs, rew, term, _, info = env_3.step(action = [-0.9])
-	dict_pretty_print({**info, 'state': obs})
+	pop = env_3.state_to_pop(obs)
+	dict_pretty_print({**info, 'population': pop})
 
 
 ##############################################################
@@ -131,7 +134,7 @@ _metadata_4 = {
 def _rx(t):
 	return 1 + t/1000
 
-_params_4 = {'rx': 1, 'ry': 2, 'rz': 0.1}
+_params_4 = {'rx': 1, 'ry': 2, 'rz': 2}
 
 _non_stationarities_4 = {'rx': _rx}
 
@@ -146,7 +149,8 @@ env_4 = general_env(
 env_4.reset()
 for _ in range(10):
 	obs, rew, term, _, info = env_4.step(action = [-1])
-	dict_pretty_print({**info, 'state': obs}, dict_name = "step info")
+	pop = env_4.state_to_pop(obs)
+	dict_pretty_print({**info, 'population': pop}, dict_name = "step info")
 
 
 
