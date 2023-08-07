@@ -53,6 +53,7 @@ class param_3s(base_metadata):
 class envMetadata(base_metadata):
 	#
 	# which env class
+	name: Optional[str] = "test_env"
 	n_sp: Optional[int] = 3
 	n_act: Optional[int] = 3
 	_harvested_sp: Optional[Union[List[int], None]] = None 

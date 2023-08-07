@@ -4,7 +4,7 @@
 
 import numpy as np
 
-from base_env import eco_env
+from base_env import eco_env, ray_eco_env
 from dyn_fns import (
 	twoSp_1, twoSp_2, threeSp_1, threeSp_2, fourSp_1
 )
@@ -16,7 +16,7 @@ def _default_penalty_fn(t: int):
 ########################### 2 SP 1 ##################################
 #####################################################################
 
-def twoSp_1_factory(n_act: int = 2, non_stationarities: dict = {}):
+def twoSp_1_factory(n_act: int = 2, non_stationarities: dict = {}, use_ray = True):
 	metadata = {
 		#
 		# which env class
@@ -46,15 +46,26 @@ def twoSp_1_factory(n_act: int = 2, non_stationarities: dict = {}):
 		'sigma_x': 0.1,
 		'sigma_y': 0.1,
 	}
-	info = {'metadata': metadata, 'params': params}
+	dyn_fn = twoSp_1
+	config = {
+		'metadata': metadata, 
+		'dyn_params': params, 
+		'dyn_fn': dyn_fn, 
+		'non_stationary': (len(non_stationarities) > 0),
+		'non_stationarities': non_stationarities,
+	}
 
-	env = eco_env(
-		metadata = metadata,
-		dyn_fn = twoSp_1, 
-		dyn_params = params, 
-		non_stationary = (len(non_stationarities) > 0), 
-		non_stationarities = non_stationarities,
-		)
+	info = {'metadata': metadata, 'params': params}
+	if use_ray:
+		env = ray_eco_env(config=config)
+	else:
+		env = eco_env(
+			metadata = metadata,
+			dyn_fn = dyn_fn, 
+			dyn_params = params, 
+			non_stationary = (len(non_stationarities) > 0), 
+			non_stationarities = non_stationarities,
+			)
 
 	return env, info
 
@@ -62,7 +73,7 @@ def twoSp_1_factory(n_act: int = 2, non_stationarities: dict = {}):
 ########################### 2 SP 2 ##################################
 #####################################################################
 
-def twoSp_2_factory(n_act: int = 2, non_stationarities: dict = {}):
+def twoSp_2_factory(n_act: int = 2, non_stationarities: dict = {}, use_ray=True):
 	metadata = {
 		#
 		# which env class
@@ -92,15 +103,26 @@ def twoSp_2_factory(n_act: int = 2, non_stationarities: dict = {}):
 		'sigma_x': 0.1,
 		'sigma_y': 0.1,
 	}
-	info = {'metadata': metadata, 'params': params}
+	dyn_fn = twoSp_2
+	config = {
+		'metadata': metadata, 
+		'dyn_params': params, 
+		'dyn_fn': dyn_fn, 
+		'non_stationary': (len(non_stationarities) > 0),
+		'non_stationarities': non_stationarities,
+	}
 
-	env = eco_env(
-		metadata = metadata,
-		dyn_fn = twoSp_2, 
-		dyn_params = params, 
-		non_stationary = (len(non_stationarities) > 0), 
-		non_stationarities = non_stationarities,
-		)
+	info = {'metadata': metadata, 'params': params}
+	if use_ray:
+		env = ray_eco_env(config=config)
+	else:
+		env = eco_env(
+			metadata = metadata,
+			dyn_fn = dyn_fn, 
+			dyn_params = params, 
+			non_stationary = (len(non_stationarities) > 0), 
+			non_stationarities = non_stationarities,
+			)
 
 	return env, info
 
@@ -108,7 +130,7 @@ def twoSp_2_factory(n_act: int = 2, non_stationarities: dict = {}):
 ########################### 3 SP 1 ##################################
 #####################################################################
 
-def threeSp_1_factory(n_act: int = 2, non_stationarities: dict = {}):
+def threeSp_1_factory(n_act: int = 2, non_stationarities: dict = {}, use_ray=True):
 	metadata = {
 		#
 		# which env class
@@ -142,15 +164,26 @@ def threeSp_1_factory(n_act: int = 2, non_stationarities: dict = {}):
 		'sigma_y': 0.1,
 		'sigma_z': 0.1,
 	}
-	info = {'metadata': metadata, 'params': params}
+	dyn_fn = threeSp_1
+	config = {
+		'metadata': metadata, 
+		'dyn_params': params, 
+		'dyn_fn': dyn_fn, 
+		'non_stationary': (len(non_stationarities) > 0),
+		'non_stationarities': non_stationarities,
+	}
 
-	env = eco_env(
-		metadata = metadata,
-		dyn_fn = threeSp_1, 
-		dyn_params = params, 
-		non_stationary = (len(non_stationarities) > 0), 
-		non_stationarities = non_stationarities,
-		)
+	info = {'metadata': metadata, 'params': params}
+	if use_ray:
+		env = ray_eco_env(config=config)
+	else:
+		env = eco_env(
+			metadata = metadata,
+			dyn_fn = dyn_fn, 
+			dyn_params = params, 
+			non_stationary = (len(non_stationarities) > 0), 
+			non_stationarities = non_stationarities,
+			)
 
 	return env, info
 
@@ -158,7 +191,7 @@ def threeSp_1_factory(n_act: int = 2, non_stationarities: dict = {}):
 ########################### 3 SP 2 ##################################
 #####################################################################
 
-def threeSp_2_factory(n_act: int = 1, non_stationarities: dict = {}):
+def threeSp_2_factory(n_act: int = 1, non_stationarities: dict = {}, use_ray=True):
 	metadata = {
 		#
 		# which env class
@@ -191,15 +224,24 @@ def threeSp_2_factory(n_act: int = 1, non_stationarities: dict = {}):
 		'sigma_y': 0.1,
 		'sigma_z': 0.1,
 	}
-	info = {'metadata': metadata, 'params': params}
-
-	env = eco_env(
-		metadata = metadata,
-		dyn_fn = threeSp_1, 
-		dyn_params = params, 
-		non_stationary = (len(non_stationarities) > 0), 
-		non_stationarities = non_stationarities,
-		)
+	dyn_fn = threeSp_2
+	config = {
+		'metadata': metadata, 
+		'dyn_params': params, 
+		'dyn_fn': dyn_fn, 
+		'non_stationary': (len(non_stationarities) > 0),
+		'non_stationarities': non_stationarities,
+	}
+	if use_ray:
+		env = ray_eco_env(config=config)
+	else:
+		env = eco_env(
+			metadata = metadata,
+			dyn_fn = dyn_fn, 
+			dyn_params = params, 
+			non_stationary = (len(non_stationarities) > 0), 
+			non_stationarities = non_stationarities,
+			)
 
 	return env, info
 
@@ -214,5 +256,11 @@ NAME_TO_ENV_FACTORY = {
 	'threeSp_2': threeSp_2_factory,
 }
 
-def env_factory(env_name, n_act, non_stationarities = {}):
-	return NAME_TO_ENV_FACTORY[env_name](n_act=n_act, non_stationarities=non_stationarities)
+def env_factory(env_name, n_act, non_stationarities = {}, use_ray=True):
+	if not isinstance(env_name, str):
+		raise Warning(f"env_name = {env_name} is not a string!")
+	env, info =  NAME_TO_ENV_FACTORY[env_name](n_act=n_act, non_stationarities=non_stationarities, use_ray=use_ray)
+	return env
+
+def ray_env_factory(env_config):
+	return ray_eco_env(env_config)

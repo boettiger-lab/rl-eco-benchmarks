@@ -9,7 +9,7 @@ from typing import Callable, Dict, Union
 from dynamical_system import dynamical_system
 from metadata import envMetadata
 
-class eco_env:
+class eco_env(gym.Env):
 	""" what all our envs will have in common """
 
 	#
@@ -135,15 +135,30 @@ class eco_env:
 		""" from action-space [-1,1] to effort-space [0,1]. """
 		return (action + 1) / 2
 
-class ray_eco_env(eco_env):
+class ray_eco_env(gym.Env):
 	""" formatted to fit ray RLLib's most natural syntax for training. """
 
 	def __init__(self, config):
 		self.config = config
-		super().__init__(
+		self.env = eco_env(
 			metadata=self.config['metadata'],
 			dyn_fn=self.config['dyn_fn'],
 			dyn_params=self.config['dyn_params'],
 			non_stationary=self.config['non_stationary'],
 			non_stationarities=self.config['non_stationarities'],
 		)
+		# super().__init__(self.env)
+
+		# self.observation_space = self.env.observation_space
+		# print(f""" env observation space =
+
+		# 	{self.observation_space}
+
+		# 	""")
+		# self.action_space = self.env.action_space
+
+	def reset(self):
+		return self.env.reset()
+
+	def step(self, action):
+		return self.env.step(action)
