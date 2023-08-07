@@ -52,10 +52,10 @@ def threeSp_1(X, Y, Z, params):
 	
 	params = 
 		c
-		LV_xy -> Lotka-Volterra
 		D
 		d_z
 		K
+		LV_xy -> Lotka-Volterra
 		r_x
 		r_y
 		r_z
@@ -76,7 +76,7 @@ def threeSp_1(X, Y, Z, params):
 			Y + (
 						p['r_y'] * Y * (1 - Y / p['K'])
 						- p['LV_xy'] * X * Y
-						- p['D'] * p['r_z'] * Z * (Y**2) / (p['c']**2 + Y**2)
+						- (1+p['D']) * p['r_z'] * Z * (Y**2) / (p['c']**2 + Y**2)
 						+ p['sigma_y'] * Y * np.random.normal()
 					),
 			Z + (
@@ -93,14 +93,10 @@ def threeSp_2(X, Y, Z, params):
 	""" a three species model with a linear trophic dynamics X -> Y -> Z 
 	
 	params = 
-		beta_x
-		beta_y
 		c_x
 		c_y
 		d_z
 		K_x
-		K_y
-		K_z
 		r_x
 		r_y
 		r_z
@@ -114,16 +110,16 @@ def threeSp_2(X, Y, Z, params):
 		[ 
 			X + (
 						p['r_x'] * X * (1 - X / p['K_x'])
-						- p['beta_x'] * Z * (X**2) / (p['c_x']**2 + X**2)
+						- p['r_y'] * Y * (X**2) / (p['c_x']**2 + X**2)
 						+ p['sigma_x'] * X * np.random.normal()
 					),
 			Y + (
-						p['r_y'] * X * Y * (1 - Y / p['K_y'])
-						- p['beta_y'] * Z * (Y**2) / (p['c_y']**2 + Y**2)
+						p['r_y'] * Y * (X**2) / (p['c_x']**2 + X**2)
+						- p['r_z'] * Z * (Y**2) / (p['c_y']**2 + Y**2)
 						+ p['sigma_y'] * Y * np.random.normal()
 				),
 			Z + (
-						p['r_z'] * Y * Z * (1 - Z / p['K_z'])
+						p['r_z'] * Z * (Y**2) / (p['c_y']**2 + Y**2)
 						- p['d_z'] * Z 
 						+ p['sigma_z'] * Z  * np.random.normal()
 					),
