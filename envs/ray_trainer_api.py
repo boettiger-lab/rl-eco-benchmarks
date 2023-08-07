@@ -55,14 +55,13 @@ class ray_trainer:
 
 	def train(
 		self, 
-		agent, 
 		path_to_checkpoint="cache", 
 		verbose = True
 	):
 		for i in range(iterations):
 			if verbose:
 				print(f"iteration nr. {i}", end="\r")
-			agent.train()
-		checkpoint = agent.save(os.path.join(path_to_checkpoint, f"PPO{iterations}_checkpoint"))
+			self.agent.train()
+		checkpoint = self.agent.save(os.path.join(path_to_checkpoint, f"PPO{iterations}_checkpoint"))
 		return agent
 
