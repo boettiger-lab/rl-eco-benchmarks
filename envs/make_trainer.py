@@ -3,6 +3,7 @@ from base_env import eco_env, ray_eco_env
 RAY_ALGOS_CONFIG = {
   'a2c': A2CConfig,
   'a3c': A3CConfig,
+  'ppo': PPOConfig
   'maml': MAMLConfig,
   'apex': ApexDQNConfig,
   'dqn': DQNConfig,
@@ -29,4 +30,12 @@ def make_ray_trainer(
   config.env_config = config
   agent = config.build()
   # agent = PPOTrainer(config=config)
+  return agent
+
+def train_ray_agent(agent, iterations, path_to_checkpoint="cache", verbose = True):
+  for i in range(iterations):
+    if verbose:
+      print(f"iteration nr. {i}", end="\r")
+    agent.train()
+  checkpoint = agent.save(os.path.join(path_to_checkpoint, f"PPO{iterations}_checkpoint"))
   return agent
