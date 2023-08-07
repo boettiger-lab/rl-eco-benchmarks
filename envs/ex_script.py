@@ -168,3 +168,10 @@ for _ in range(10):
 	obs, rew, term, _, info = env_5.step(action = [-1])
 	dict_pretty_print({**info, 'state': obs}, dict_name = "step info")
 
+
+#####################################################################
+#################### RAY TRAINER EXAMPLE ############################
+#####################################################################
+
+from ray_trainer_api import ray_trainer
+

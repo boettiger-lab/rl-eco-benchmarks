@@ -4,7 +4,7 @@ from collections.abc import Iterable
 from numbers import Number
 
 def iter_pretty_print(iterable_obj):
-  print("[", *[ f"{x:.3f}, " for x in iterable_obj] ,"]")
+  print("[", *[ f"{x:.3f}, " for x in iterable_obj ] ,"]")
 
 def dict_pretty_print(D: dict, indent_lvl: int = 0, indent_size: int = 2, verbose:bool =False, dict_name: str=""):
   """ RStudio terminal doesn't like json.dumps so do it manual """

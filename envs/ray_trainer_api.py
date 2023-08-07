@@ -10,10 +10,12 @@ from ray.rllib.algorithms.appo import APPOConfig
 from ray.rllib.algorithms.ddppo import DDPPOConfig
 from ray.rllib.algorithms.ppo import PPOConfig
 
+from base_class import eco_env, ray_eco_env
+
 class ray_trainer:
 	""" an RL agent training on one of ray's algorithms. """
 
-	def __init__(self, algo_name, env_class, env_name, config):
+	def __init__(self, algo_name, config, env_name = "ray_eco_env-v0", env_class = ray_eco_env):
 		#
 		# env
 		self.env_name = env_name

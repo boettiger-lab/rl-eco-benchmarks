@@ -4,7 +4,7 @@
 
 import numpy as np
 
-from base_env import general_env
+from base_env import eco_env
 from dyn_fns import (
 	twoSp_1, twoSp_2, threeSp_1, threeSp_2, fourSp_1
 )
@@ -48,7 +48,7 @@ def twoSp_1_factory(n_act: int = 2, non_stationarities: dict = {}):
 	}
 	info = {'metadata': metadata, 'params': params}
 
-	env = general_env(
+	env = eco_env(
 		metadata = metadata,
 		dyn_fn = twoSp_1, 
 		dyn_params = params, 
@@ -94,7 +94,7 @@ def twoSp_2_factory(n_act: int = 2, non_stationarities: dict = {}):
 	}
 	info = {'metadata': metadata, 'params': params}
 
-	env = general_env(
+	env = eco_env(
 		metadata = metadata,
 		dyn_fn = twoSp_2, 
 		dyn_params = params, 
@@ -144,7 +144,7 @@ def threeSp_1_factory(n_act: int = 2, non_stationarities: dict = {}):
 	}
 	info = {'metadata': metadata, 'params': params}
 
-	env = general_env(
+	env = eco_env(
 		metadata = metadata,
 		dyn_fn = threeSp_1, 
 		dyn_params = params, 
@@ -193,7 +193,7 @@ def threeSp_2_factory(n_act: int = 1, non_stationarities: dict = {}):
 	}
 	info = {'metadata': metadata, 'params': params}
 
-	env = general_env(
+	env = eco_env(
 		metadata = metadata,
 		dyn_fn = threeSp_1, 
 		dyn_params = params, 
@@ -204,12 +204,15 @@ def threeSp_2_factory(n_act: int = 1, non_stationarities: dict = {}):
 	return env, info
 
 #####################################################################
-########################### NAMES ###################################
+##################### FULL ENV FACTORY ##############################
 #####################################################################
 
-ENV_FACTORY_NAMES = {
+NAME_TO_ENV_FACTORY = {
 	'twoSp_1': twoSp_1_factory,
 	'twoSp_2': twoSp_2_factory,
 	'threeSp_1': threeSp_1_factory,
 	'threeSp_2': threeSp_2_factory,
 }
+
+def env_factory(env_name, n_act, non_stationarities = {}):
+	return NAME_TO_ENV_FACTORY[env_name](n_act=n_act, non_stationarities=non_stationarities)
