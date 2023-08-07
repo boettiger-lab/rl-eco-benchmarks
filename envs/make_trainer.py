@@ -14,9 +14,10 @@ RAY_ALGOS_CONFIG = {
 
 def make_ray_trainer(
   algo_name,
-  config):
+  config
+  ):
   env_name = "ray_eco_env-v0"
-  register_env("ray_eco_env-v0", ray_eco_env)
+  register_env(env_name, ray_eco_env)
   config = RAY_ALGOS_CONFIG[algo_name]()
   config.training(vf_clip_param = 50.0)
   config.num_envs_per_worker=30
