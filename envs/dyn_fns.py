@@ -180,11 +180,11 @@ def fourSp_1(X, Y, Z, W, params):
 							+ (Y**2) / (p['c_yz']**2 + Y**2)
 						) 
 						- p['d_z'] * Z +  p['sigma_z'] * Z  * np.random.normal()
-					)
+					),
 			W + (
 						p['r_w'] * p['beta_w'] * Z * (
 							(Y**2) / (p['c_yw']**2 + Y**2)
 						) 
 						- p['d_w'] * Z + p['sigma_w'] * Z  * np.random.normal()
-					)
+					),
 		])
