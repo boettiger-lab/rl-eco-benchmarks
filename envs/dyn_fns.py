@@ -22,17 +22,20 @@ def twoSp_2(X, Y, params):
 	""" a two species model with predation
 	
 	params = 
+		c
+		d_y
 		K_x
-		K_y
-		LV_xy
 		r_x
 		r_y
+
+		sigma_x
+		sigma_y
 	"""
 	p = params
 	return np.float32([
 		X + (
 				p['r_x'] * X * (1 - X / p['K_x'])
-			- p['beta'] * Z * (X**2) / (p['c']**2 + X**2)
+			- p['r_y'] * Y * (X**2) / (p['c']**2 + X**2)
 			+ p['sigma_x'] * X * np.random.normal()
 			),
 		Y + (
