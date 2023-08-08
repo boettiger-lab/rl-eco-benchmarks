@@ -1,5 +1,6 @@
 import numpy as np
 import inspect
+import warnings
 
 from typing import Dict, Union, Callable
 from dataclasses import make_dataclass
@@ -111,19 +112,45 @@ class dynamical_system:
 				}
 			)
 
+	def _test(self, fn: Callable):
+		if self.parametrized and self.non_stationary:
+			def d_fn(*args, t, params): 
+				""" non-stationarities contained in parameters """
+				return fn(
+					*args, 
+					params=params.new_param_vals(
+						**{
+						p_name: nonstationarity(t) 
+						for p_name, nonstationarity in self.non_stationarities.items()
+						}
+					)
+				)
+		elif self.parametrized and (not self.non_stationary):
+			def d_fn(*args, t, params): 
+				""" parametrized, stationary """
+				return fn(
+					*args, params.param_vals()
+				)
+		elif (not self.parametrized) and (self.non_stationary):
+			def d_fn(*args, t, params): 
+				""" explicit t dependence in fn """
+				warnings.warn("dynamics function has explicit t dependence and no parameters.")
+				return fn(*args, t=t, params=params)
+		else:
+			def d_fn(*args, t, params): 
+				""" stationary and non-parametric """
+				return fn(*args)
+		return d_fn
+
 	def _support_parameters(self, fn: Callable):
 		# self.check_n_set_parametrization_format()
 		if self.parametrized:
-				def d_fn(*args, params): 
-					if isinstance(params, base_params_obj):
-						return fn(*args, params=params.param_vals())
-					elif isinstance(params, dict):
-						return fn(*args, params=params)
-					else:
-						raise Warning(self.not_supported_params_wrn_fn(params))
+				def d_fn(*args, params, **kwargs): 
+					assert isinstance(params, base_params_obj), self.not_supported_params_wrn_fn(params)
+					return fn(*args, params=params.param_vals(), **kwargs)
 				return d_fn
 		else:
-			def d_fn(*args, params): return fn(*args)
+			def d_fn(*args, params, **kwargs): return fn(*args, **kwargs)
 			return d_fn
 
 	def _support_t_dependence(self, fn: Callable):
@@ -144,9 +171,10 @@ class dynamical_system:
 
 	def _make_dyn_fn(self, fn: Callable):
 		""" makes the dynamic function callable in a standardizedx way """
-		return self._support_t_dependence(
-			self._support_parameters(fn)
-		)
+		return self._test(fn)
+		# self._support_t_dependence(
+		# 	self._support_parameters(fn)
+		# )
 
 	def check_n_set_parametrization_format(self):
 		""" checks whether dyn_fn accepts parameters in one of the allowed formats (if it does at all) """
@@ -190,12 +218,12 @@ class dynamical_system:
 				"  {param_name: fn = t -> param_value }"
 				)
 
-		dyn_fn_output = self.dyn_fn(*self.standard_state, params=self.dyn_params, t=0)
+		# dyn_fn_output = self.dyn_fn(*self.standard_state, t=0, params=self.dyn_params)
 
-		assert isinstance(dyn_fn_output, np.ndarray), self.dyn_fn_struc_warning
-		assert len(dyn_fn_output) == self.n, self.dyn_fn_struc_warning
+		# assert isinstance(dyn_fn_output, np.ndarray), self.dyn_fn_struc_warning
+		# assert len(dyn_fn_output) == self.n, self.dyn_fn_struc_warning
 
 
-		fn_purity(self.dyn_fn, *self.standard_state, params = self.dyn_params, t=0)
+		# fn_purity(self.dyn_fn, t=0, *self.standard_state, params = self.dyn_params)
 		
 

@@ -139,6 +139,7 @@ class ray_eco_env(gym.Env):
 	""" formatted to fit ray RLLib's most natural syntax for training. """
 
 	def __init__(self, config):
+		super(ray_eco_env, self).__init__()
 		self.config = config
 		self.env = eco_env(
 			metadata=self.config['metadata'],
@@ -149,7 +150,8 @@ class ray_eco_env(gym.Env):
 		)
 		# super().__init__(self.env)
 
-		# self.observation_space = self.env.observation_space
+		self.observation_space = self.env.observation_space
+		self.action_space = self.env.action_space
 		# print(f""" env observation space =
 
 		# 	{self.observation_space}

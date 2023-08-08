@@ -1,7 +1,8 @@
 import numpy as np
 from dynamical_system import base_params_obj
 from base_env import eco_env, ray_eco_env
-from env_factories import env_factory
+from env_factories import env_factory, threeSp_1_factory
+from dyn_fns import threeSp_1
 from util import dict_pretty_print
 
 ##############################################################
@@ -177,6 +178,7 @@ for _ in range(10):
 print("\n\n" + "ray_trainer test:" + "\n\n")
 
 from ray_trainer_api import ray_trainer
+from gymnasium import spaces
 
 _metadata = {
 	#
@@ -199,9 +201,11 @@ _metadata = {
 	'_prices': np.ones(2, dtype=np.float32),
 }
 
-_env = env_factory(_metadata['name'], n_act=_metadata_4['n_act'], use_ray=True)
-_dyn_fn = _env.env.env_dyn_obj.dyn_fn
-_params = _env.env.env_dyn_obj.dyn_params
+_env, info = threeSp_1_factory(n_act=_metadata['n_act'], use_ray=True)
+_dyn_fn = threeSp_1
+_params = info['params']
+
+_ = _env.env.env_dyn_obj.dyn_fn(0.5, 0.5, 0.5, t=1, params=_env.env.env_dyn_obj.dyn_params)
 
 _config_ray = {
 	'metadata': _metadata,
@@ -209,14 +213,21 @@ _config_ray = {
 	'dyn_params': _params,
 	'non_stationary': False,
 	'non_stationarities': {},
+	'observation_space': spaces.Box(np.float32([-1,-1,-1]), np.float32([1,1,1]), dtype=np.float32),
+	'action_space': spaces.Box(np.float32([-1,-1]), np.float32([1,1]), dtype=np.float32),
 }
+
+env = ray_eco_env(_config_ray)
+
+print(env.observation_space)
+
 _algo_name = 'a2c'
 _model_name = _metadata['name']
 
 RT = ray_trainer(
 	algo_name=_algo_name, 
 	config=_config_ray,
-	env_model_name=_model_name,
+	env_model_name='threeSp_1',
 	n_act = _metadata_4['n_act'],
 )
 
