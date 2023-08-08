@@ -201,9 +201,21 @@ _metadata = {
 	'_prices': np.ones(2, dtype=np.float32),
 }
 
-_env, info = threeSp_1_factory(n_act=_metadata['n_act'], use_ray=True)
+_env, info = threeSp_1_factory(n_act=_metadata['n_act'])
 _dyn_fn = threeSp_1
-_params = info['params']
+_params = {
+	'c_x': np.random.choice([0.2, 0.25, 0.3]),
+	'c_y': np.random.choice([0.2, 0.25, 0.3]),
+	'd_z': np.random.choice([0.9, 1, 1.1]),
+	'K_x': np.random.choice([0.9, 1, 1.1]),
+	'r_x': np.random.choice([0.9, 1, 1.1]),
+	'r_y': np.random.choice([0.9, 1, 1.1]),
+	'r_z': np.random.choice([0.9, 1, 1.1]),
+	#
+	'sigma_x': 0.1,
+	'sigma_y': 0.1,
+	'sigma_z': 0.1,
+}
 
 _ = _env.env.env_dyn_obj.dyn_fn(0.5, 0.5, 0.5, t=1, params=_env.env.env_dyn_obj.dyn_params)
 
@@ -213,13 +225,11 @@ _config_ray = {
 	'dyn_params': _params,
 	'non_stationary': False,
 	'non_stationarities': {},
-	'observation_space': spaces.Box(np.float32([-1,-1,-1]), np.float32([1,1,1]), dtype=np.float32),
-	'action_space': spaces.Box(np.float32([-1,-1]), np.float32([1,1]), dtype=np.float32),
+	# 'observation_space': spaces.Box(np.float32([-1,-1,-1]), np.float32([1,1,1]), dtype=np.float32),
+	# 'action_space': spaces.Box(np.float32([-1,-1]), np.float32([1,1]), dtype=np.float32),
 }
 
 env = ray_eco_env(_config_ray)
-
-print(env.observation_space)
 
 _algo_name = 'a2c'
 _model_name = _metadata['name']

@@ -263,4 +263,4 @@ def env_factory(env_name, n_act, non_stationarities = {}, use_ray=True):
 	return env
 
 def ray_env_factory(env_config):
-	return ray_eco_env(env_config)
+	return eco_env(**env_config)

@@ -54,7 +54,7 @@ class ray_trainer:
 		# 
 		# config.env
 		self.algo_config.env=env_model_name
-		self.algo_config.env_config = config
+		self.algo_config.env_config = config		
 		#
 		# agent
 		self.agent = self.algo_config.build()
