@@ -48,10 +48,6 @@ class eco_env(gym.Env):
 			dtype = np.float32,
 			)
 
-		print("\n")
-		print(self.observation_space)
-		print("\n")
-
 		# easier access for objects I reference explicitly
 		self.init_pop = self.metadata.init_pop
 		self.reset_sigma = self.metadata.reset_sigma

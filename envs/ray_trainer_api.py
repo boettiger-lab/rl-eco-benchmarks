@@ -16,8 +16,6 @@ from ray.rllib.algorithms.appo import APPOConfig
 from ray.rllib.algorithms.ddppo import DDPPOConfig
 from ray.rllib.algorithms.ppo import PPOConfig
 
-# from ray.rllib.agents.ppo import PPOTrainer
-
 from base_env import eco_env, ray_eco_env
 from env_factories import env_factory, ray_env_factory
 
