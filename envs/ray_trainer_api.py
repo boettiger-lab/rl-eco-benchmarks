@@ -35,8 +35,6 @@ class ray_trainer:
 			env_model_name, 
 			lambda env_config: ray_env_factory(env_config=env_config)
 		)
-		print("registered with Ray tune!")
-		# register_env(env_name, env_class)
 		#
 		# algo
 		self.algo_name = algo_name
