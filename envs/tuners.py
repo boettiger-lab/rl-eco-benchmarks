@@ -16,23 +16,6 @@ from hyperparams import make_hyperparams
 # Implements%20the%20Population%20Based%20Bandit, (cont.)
 # selected%20using%20GP%2Dbandit%20optimization. (end)
 
-class ray_pb2_tuner:
-	"""	
-	a PB2 hyperparameter tuner using ray.tune
-
-	docs: 
-	https://docs.ray.io/en/latest/tune/api/doc/ (cont.)
-	ray.tune.schedulers.pb2.PB2.html#:~:text= (cont.)
-	Implements%20the%20Population%20Based%20Bandit, (cont.)
-	selected%20using%20GP%2Dbandit%20optimization. (end)
-	"""
-
-	def __init__(self):
-		pass
-
-#
-# TBD: incorporate code below into the class above
-#
 
 def sb2_tuning(
 	algo_name, 

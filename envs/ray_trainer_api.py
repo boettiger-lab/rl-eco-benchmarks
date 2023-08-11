@@ -20,18 +20,7 @@ from ray.rllib.algorithms.ppo import PPOConfig
 
 from base_env import eco_env, ray_eco_env
 from env_factories import env_factory, ray_env_factory
-
-@dataclass
-class hyperparam:
-	""" used for hyperparameter tuning """
-	name: str
-	low: int
-	high: int
-
-def dict_to_hyperparam_list(hyperparam_dict: Dict[str, List]):
-	""" dictionary of {name: [low, high]} for all hyperparams """
-	return [hyperparam(key, value[0], value[1]) for key, value in hyperparam_dict.items]
-
+from tuners import sb2_tuning
 
 class ray_trainer:
 	""" an RL agent training on one of ray's algorithms. """
@@ -68,6 +57,9 @@ class ray_trainer:
 		#
 		# agent
 		self.agent = self.algo_config.build()
+		#
+		# shorthands
+		self.env_name = self.algo_config.env 
 
 	def _make_config(self):
 		config_dict = {
@@ -87,7 +79,7 @@ class ray_trainer:
 
 	def train(
 		self, 
-		path_to_checkpoint="cache", 
+		path_to_checkpoint="../cache", 
 		verbose = True
 	):
 		for i in range(iterations):
@@ -97,5 +89,17 @@ class ray_trainer:
 		checkpoint = self.agent.save(os.path.join(path_to_checkpoint, f"PPO{iterations}_checkpoint"))
 		return agent
 
-	def tune_hyper_params(self, hyperparam_dict: Dict[str, List]):
+	def tune_hyper_params(self, hp_dicts_list, **kwargs):
+		""" eventually allow for different schedulers for optimizaton """
+		"""
+		args:
+			hp_dicts_list: see sb2_tuning implementation for required structure
+			**kwargs: see sb2_tuning optional kwargs
+		"""
+		return sb2_tuning(
+			algo_name=self.algo_name,
+			env_name=self.env_name,
+			hp_dicts_list=hp_dicts_list,
+			**kwargs,
+			)
 		
