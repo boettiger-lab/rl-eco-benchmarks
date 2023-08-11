@@ -237,7 +237,7 @@ _model_name = _metadata['name']
 RT = ray_trainer(
 	algo_name=_algo_name, 
 	config=_config_ray,
-	env_model_name='threeSp_1',
+	env_model_name=_model_name,
 	n_act = _metadata_4['n_act'],
 )
 
