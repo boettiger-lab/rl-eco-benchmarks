@@ -3,6 +3,8 @@ import torch
 # from ray.tune import register_env
 from ray import tune
 from gymnasium.envs.registration import register
+from dataclasses import dataclass
+from typing import Dict, List
 
 from ray.rllib.algorithms.a2c import A2CConfig
 from ray.rllib.algorithms.a3c import A3CConfig
@@ -18,6 +20,18 @@ from ray.rllib.algorithms.ppo import PPOConfig
 
 from base_env import eco_env, ray_eco_env
 from env_factories import env_factory, ray_env_factory
+
+@dataclass
+class hyperparam:
+	""" used for hyperparameter tuning """
+	name: str
+	low: int
+	high: int
+
+def dict_to_hyperparam_list(hyperparam_dict: Dict[str, List]):
+	""" dictionary of {name: [low, high]} for all hyperparams """
+	return [hyperparam(key, value[0], value[1]) for key, value in hyperparam_dict.items]
+
 
 class ray_trainer:
 	""" an RL agent training on one of ray's algorithms. """
@@ -83,3 +97,5 @@ class ray_trainer:
 		checkpoint = self.agent.save(os.path.join(path_to_checkpoint, f"PPO{iterations}_checkpoint"))
 		return agent
 
+	def tune_hyper_params(self, hyperparam_dict: Dict[str, List]):
+		
