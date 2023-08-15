@@ -58,7 +58,7 @@ class eco_env(gym.Env):
 		# reset
 		self.reset()
 
-	def reset(self):
+	def reset(self, *, seed=42):
 		self.timestep = 0
 		reset_pert = self.reset_sigma * np.random.normal(size=3)
 		self.pop = self.init_pop + reset_pert
