@@ -241,3 +241,5 @@ RT = ray_trainer(
 	n_act = _metadata_4['n_act'],
 )
 
+agent = RT.train(iterations=10)
+

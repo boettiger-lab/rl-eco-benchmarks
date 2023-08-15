@@ -79,9 +79,15 @@ class ray_trainer:
 
 	def train(
 		self, 
-		path_to_checkpoint="../cache", 
-		verbose = True
+		iterations: int,
+		save_checkpoint: bool = False,
+		path_to_checkpoint: str = "../cache", 
+		verbose: bool = True
 	):
+		if save_checkpoint and path_to_checkpoint == "":
+			warning.warn("Empty checkpoint path received, setting it to '../cache'.")
+			path_to_checkpoint = "../cache"
+		#
 		for i in range(iterations):
 			if verbose:
 				print(f"iteration nr. {i}", end="\r")
