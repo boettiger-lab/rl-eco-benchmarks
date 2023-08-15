@@ -228,7 +228,7 @@ _config_ray = {
 
 # env = ray_eco_env(_config_ray)
 
-_algo_name = 'a2c'
+_algo_name = 'ppo'
 
 RT = ray_trainer(
 	algo_name=_algo_name, 
