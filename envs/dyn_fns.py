@@ -54,7 +54,7 @@ def threeSp_1(X, Y, Z, params):
 		c
 		D
 		d_z
-		K
+		K_x
 		LV_xy -> Lotka-Volterra
 		r_x
 		r_y
@@ -68,7 +68,7 @@ def threeSp_1(X, Y, Z, params):
 	return np.float32(
 		[ 
 			X + (
-						p['r_x'] * X * (1 - X / p['K'])
+						p['r_x'] * X * (1 - X / p['K_x'])
 						- p['LV_xy'] * X * Y
 						- (1 - p['D']) * p['r_z'] * Z * (X**2) / (p['c']**2 + X**2)
 						+ p['sigma_x'] * X * np.random.normal()

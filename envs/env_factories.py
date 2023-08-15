@@ -154,7 +154,7 @@ def threeSp_1_factory(n_act: int = 2, non_stationarities: dict = {}, use_ray=Tru
 		'c': np.random.choice([0.2, 0.25, 0.3]),
 		'D': np.random.choice([0.05, 0.1, 0.15]),
 		'd_z': np.random.choice([0.2, 0.3, 0.4]),
-		'K': np.random.choice([0.9, 1, 1.1]),
+		'K_x': np.random.choice([0.9, 1, 1.1]),
 		'LV_xy': np.random.choice([0.05, 0.1, 0.15]),
 		'r_x': np.random.choice([0.9, 1, 1.1]),
 		'r_y': np.random.choice([0.9, 1, 1.1]),

@@ -1,5 +1,4 @@
 import numpy as np
-from dynamical_system import base_params_obj
 from base_env import eco_env, ray_eco_env
 from env_factories import env_factory, threeSp_1_factory
 from dyn_fns import threeSp_1
@@ -180,65 +179,65 @@ print("\n\n" + "ray_trainer test:" + "\n\n")
 from ray_trainer_api import ray_trainer
 from gymnasium import spaces
 
-_metadata = {
-	#
-	# which env class
-	'name': 'threeSp_1',
-	'n_sp':  3,
-	'n_act': 2,
-	'_harvested_sp': [0,1],
-	#
-	# about episodes
-	'init_pop': np.float32([0.5, 0.5, 0.1]),
-	'reset_sigma': 0.01,
-	'tmax': 1000,
-	'penalty_fn': _penalty_fn_4,
-	'extinct_thresh': 0.05,
-	#
-	# about dynamics / control
-	'var_bound': 2,
-	'_costs': np.zeros(2, dtype=np.float32),
-	'_prices': np.ones(2, dtype=np.float32),
-}
+# _metadata = {
+# 	#
+# 	# which env class
+# 	'name': 'threeSp_1',
+# 	'n_sp':  3,
+# 	'n_act': 2,
+# 	'_harvested_sp': [0,1],
+# 	#
+# 	# about episodes
+# 	'init_pop': np.float32([0.5, 0.5, 0.1]),
+# 	'reset_sigma': 0.01,
+# 	'tmax': 1000,
+# 	'penalty_fn': _penalty_fn_4,
+# 	'extinct_thresh': 0.05,
+# 	#
+# 	# about dynamics / control
+# 	'var_bound': 2,
+# 	'_costs': np.zeros(2, dtype=np.float32),
+# 	'_prices': np.ones(2, dtype=np.float32),
+# }
+# 
+# _env, info = threeSp_1_factory(n_act=_metadata['n_act'])
+# _dyn_fn = threeSp_1
+# _params = {
+# 	'c_x': np.random.choice([0.2, 0.25, 0.3]),
+# 	'c_y': np.random.choice([0.2, 0.25, 0.3]),
+# 	'd_z': np.random.choice([0.9, 1, 1.1]),
+# 	'K_x': np.random.choice([0.9, 1, 1.1]),
+# 	'r_x': np.random.choice([0.9, 1, 1.1]),
+# 	'r_y': np.random.choice([0.9, 1, 1.1]),
+# 	'r_z': np.random.choice([0.9, 1, 1.1]),
+# 	#
+# 	'sigma_x': 0.1,
+# 	'sigma_y': 0.1,
+# 	'sigma_z': 0.1,
+# }
 
-_env, info = threeSp_1_factory(n_act=_metadata['n_act'])
-_dyn_fn = threeSp_1
-_params = {
-	'c_x': np.random.choice([0.2, 0.25, 0.3]),
-	'c_y': np.random.choice([0.2, 0.25, 0.3]),
-	'd_z': np.random.choice([0.9, 1, 1.1]),
-	'K_x': np.random.choice([0.9, 1, 1.1]),
-	'r_x': np.random.choice([0.9, 1, 1.1]),
-	'r_y': np.random.choice([0.9, 1, 1.1]),
-	'r_z': np.random.choice([0.9, 1, 1.1]),
-	#
-	'sigma_x': 0.1,
-	'sigma_y': 0.1,
-	'sigma_z': 0.1,
-}
+# _ = _env.env.env_dyn_obj.dyn_fn(0.5, 0.5, 0.5, t=1, params=_env.env.env_dyn_obj.dyn_params)
 
-_ = _env.env.env_dyn_obj.dyn_fn(0.5, 0.5, 0.5, t=1, params=_env.env.env_dyn_obj.dyn_params)
+# _config_ray = {
+# 	'metadata': _metadata,
+# 	'dyn_fn': _dyn_fn,
+# 	'dyn_params': _params,
+# 	'non_stationary': False,
+# 	'non_stationarities': {},
+# 	# 'observation_space': spaces.Box(np.float32([-1,-1,-1]), np.float32([1,1,1]), dtype=np.float32),
+# 	# 'action_space': spaces.Box(np.float32([-1,-1]), np.float32([1,1]), dtype=np.float32),
+# }
 
-_config_ray = {
-	'metadata': _metadata,
-	'dyn_fn': _dyn_fn,
-	'dyn_params': _params,
-	'non_stationary': False,
-	'non_stationarities': {},
-	# 'observation_space': spaces.Box(np.float32([-1,-1,-1]), np.float32([1,1,1]), dtype=np.float32),
-	# 'action_space': spaces.Box(np.float32([-1,-1]), np.float32([1,1]), dtype=np.float32),
-}
-
-env = ray_eco_env(_config_ray)
+# env = ray_eco_env(_config_ray)
 
 _algo_name = 'a2c'
-_model_name = _metadata['name']
+_model_name = 'threeSp_1'
 
 RT = ray_trainer(
 	algo_name=_algo_name, 
 	config=_config_ray,
 	env_model_name=_model_name,
-	n_act = _metadata_4['n_act'],
+	n_act = 2,
 )
 
 agent = RT.train(iterations=10)
