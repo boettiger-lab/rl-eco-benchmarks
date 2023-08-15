@@ -9,7 +9,7 @@ class hyperparam:
 	val_type_str: str
 	low_bound: 'optional, only needed if val_type_str != categorical' = None
 	high_bound: 'optional, only needed if val_type_str != categorical' = None
-	value_list: 'optional, only needed if val_type_str == categorical' = []
+	value_list: 'optional, only needed if val_type_str == categorical' = field(default_factory=list)
 
 	def __post_init__(self):
 		if val_type_str not in ['categorical', 'int', 'float']:
