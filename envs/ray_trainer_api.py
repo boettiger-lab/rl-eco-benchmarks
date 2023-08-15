@@ -28,13 +28,12 @@ class ray_trainer:
 		self, 
 		algo_name, 
 		config, 
-		env_model_name,
-		n_act,
+		env_registration_name: str = 'my_env',
 	):
 		#
 		# env
 		tune.register_env(
-			env_model_name, 
+			env_registration_name, 
 			lambda env_config: ray_env_factory(env_config=env_config)
 		)
 		#
