@@ -16,7 +16,7 @@ class hyperparam:
 		if val_type_str == 'categorical':
 			assert len(self.value_list > 0), "a categorical hyperparam needs a value_list property"
 		if val_type_str != 'categorical':
-			assert (low_bound != None) && (high_bound != None), "int and float hyperparams need low_bound and high_bound properties"
+			assert (low_bound != None) and (high_bound != None), "int and float hyperparams need low_bound and high_bound properties"
 
 	def sample_fn(self):
 		""" returns function which samples the hyperparameter.  
