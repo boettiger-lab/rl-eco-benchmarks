@@ -202,10 +202,11 @@ _metadata = {
 
 _dyn_fn = threeSp_1
 _params = {
-	'c_x': np.random.choice([0.2, 0.25, 0.3]),
-	'c_y': np.random.choice([0.2, 0.25, 0.3]),
-	'd_z': np.random.choice([0.9, 1, 1.1]),
+	'c': np.random.choice([0.2, 0.25, 0.3]),
+	'D': np.random.choice([0.05, 0.1, 0.15]),
+	'd_z': np.random.choice([0.2, 0.3, 0.4]),
 	'K_x': np.random.choice([0.9, 1, 1.1]),
+	'LV_xy': np.random.choice([0.05, 0.1, 0.15]),
 	'r_x': np.random.choice([0.9, 1, 1.1]),
 	'r_y': np.random.choice([0.9, 1, 1.1]),
 	'r_z': np.random.choice([0.9, 1, 1.1]),
