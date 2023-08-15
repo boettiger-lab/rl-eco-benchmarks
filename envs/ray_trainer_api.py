@@ -50,7 +50,7 @@ class ray_trainer:
 		self.algo_config.create_env_on_local_worker = True
 		# 
 		# config.env
-		self.algo_config.env=env_model_name
+		self.algo_config.env=env_registration_name
 		self.algo_config.env_config = config		
 		#
 		# agent
