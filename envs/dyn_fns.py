@@ -74,7 +74,7 @@ def threeSp_1(X, Y, Z, params):
 						+ p['sigma_x'] * X * np.random.normal()
 					),
 			Y + (
-						p['r_y'] * Y * (1 - Y / p['K'])
+						p['r_y'] * Y * (1 - Y / p['K_x'])
 						- p['LV_xy'] * X * Y
 						- (1+p['D']) * p['r_z'] * Z * (Y**2) / (p['c']**2 + Y**2)
 						+ p['sigma_y'] * Y * np.random.normal()
