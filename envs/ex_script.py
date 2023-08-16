@@ -242,6 +242,8 @@ _algo_set = {
 	'ars',
 }
 
+_failed_algos = []
+
 for _algo in _algo_set:
 	try:
 		RT = ray_trainer(
@@ -251,5 +253,9 @@ for _algo in _algo_set:
 		agent = RT.train(iterations=5, verbose=False)
 
 	except:
-		print(f"Failed for algorithm {_algo}")
+		_failed_algos.append(_algo)
+
+
+for fa in _failed_algos:
+	print(f"failed for {fa}")
 
