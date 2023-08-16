@@ -250,7 +250,7 @@ _algo_set = {
 _algo = 'ppo'
 _failed_algos = []
 for _algo in _algo_set:
-	print(f"working on {_algo}")
+	print("\n\n" + f"working on {_algo}" + "\n\n")
 	try:
 		RT = ray_trainer(
 			algo_name=_algo, 
