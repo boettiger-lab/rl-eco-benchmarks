@@ -241,6 +241,7 @@ _algo_set = {
 	'ppo',
 	'maml',
 	'apex',
+	# 'dqn',
 	'ddpg',
 	'td3',
 	'ars',
@@ -249,6 +250,8 @@ _algo_set = {
 _algo = 'ppo'
 _failed_init = []
 _failed_train = []
+_init_exceptions = []
+_train_exceptions = []
 for _algo in _algo_set:
 	print("\n\n" + f"working on {_algo}" + "\n\n")
 	try:
@@ -257,20 +260,31 @@ for _algo in _algo_set:
 			config=_config_ray,
 		)
 	except Exception as e:
+		_failed_init.append({'algo': _algo, 'exception': str(e)})
 		print("\n\n"+f"failed to initialize {_algo}. Exception thrown: " + "\n" + str(e))
-		_failed_init.append(_algo)
 
 	try:
 		agent = RT.train(iterations=2)
 	except Exception as e:
+		_failed_train.append({'algo': _algo, 'exception': str(e)})
 		print("\n\n"+f"failed to train {_algo}. Exception thrown: " + "\n" + str(e))
-		_failed_train.append(_algo)
+
+print("\n\n"+"init exceptions:"+"\n\n")
+for fi in _failed_init:
+	dict_pretty_print(fi)
+
+print("\n\n"+"train exceptions:"+"\n\n")
+for ft in _failed_train:
+	dict_pretty_print(ft)
 
 
-for idx, fi in enumerate(_failed_init):
-	print(f"{idx}: failed to initialize {fi}")
+# for idx, fi in enumerate(_failed_init):
+# 	print(f"{idx}: failed to initialize {fi}")
 
-for idx, ft in enumerate(_failed_train):
-	print(f"{idx}: failed to train {ft}")
+# for idx, ft in enumerate(_failed_train):
+# 	print(f"{idx}: failed to train {ft}")
+
+# for idx, ie in enumerate(_init_exceptions):
+# 	print(f"{idx}: ")
 
 
