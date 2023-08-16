@@ -45,7 +45,7 @@ class ray_trainer:
 		# self.config.training(vf_clip_param = 50.0)
 		self.algo_config.disable_env_checking = True # otherwise it complains about the env
 		self.algo_config.num_envs_per_worker=30
-		self.algo_config = self.algo_config.resources(num_gpus=torch.cuda.device_count())
+		# self.algo_config = self.algo_config.resources(num_gpus=torch.cuda.device_count())
 		self.algo_config.framework_str="torch"
 		self.algo_config.create_env_on_local_worker = True
 		# 
