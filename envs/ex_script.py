@@ -248,15 +248,24 @@ _algo_set = {
 }
 
 _algo = 'ppo'
+_failed_algos = []
+for _algo in _algo_set:
+	try:
+		RT = ray_trainer(
+			algo_name=_algo, 
+			config=_config_ray,
+		)
+		agent = RT.train(iterations=5)
 
-try:
-	RT = ray_trainer(
-		algo_name=_algo, 
-		config=_config_ray,
-	)
-	agent = RT.train(iterations=5)
+	except:
+		_failed_algos.append(_algo)
 
-except:
-	print(f"failed for {_algo}")
+_successful_algos = _algo_set.difference(_failed_algos)
+
+for fa in _failed_algos:
+	print(f"failed for {fa}")
+
+for sa in _successful_algos:
+	print(f"succeeded for {sa}")
 
 
