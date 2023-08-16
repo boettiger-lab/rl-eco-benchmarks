@@ -228,12 +228,28 @@ _config_ray = {
 
 # env = ray_eco_env(_config_ray)
 
-_algo_name = 'ppo'
+_algo_set = {
+	'a2c',
+	'a3c',
+	'appo',
+	'ddppo',
+	'ppo',
+	'maml',
+	'apex',
+	'dqn',
+	'ddpg',
+	'td3',
+	'ars',
+}
 
-RT = ray_trainer(
-	algo_name=_algo_name, 
-	config=_config_ray,
-)
+for _algo in _algo_set:
+	try:
+		RT = ray_trainer(
+			algo_name=_algo_name, 
+			config=_config_ray,
+		)
+		agent = RT.train(iterations=10)
 
-agent = RT.train(iterations=10)
+	except:
+		print(f"Failed for algorithm {_algo}")
 
