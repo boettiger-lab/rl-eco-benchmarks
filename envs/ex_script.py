@@ -200,7 +200,7 @@ _metadata = {
 	'_prices': np.ones(2, dtype=np.float32),
 }
 
-_dyn_fn = threeSp_1
+_dyn_fn = lambda x: x
 _params = {
 	'c': np.random.choice([0.2, 0.25, 0.3]),
 	'D': np.random.choice([0.05, 0.1, 0.15]),
