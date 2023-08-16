@@ -245,7 +245,7 @@ _algo_set = {
 for _algo in _algo_set:
 	try:
 		RT = ray_trainer(
-			algo_name=_algo_name, 
+			algo_name=_algo, 
 			config=_config_ray,
 		)
 		agent = RT.train(iterations=10)
