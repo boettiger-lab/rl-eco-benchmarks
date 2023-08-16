@@ -257,6 +257,7 @@ for _algo in _algo_set:
 			config=_config_ray,
 		)
 		agent = RT.train(iterations=2)
+		print(f"succeeded at {_algo}")
 
 	except:
 		_failed_algos.append(_algo)
