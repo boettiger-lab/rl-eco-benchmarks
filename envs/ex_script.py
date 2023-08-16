@@ -242,20 +242,16 @@ _algo_set = {
 	'ars',
 }
 
-_failed_algos = []
+_algo = 'ppo'
 
-for _algo in _algo_set:
-	try:
-		RT = ray_trainer(
-			algo_name=_algo, 
-			config=_config_ray,
-		)
-		agent = RT.train(iterations=5, verbose=False)
+try:
+	RT = ray_trainer(
+		algo_name=_algo, 
+		config=_config_ray,
+	)
+	agent = RT.train(iterations=5, verbose=False)
 
-	except:
-		_failed_algos.append(_algo)
+except:
+	print(f"failed for {_algo}")
 
-
-for fa in _failed_algos:
-	print(f"failed for {fa}")
 
