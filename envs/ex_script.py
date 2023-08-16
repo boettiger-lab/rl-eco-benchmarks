@@ -240,7 +240,7 @@ _algo_set = {
 	'ddppo',
 	'ppo',
 	'maml',
-	'apex',
+	# 'apex',
 	# 'dqn',
 	'ddpg',
 	'td3',
