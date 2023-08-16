@@ -241,7 +241,6 @@ _algo_set = {
 	'ppo',
 	'maml',
 	'apex',
-	'dqn',
 	'ddpg',
 	'td3',
 	'ars',
@@ -268,10 +267,10 @@ for _algo in _algo_set:
 		_failed_train.append(_algo)
 
 
-for idx, fi in _failed_init:
+for idx, fi in enumerate(_failed_init):
 	print(f"{idx}: failed to initialize {fi}")
 
-for idx, ft in _failed_train:
+for idx, ft in enumerate(_failed_train):
 	print(f"{idx}: failed to train {ft}")
 
 
