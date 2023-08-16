@@ -90,7 +90,8 @@ class ray_trainer:
 			if verbose:
 				print(f"iteration nr. {i}", end="\r")
 			self.agent.train()
-		checkpoint = self.agent.save(os.path.join(path_to_checkpoint, f"PPO{iterations}_checkpoint"))
+		if save_checkpoint:
+			checkpoint = self.agent.save(os.path.join(path_to_checkpoint, f"PPO{iterations}_checkpoint"))
 		return agent
 
 	def tune_hyper_params(self, hp_dicts_list, **kwargs):
