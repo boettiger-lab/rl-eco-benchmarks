@@ -254,7 +254,7 @@ try:
 		algo_name=_algo, 
 		config=_config_ray,
 	)
-	agent = RT.train(iterations=5, verbose=False)
+	agent = RT.train(iterations=5)
 
 except:
 	print(f"failed for {_algo}")
