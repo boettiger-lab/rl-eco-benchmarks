@@ -216,7 +216,7 @@ _metadata = {
 # 	'sigma_z': 0.1,
 # }
 
-_dyn_fn = lambda x: x
+_dyn_fn = lambda *args: args
 _params = {}
 
 # _ = _env.env.env_dyn_obj.dyn_fn(0.5, 0.5, 0.5, t=1, params=_env.env.env_dyn_obj.dyn_params)
