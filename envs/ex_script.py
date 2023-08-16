@@ -248,7 +248,8 @@ _algo_set = {
 }
 
 _algo = 'ppo'
-_failed_algos = []
+_failed_init = []
+_failed_train = []
 for _algo in _algo_set:
 	print("\n\n" + f"working on {_algo}" + "\n\n")
 	try:
@@ -256,18 +257,21 @@ for _algo in _algo_set:
 			algo_name=_algo, 
 			config=_config_ray,
 		)
+	except Exception as e:
+		print("\n\n"+f"failed to initialize {_algo}. Exception thrown: " + "\n" + str(e))
+		_failed_init.append(_algo)
+
+	try:
 		agent = RT.train(iterations=2)
-		print(f"succeeded at {_algo}")
+	except Exception as e:
+		print("\n\n"+f"failed to train {_algo}. Exception thrown: " + "\n" + str(e))
+		_failed_train.append(_algo)
 
-	except:
-		_failed_algos.append(_algo)
 
-_successful_algos = _algo_set.difference(_failed_algos)
+for idx, fi in _failed_init:
+	print(f"{idx}: failed to initialize {fi}")
 
-for fa in _failed_algos:
-	print(f"failed for {fa}")
-
-for sa in _successful_algos:
-	print(f"succeeded for {sa}")
+for idx, ft in _failed_train:
+	print(f"{idx}: failed to train {ft}")
 
 
