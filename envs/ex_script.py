@@ -248,7 +248,7 @@ for _algo in _algo_set:
 			algo_name=_algo, 
 			config=_config_ray,
 		)
-		agent = RT.train(iterations=10)
+		agent = RT.train(iterations=5, verbose=False)
 
 	except:
 		print(f"Failed for algorithm {_algo}")
