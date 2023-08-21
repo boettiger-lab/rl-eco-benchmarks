@@ -226,8 +226,6 @@ _config_ray = {
 	'non_stationarities': {},
 }
 
-# env = ray_eco_env(_config_ray)
-
 _algo_set = {
 	'a2c',
 	'a3c',
