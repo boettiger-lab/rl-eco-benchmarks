@@ -200,33 +200,35 @@ _metadata = {
 	'_prices': np.ones(2, dtype=np.float32),
 }
 
-# _dyn_fn = threeSp_1
-# _params = {
-# 	'c': np.random.choice([0.2, 0.25, 0.3]),
-# 	'D': np.random.choice([0.05, 0.1, 0.15]),
-# 	'd_z': np.random.choice([0.2, 0.3, 0.4]),
-# 	'K_x': np.random.choice([0.9, 1, 1.1]),
-# 	'LV_xy': np.random.choice([0.05, 0.1, 0.15]),
-# 	'r_x': np.random.choice([0.9, 1, 1.1]),
-# 	'r_y': np.random.choice([0.9, 1, 1.1]),
-# 	'r_z': np.random.choice([0.9, 1, 1.1]),
-# 	#
-# 	'sigma_x': 0.1,
-# 	'sigma_y': 0.1,
-# 	'sigma_z': 0.1,
-# }
+_dyn_fn = threeSp_1
+_params = {
+	'c': np.random.choice([0.2, 0.25, 0.3]),
+	'D': np.random.choice([0.05, 0.1, 0.15]),
+	'd_z': np.random.choice([0.2, 0.3, 0.4]),
+	'K_x': np.random.choice([0.9, 1, 1.1]),
+	'LV_xy': np.random.choice([0.05, 0.1, 0.15]),
+	'r_x': np.random.choice([0.9, 1, 1.1]),
+	'r_y': np.random.choice([0.9, 1, 1.1]),
+	'r_z': np.random.choice([0.9, 1, 1.1]),
+	#
+	'sigma_x': 0.1,
+	'sigma_y': 0.1,
+	'sigma_z': 0.1,
+}
 
 # _dyn_fn
 def _dyn_fn(x,y,z):
-	return np.array([x,y,z])
-_params = {}
+	global _params
+	return threeSp_1(x,y,z,_params)
+	# return np.array([x,y,z])
+# _params = {}
 
 # _ = _env.env.env_dyn_obj.dyn_fn(0.5, 0.5, 0.5, t=1, params=_env.env.env_dyn_obj.dyn_params)
 
 _config_ray = {
 	'metadata': _metadata,
 	'dyn_fn': _dyn_fn,
-	'dyn_params': _params,
+	'dyn_params': {},
 	'non_stationary': False,
 	'non_stationarities': {},
 }

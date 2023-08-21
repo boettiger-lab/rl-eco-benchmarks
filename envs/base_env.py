@@ -98,6 +98,18 @@ class eco_env(gym.Env):
 		self.state = self.pop_to_state(self.pop)
 		self.timestep += 1
 		#
+		# cap off state:
+		if any(x>1 for x in self.state):
+			NORM_WARN = ( 
+				f"State {self.state} was capped off at 1 for being out of bounds. "
+				"Check dynamics or increase env.var_bound (supplied through the "
+				"metadata dictionary to the env). In this run, values will be clipped "
+				"at 1."
+				)
+			warnings.warn(NORM_WARN)
+			self.state = np.clip(self.state, , self.n_sp * [-1], self.n_sp * [1])
+			self.pop = self.state_to_pop(self.state)
+		#
 		# info
 		info = {"actions": action, "harvests": harvest_arr, "reward": reward, }
 		return self.state, reward, terminated, False, info
