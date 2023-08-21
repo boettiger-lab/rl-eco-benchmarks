@@ -107,8 +107,8 @@ class eco_env(gym.Env):
 				"at 1."
 				)
 			warnings.warn(NORM_WARN)
-			self.state = np.clip(self.state, self.n_sp * [-1], self.n_sp * [1])
-			self.pop = self.state_to_pop(self.state)
+		self.state = np.clip(self.state, self.n_sp * [-1], self.n_sp * [1])
+		self.pop = self.state_to_pop(self.state)
 		#
 		# info
 		info = {"actions": action, "harvests": harvest_arr, "reward": reward, }
