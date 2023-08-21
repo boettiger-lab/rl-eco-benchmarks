@@ -221,9 +221,9 @@ def _dyn_fn(x,y,z):
 _config_ray = {
 	'metadata': _metadata,
 	'dyn_fn': _dyn_fn,
-	'dyn_params': {},
-	'non_stationary': False,
-	'non_stationarities': {},
+	# 'dyn_params': {},
+	# 'non_stationary': False,
+	# 'non_stationarities': {}, # these are now not needed if they are irrelevant!
 }
 
 _algo_set = {
