@@ -195,7 +195,7 @@ _metadata = {
 	'extinct_thresh': 0.05,
 	#
 	# about dynamics / control
-	'var_bound': 2,
+	'var_bound': 4,
 	'_costs': np.zeros(2, dtype=np.float32),
 	'_prices': np.ones(2, dtype=np.float32),
 }
