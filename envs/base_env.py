@@ -154,11 +154,11 @@ class ray_eco_env(gym.Env):
 		super(ray_eco_env, self).__init__()
 		self.config = config
 		self.env = eco_env(
-			metadata=self.config['metadata'],
-			dyn_fn=self.config['dyn_fn'],
-			dyn_params=self.config['dyn_params'],
-			non_stationary=self.config['non_stationary'],
-			non_stationarities=self.config['non_stationarities'],
+			metadata=self.config.get('metadata', self.needed_cfg('metadata')),
+			dyn_fn=self.config.get('dyn_fn', self.needed_cfg('dyn_fn')),
+			dyn_params=self.config.get('dyn_params', {}),
+			non_stationary=self.config.get('non_stationary', None),
+			non_stationarities=self.config.get('non_stationarities', {}),
 		)
 		# super().__init__(self.env)
 
@@ -176,3 +176,8 @@ class ray_eco_env(gym.Env):
 
 	def step(self, action):
 		return self.env.step(action)
+
+	# helpers
+
+	def needed_cfg(self, dict_entry: str):
+		raise Warning(f"ray_eco_env.config dict requires a '{dict_entry}' entry.")
