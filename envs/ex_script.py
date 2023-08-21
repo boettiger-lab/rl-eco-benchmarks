@@ -217,10 +217,6 @@ _params = {
 def _dyn_fn(x,y,z):
 	global _params
 	return threeSp_1(x,y,z,_params)
-	# return np.array([x,y,z])
-# _params = {}
-
-# _ = _env.env.env_dyn_obj.dyn_fn(0.5, 0.5, 0.5, t=1, params=_env.env.env_dyn_obj.dyn_params)
 
 _config_ray = {
 	'metadata': _metadata,
