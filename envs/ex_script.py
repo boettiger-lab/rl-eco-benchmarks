@@ -177,7 +177,6 @@ for _ in range(10):
 print("\n\n" + "ray_trainer test:" + "\n\n")
 
 from ray_trainer_api import ray_trainer
-from gymnasium import spaces
 
 _metadata = {
 	#
@@ -200,7 +199,6 @@ _metadata = {
 	'_prices': np.ones(2, dtype=np.float32),
 }
 
-_dyn_fn = threeSp_1
 _params = {
 	'c': np.random.choice([0.2, 0.25, 0.3]),
 	'D': np.random.choice([0.05, 0.1, 0.15]),
@@ -216,7 +214,6 @@ _params = {
 	'sigma_z': 0.1,
 }
 
-# _dyn_fn
 def _dyn_fn(x,y,z):
 	global _params
 	return threeSp_1(x,y,z,_params)
