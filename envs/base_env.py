@@ -160,16 +160,9 @@ class ray_eco_env(gym.Env):
 			non_stationary=self.config.get('non_stationary', None),
 			non_stationarities=self.config.get('non_stationarities', {}),
 		)
-		# super().__init__(self.env)
 
 		self.observation_space = self.env.observation_space
 		self.action_space = self.env.action_space
-		# print(f""" env observation space =
-
-		# 	{self.observation_space}
-
-		# 	""")
-		# self.action_space = self.env.action_space
 
 	def reset(self):
 		return self.env.reset()
