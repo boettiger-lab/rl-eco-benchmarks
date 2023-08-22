@@ -163,7 +163,7 @@ class ray_eco_env(gym.Env):
 			metadata=self.config.get('metadata', MissingEntry('metadata')),
 			dyn_fn=self.config.get('dyn_fn', MissingEntry('dyn_fn')),
 			dyn_params=self.config.get('dyn_params', {}),
-			non_stationary=self.config.get('non_stationary', None),
+			non_stationary=self.config.get('non_stationary', False),
 			non_stationarities=self.config.get('non_stationarities', {}),
 		)
 
