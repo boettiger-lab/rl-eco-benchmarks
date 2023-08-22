@@ -2,6 +2,7 @@ import gymnasium as gym
 import numpy as np
 import warnings
 
+from dataclasses import dataclass
 from gymnasium import spaces
 from typing import Callable, Dict, Union
 
@@ -147,6 +148,11 @@ class eco_env(gym.Env):
 		""" from action-space [-1,1] to effort-space [0,1]. """
 		return (action + 1) / 2
 
+@dataclass
+class MissingEntry:
+	entry_name: str
+
+
 class ray_eco_env(gym.Env):
 	""" formatted to fit ray RLLib's most natural syntax for training. """
 
@@ -154,8 +160,8 @@ class ray_eco_env(gym.Env):
 		super(ray_eco_env, self).__init__()
 		self.config = config
 		self.env = eco_env(
-			metadata=self.config.get('metadata', self.needed_cfg('metadata')),
-			dyn_fn=self.config.get('dyn_fn', self.needed_cfg('dyn_fn')),
+			metadata=self.config.get('metadata', MissingEntry('metadata')),
+			dyn_fn=self.config.get('dyn_fn', MissingEntry('dyn_fn')),
 			dyn_params=self.config.get('dyn_params', {}),
 			non_stationary=self.config.get('non_stationary', None),
 			non_stationarities=self.config.get('non_stationarities', {}),
