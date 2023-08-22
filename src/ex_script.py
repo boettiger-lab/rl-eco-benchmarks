@@ -226,6 +226,12 @@ _config_ray = {
 	# 'non_stationarities': {}, # these are now not needed if they are irrelevant!
 }
 
+RT = ray_trainer(
+	algo_name="ppo", 
+	config=_config_ray,
+)
+agent = RT.train(iterations=2)
+
 _algo_set = {
 	'a2c',
 	'a3c',
@@ -240,7 +246,6 @@ _algo_set = {
 	'ars',
 }
 
-_algo = 'ppo'
 _failed_init = []
 _failed_train = []
 _init_exceptions = []
