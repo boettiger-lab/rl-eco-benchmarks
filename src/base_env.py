@@ -150,16 +150,6 @@ class eco_env(gym.Env):
 		""" from action-space [-1,1] to effort-space [0,1]. """
 		return (action + 1) / 2
 
-	#
-	# diagnoses
-
-	def needed_cfg(self, dict_entry: str):
-		raise Warning(f"ray_eco_env.config dict requires a '{dict_entry}' entry.")
-
-@dataclass
-class MissingEntry:
-	entry_name: str
-
 
 class ray_eco_env(gym.Env):
 	""" formatted to fit ray RLLib's most natural syntax for training. """
