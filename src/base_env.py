@@ -177,7 +177,7 @@ class ray_eco_env(gym.Env):
 		return self.env.step(action)
 
 	def check_config(self):
-		assert self.config.has_entry('metadata'), "ray_eco_env.config dict requires a 'metadata' entry."
-		assert self.config.has_entry('dyn_fn'), "ray_eco_env.config dict requires a 'dyn_fn' entry."
+		assert ('metadata' in self.config), "ray_eco_env.config dict requires a 'metadata' entry."
+		assert ('dyn_fn' in self.config), "ray_eco_env.config dict requires a 'dyn_fn' entry."
 
 
