@@ -25,6 +25,8 @@ class eco_env(gym.Env):
 		non_stationarities: Dict[str, Callable] = {},
 		):
 
+
+
 		self.metadata = envMetadata(
 			**metadata, 
 			)
@@ -148,6 +150,12 @@ class eco_env(gym.Env):
 		""" from action-space [-1,1] to effort-space [0,1]. """
 		return (action + 1) / 2
 
+	#
+	# diagnoses
+
+	def needed_cfg(self, dict_entry: str):
+		raise Warning(f"ray_eco_env.config dict requires a '{dict_entry}' entry.")
+
 @dataclass
 class MissingEntry:
 	entry_name: str
@@ -158,10 +166,12 @@ class ray_eco_env(gym.Env):
 
 	def __init__(self, config):
 		super(ray_eco_env, self).__init__()
+
 		self.config = config
+		self.check_config()
 		self.env = eco_env(
-			metadata=self.config.get('metadata', MissingEntry('metadata')),
-			dyn_fn=self.config.get('dyn_fn', MissingEntry('dyn_fn')),
+			metadata=self.config['metadata'],
+			dyn_fn=self.config.['dyn_fn'],
 			dyn_params=self.config.get('dyn_params', {}),
 			non_stationary=self.config.get('non_stationary', False),
 			non_stationarities=self.config.get('non_stationarities', {}),
@@ -176,7 +186,8 @@ class ray_eco_env(gym.Env):
 	def step(self, action):
 		return self.env.step(action)
 
-	# helpers
+	def check_config(self):
+		assert self.config.has_entry('metadata'), "ray_eco_env.config dict requires a 'metadata' entry."
+		assert self.config.has_entry('dyn_fn'), "ray_eco_env.config dict requires a 'dyn_fn' entry."
 
-	def needed_cfg(self, dict_entry: str):
-		raise Warning(f"ray_eco_env.config dict requires a '{dict_entry}' entry.")
+
