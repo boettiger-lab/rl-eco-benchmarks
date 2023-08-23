@@ -333,7 +333,7 @@ for r in range(5):
 
 print(
 	"\n\n"+
-	f"evaluation reward = {np.mean(rewards)} +/- {np.std(rewards)}"+
+	f"evaluation reward = {np.mean(rewards):.3f} +/- {np.std(rewards):.3f}"+
 	"\n\n"
 	)
 
