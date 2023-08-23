@@ -260,18 +260,24 @@ ALGO_SET = {
 
 def workflow(algo: str):
 
+	print(f"Working on {algo} now...")
+
 	####################################################################
 	########################### TRAINING ###############################
 	####################################################################
+	try:
+		RT = ray_trainer(
+			algo_name=algo, 
+			config={
+				'metadata': metadata,
+				'dyn_fn': dyn_fn,
+			},
+		)
+		agent = RT.train(iterations=1)
 
-	RT = ray_trainer(
-		algo_name=algo, 
-		config={
-			'metadata': metadata,
-			'dyn_fn': dyn_fn,
-		},
-	)
-	agent = RT.train(iterations=1)
+	except:
+		print(f"failed for {algo}!"+"\n\n")
+		return {"algo": [algo], "mean_rew": "failed", "std_rew": "failed"}
 
 	print("Done training.")
 
