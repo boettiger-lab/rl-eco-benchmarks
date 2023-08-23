@@ -54,7 +54,7 @@ class ray_trainer:
 		self.algo_config = self.algo_config.resources(
 			num_gpus=torch.cuda.device_count(), 
 			num_gpus_per_worker=1,
-			num_cpus_per_worker=10,
+			num_cpus_per_worker=30,
 		)
 		# 
 		# config.env
