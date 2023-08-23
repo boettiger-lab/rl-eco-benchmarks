@@ -30,13 +30,20 @@ def esc_filter(act, *, population):
 	else: #population > esc and population != 0
 		return (population - esc) / population # effort, not total harvest!
 
+def absolute_filter(act, *, population):
+	""" returns (act+1) / (2 * population), so that act is actually 
+	a linear transform of the total harvest: 
+	
+	i.e. the env collects a harvest of 
 
-def total_harvest(actions, bound=2, filter_shape = None):
-	shape = filter_shape or _default_shape
+		(return val of filter) * population = (act+1)/2.
 
-	return lambda harvested_pops: np.clip(
-		np.float32([shape(act) for act in actions]),
-		np.zeros(len(actions)),
-		np.ones(len(actions)),
-	)
+	I'll impose some arbitrary threshold on the population size below 
+	which it returns 0, so that we don't get ridiculously large numbers
+	and possibly get noise due to multiplying/diving by large numbers.
+	"""
 
+	if population < 10 ** (-4):
+		return 0
+	else:
+		return (act+1) / (2 * population)
