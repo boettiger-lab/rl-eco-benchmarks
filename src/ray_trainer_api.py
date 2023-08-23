@@ -53,7 +53,7 @@ class ray_trainer:
 		self.cpus_to_use = os.cpu_count() // 2
 		self.algo_config = self.algo_config.resources(
 			num_gpus=torch.cuda.device_count(), 
-			num_gpus_per_worker=1,
+			num_gpus_per_worker=0.5,
 			num_cpus_per_worker=30,
 		)
 		# 
