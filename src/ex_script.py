@@ -273,7 +273,7 @@ def workflow(algo: str):
 				'dyn_fn': dyn_fn,
 			},
 		)
-		agent = RT.train(iterations=1)
+		agent = RT.train(iterations=500)
 
 	except:
 		print(f"failed for {algo}!"+"\n\n")
