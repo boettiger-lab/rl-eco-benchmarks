@@ -247,7 +247,7 @@ RT = ray_trainer(
 		'dyn_fn': dyn_fn,
 	},
 )
-agent = RT.train(iterations=10)
+agent = RT.train(iterations=1000)
 
 print("Done training.")
 
