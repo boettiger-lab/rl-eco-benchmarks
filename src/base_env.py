@@ -149,9 +149,13 @@ class eco_env(gym.Env):
 		""" inverse of pop_to_state. """
 		return (state + 1) * (self.var_bound / 2)
 
-	def action_to_effort(self, action):
-		""" from action-space [-1,1] to effort-space [0,1]. """
-		return np.float32([act_to_eff_filter(act) for act in action])
+	def action_to_effort(self, action, *args, **kwargs):
+		""" from action-space [-1,1] to effort-space [0,1]. 
+		*args: I don't think I'll implement any filter with args
+		**kwargs: 
+			escapement requires the state variable
+		"""
+		return np.float32([act_to_eff_filter(act, *args, **kwargs) for act in action])
 
 
 class ray_eco_env(gym.Env):
