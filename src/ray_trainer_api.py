@@ -49,7 +49,7 @@ class ray_trainer:
 		self.algo_config.create_env_on_local_worker = True
 		#
 		# computational resources
-		self.algo_config.num_envs_per_worker=90
+		self.algo_config.num_envs_per_worker=50
 		self.cpus_to_use = os.cpu_count() // 2
 		self.algo_config = self.algo_config.resources(
 			num_gpus=torch.cuda.device_count(), 
