@@ -183,6 +183,8 @@ print("\n\n" + "ray_trainer test:" + "\n\n")
 
 from ray_trainer_api import ray_trainer
 
+TMAX = 800
+
 metadata = {
 	#
 	# structure of ctrl problem
@@ -194,11 +196,11 @@ metadata = {
 	# about episodes
 	'init_pop': np.float32([0.5, 0.5, 0.2]),
 	'reset_sigma': 0.01,
-	'tmax': 800,
+	'tmax': TMAX,
 	#
 	# about dynamics / control
 	'extinct_thresh': 0.05,
-	'penalty_fn': lambda t: - 800 / (t+1),
+	'penalty_fn': lambda t: - 5 * TMAX / (t+1),
 	'var_bound': 4,
 	'_costs': np.zeros(2, dtype=np.float32),
 	'_prices': np.ones(2, dtype=np.float32),
@@ -239,103 +241,138 @@ def dyn_fn(X, Y, Z):
 				) - p["dH"] * Z +  p["sigma_z"] * Z  * np.random.normal()
 	])
 
+#### Algo testing:
 
-RT = ray_trainer(
-	algo_name="ppo", 
-	config={
-		'metadata': metadata,
-		'dyn_fn': dyn_fn,
-	},
-)
-agent = RT.train(iterations=10_000)
-
-print("Done training.")
-
-####################################################################
-################### EVALUATION AND PLOTTING ########################
-####################################################################
-
-#
-# helper functions
-
-def generate_episode(agent, env):
-    df = []
-    episode_reward = 0
-    observation, _ = env.reset()
-    for t in range(env.env.metadata.tmax):
-        action = agent.compute_single_action(observation, deterministic=True)
-        pop = env.env.state_to_pop(observation) # natural units
-        effort = (action + 1)/2
-        df.append([t, episode_reward, 
-                 *effort, 
-                 *pop
-                ])
-
-        observation, reward, terminated, done, info = env.step(action)
-        episode_reward += reward
-        if terminated or done:
-            break
-    df = pd.DataFrame(df, columns=['t', 'reward', 'x_cull', 'y_cull', 'x', 'y', 'z'])
-    
-    return df, episode_reward
-
-def plot_episode(df):
-    """ plots an episode df. df generated using generate_episode(). """
-    return ggplot(
-        df.melt(["t"]),
-        aes("t", "value", color="variable"),
-    ) + geom_line()
+ALGO_SET = {
+	# 'a2c',
+	'a3c',
+	'appo',
+	'ddppo',
+	'ppo',
+	# 'maml',
+	# 'apex',
+	# 'dqn',
+	'ddpg',
+	'td3',
+	'ars',
+}
 
 
-#
-# generate data
+def workflow(algo: str):
 
-print("Generating data...")
+	####################################################################
+	########################### TRAINING ###############################
+	####################################################################
 
-env = ray_eco_env(config={'metadata': metadata,'dyn_fn': dyn_fn})
-
-rewards = []
-episodes = []
-for i in range(100):
-	ep_df, ep_rew = generate_episode(agent, env)
-	rewards.append(ep_rew)
-	ep_df["rep"] = i
-	episodes.append(ep_df)
-
-episode_data = pd.concat(episodes)
-
-#
-# save data
-
-print("Saving data...")
-
-data_dir = os.path.join("..", "data")
-os.makedirs(data_dir, exist_ok=True)
-episode_data.to_csv(
-	os.path.join(data_dir, "episodes.csv")
+	RT = ray_trainer(
+		algo_name=algo, 
+		config={
+			'metadata': metadata,
+			'dyn_fn': dyn_fn,
+		},
 	)
+	agent = RT.train(iterations=1)
 
-#
-# plot data
+	print("Done training.")
 
-print("Generating plots...")
+	####################################################################
+	################### EVALUATION AND PLOTTING ########################
+	####################################################################
 
-for r in range(5):
-	plot = plot_episode(
-		episode_data.loc[episode_data.rep == r][
-			['t', 'x_cull', 'y_cull', 'x', 'y', 'z']
-		]
+	#
+	# helper functions
+
+	def generate_episode(agent, env):
+		df = []
+		episode_reward = 0
+		observation, _ = env.reset()
+		for t in range(env.env.metadata.tmax):
+			action = agent.compute_single_action(observation, deterministic=True)
+			pop = env.env.state_to_pop(observation) # natural units
+			effort = (action + 1)/2
+			df.append([
+				t, 
+				episode_reward, 
+				*effort, 
+				*pop
+				])
+			#
+			observation, reward, terminated, done, info = env.step(action)
+			episode_reward += reward
+			if terminated or done:
+				break
+		df = pd.DataFrame(df, columns=['t', 'reward', 'x_cull', 'y_cull', 'x', 'y', 'z'])
+		#
+		return df, episode_reward
+
+	def plot_episode(df):
+	    """ plots an episode df. df generated using generate_episode(). """
+	    return ggplot(
+	        df.melt(["t"]),
+	        aes("t", "value", color="variable"),
+	    ) + geom_line()
+
+
+	#
+	# generate data
+
+	print("Generating data...")
+
+	env = ray_eco_env(config={'metadata': metadata,'dyn_fn': dyn_fn})
+
+	rewards = []
+	episodes = []
+	for i in range(100):
+		ep_df, ep_rew = generate_episode(agent, env)
+		rewards.append(ep_rew)
+		ep_df["rep"] = i
+		episodes.append(ep_df)
+
+	episode_data = pd.concat(episodes)
+
+	#
+	# save data
+
+	print("Saving data...")
+
+	data_dir = os.path.join("..", "data", algo)
+	os.makedirs(data_dir, exist_ok=True)
+	episode_data.to_csv(
+		os.path.join(data_dir, "episodes.csv")
 		)
-	plot.save(
-		os.path.join(data_dir, f"ep_{r}.png")
+
+	#
+	# plot data
+
+	print("Generating plots...")
+
+	for r in range(5):
+		plot = plot_episode(
+			episode_data.loc[episode_data.rep == r][
+				['t', 'x_cull', 'y_cull', 'x', 'y', 'z']
+			]
+			)
+		plot.save(
+			os.path.join(data_dir, f"ep_{r}.png")
+			)
+
+	algo_eval = {"algo": [algo], "mean_rew": np.mean(rewards), "std_rew": np.std(rewards)}
+
+	print(
+		"\n\n"+
+		f"{algo} evaluation reward = {np.mean(rewards):.3f} +/- {np.std(rewards):.3f}"+
+		"\n\n"
 		)
 
+	return algo_eval
 
-print(
-	"\n\n"+
-	f"evaluation reward = {np.mean(rewards):.3f} +/- {np.std(rewards):.3f}"+
-	"\n\n"
-	)
+evals_ = []
+for algo in ALGO_SET:
+	algo_eval = workflow(algo)
+	evals_.append(pd.DataFrame(algo_eval))
+
+evals_df = pd.concat(evals_)
+print(evals_df.head(7))
 
 #### Algo testing:
 
