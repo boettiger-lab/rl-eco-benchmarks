@@ -321,7 +321,11 @@ episode_data.to_csv(
 print("Generating plots...")
 
 for r in range(5):
-	plot = plot_episode(episode_data.loc[episode_data.rep == r])
+	plot = plot_episode(
+		episode_data.loc[episode_data.rep == r][
+			['x_cull', 'y_cull', 'x', 'y', 'z']
+		]
+		)
 	plot.save(
 		os.path.join(data_dir, f"ep_{r}.png")
 		)
