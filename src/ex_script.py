@@ -247,7 +247,7 @@ RT = ray_trainer(
 		'dyn_fn': dyn_fn,
 	},
 )
-agent = RT.train(iterations=20)
+agent = RT.train(iterations=10)
 
 print("Done training.")
 
@@ -323,7 +323,7 @@ print("Generating plots...")
 for r in range(5):
 	plot = plot_episode(
 		episode_data.loc[episode_data.rep == r][
-			['x_cull', 'y_cull', 'x', 'y', 'z']
+			['t', 'x_cull', 'y_cull', 'x', 'y', 'z']
 		]
 		)
 	plot.save(
