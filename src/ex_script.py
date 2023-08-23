@@ -310,7 +310,7 @@ episode_data = pd.concat(episodes)
 print("Saving data...")
 
 data_dir = os.path.join("..", "data")
-os.makedirs(data_dir, exists_ok=True)
+os.makedirs(data_dir, exist_ok=True)
 episode_data.to_csv(
 	os.path.join(data_dir, "episodes.csv")
 	)
