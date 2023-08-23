@@ -23,6 +23,7 @@ class eco_env(gym.Env):
 		dyn_params: Dict[str, Union[int, float, np.float32, np.float64]] = {}, 
 		non_stationary: bool = False, 
 		non_stationarities: Dict[str, Callable] = {},
+		act_to_eff_filter: Callable = lambda act: (act+1)/2,
 		):
 
 
@@ -30,6 +31,8 @@ class eco_env(gym.Env):
 		self.metadata = envMetadata(
 			**metadata, 
 			)
+
+		self.act_to_eff_filter = act_to_eff_filter
 
 		self.env_dyn_obj = dynamical_system(
 			n=self.metadata.n_sp,
@@ -148,7 +151,7 @@ class eco_env(gym.Env):
 
 	def action_to_effort(self, action):
 		""" from action-space [-1,1] to effort-space [0,1]. """
-		return (action + 1) / 2
+		return np.float32([act_to_eff_filter(act) for act in action])
 
 
 class ray_eco_env(gym.Env):
