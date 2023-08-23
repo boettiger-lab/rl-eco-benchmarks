@@ -309,10 +309,10 @@ episode_data = pd.concat(episodes)
 
 print("Saving data...")
 
-data_dir = os.join("..", "data")
+data_dir = os.path.join("..", "data")
 os.makedirs(data_dir, exists_ok=True)
 episode_data.to_csv(
-	os.join(data_dir, "episodes.csv")
+	os.path.join(data_dir, "episodes.csv")
 	)
 
 #
@@ -323,7 +323,7 @@ print("Generating plots...")
 for r in range(5):
 	plot = plot_episode(episode_data.loc[episode_data.rep == r])
 	plot.save(
-		os.join(data_dir, f"ep_{r}.png")
+		os.path.join(data_dir, f"ep_{r}.png")
 		)
 
 
