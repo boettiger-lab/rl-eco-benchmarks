@@ -1,40 +1,51 @@
 import numpy as np
 
 from scipy.special import expit # inverse logit function
+from math import sin, sqrt, pi
 
 # 
 # take actions as input, generate function which maps pops to total harvests
 # 
 
-def _default_shape(act):
+def default_filter(act):
 	"""linear -1,1 to 0,1"""
 	return (act+1)/2
 
-def inverse_logit_filter(actions):
-	efforts = np.float32([expit(act) for act in actions])
-	return lambda harvested_pops: np.multiply(efforts, harvested_pops)
+def inverse_logit_filter(act):
+	return expit(act)
 
-def escapement_filter(actions, filter_shape = None):
+def quadratic_filter(act):
+	return ( (act+1)/2 ) ** 2
 
-	def base_esc(esc, X):
-		""" single species """
-		if X<esc:
-			return 0
-		else:
-			return X-esc
+def sqrt_filter(act):
+	return sqrt( (act+1)/2 )
 
-	shape = filter_shape or _default_shape
+def esc_filter(act, *, population):
+	""" * makes population a keyword arg. """
+	#
+	esc = (act+1)/2
+	#
+	if (population == 0) or (population <= esc):
+		return 0
+	else: #population > esc and population != 0
+		return (population - esc) / population # effort, not total harvest!
 
-	escapements = np.float32([shape(act) for act in actions])
+def sin_filter(act):
+	return sin( act * pi / 2 )
 
-	return lambda harvested_pops: np.float32([base_esc(escapements[i], pop) for i, pop in enumerate(harvested_pops)])
+def absolute_filter(act, *, population):
+	""" returns (act+1) / (2 * population), so that act is actually 
+	a linear transform of the total harvest: 
+	
+	i.e. the env collects a harvest of 
 
-def total_harvest(actions, bound=2, filter_shape = None):
-	shape = filter_shape or _default_shape
+		(return val of filter) * population = (act+1)/2.
 
-	return lambda harvested_pops: np.clip(
-		np.float32([shape(act) for act in actions]),
-		np.zeros(len(actions)),
-		np.ones(len(actions)),
-	)
-
+	I'll impose some arbitrary threshold on the population size below 
+	which it returns 0, so that we don't get ridiculously large numbers
+	and possibly get noise due to multiplying/diving by large numbers.
+	"""
+	if population < 10 ** (-4):
+		return 0
+	else:
+		return (act+1) / (2 * population)
