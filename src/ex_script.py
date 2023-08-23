@@ -326,6 +326,13 @@ for r in range(5):
 		os.join(data_dir, f"ep_{r}.png")
 		)
 
+
+print(
+	"\n\n"+
+	f"evaluation reward = {np.mean(rewards)} +/- {np.std(rewards)}"+
+	"\n\n"
+	)
+
 #### Algo testing:
 
 # _algo_set = {
