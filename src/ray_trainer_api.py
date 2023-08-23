@@ -43,7 +43,8 @@ class ray_trainer:
 		self.algo_config = self._make_config()
 		#
 		# boiler plate algo settings
-		self.algo_config.training(vf_clip_param = 50.0)
+		if algo_name == "ppo":
+			self.algo_config.training(vf_clip_param = 50.0)
 		self.algo_config.disable_env_checking = True # otherwise it complains about the env
 		self.algo_config.framework_str="torch"
 		self.algo_config.create_env_on_local_worker = True
