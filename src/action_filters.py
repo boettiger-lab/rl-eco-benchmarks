@@ -1,6 +1,7 @@
 import numpy as np
 
 from scipy.special import expit # inverse logit function
+from math import sin, sqrt, pi
 
 # 
 # take actions as input, generate function which maps pops to total harvests
@@ -17,7 +18,6 @@ def quadratic_filter(act):
 	return ( (act+1)/2 ) ** 2
 
 def sqrt_filter(act):
-	from math import sqrt
 	return sqrt( (act+1)/2 )
 
 def esc_filter(act, *, population):
@@ -29,6 +29,9 @@ def esc_filter(act, *, population):
 		return 0
 	else: #population > esc and population != 0
 		return (population - esc) / population # effort, not total harvest!
+
+def sin_filter(act):
+	return sin( act * pi / 2 )
 
 def absolute_filter(act, *, population):
 	""" returns (act+1) / (2 * population), so that act is actually 
@@ -42,7 +45,6 @@ def absolute_filter(act, *, population):
 	which it returns 0, so that we don't get ridiculously large numbers
 	and possibly get noise due to multiplying/diving by large numbers.
 	"""
-
 	if population < 10 ** (-4):
 		return 0
 	else:
