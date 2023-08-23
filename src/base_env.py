@@ -155,7 +155,7 @@ class eco_env(gym.Env):
 		**kwargs: 
 			escapement requires the state variable
 		"""
-		return np.float32([act_to_eff_filter(act, *args, **kwargs) for act in action])
+		return np.float32([self.act_to_eff_filter(act, *args, **kwargs) for act in action])
 
 
 class ray_eco_env(gym.Env):
