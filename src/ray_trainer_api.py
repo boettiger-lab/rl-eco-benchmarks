@@ -45,10 +45,17 @@ class ray_trainer:
 		# boiler plate algo settings
 		self.algo_config.training(vf_clip_param = 50.0)
 		self.algo_config.disable_env_checking = True # otherwise it complains about the env
-		self.algo_config.num_envs_per_worker=50
-		self.algo_config = self.algo_config.resources(num_gpus=torch.cuda.device_count(), num_cpus=(os.cpu_count() // 2))
 		self.algo_config.framework_str="torch"
 		self.algo_config.create_env_on_local_worker = True
+		#
+		# computational resources
+		self.algo_config.num_envs_per_worker=50
+		self.cpus_to_use = os.cpu_count() // 2
+		self.algo_config = self.algo_config.resources(
+			num_gpus=torch.cuda.device_count(), 
+			num_gpus_per_worker=0.5,
+			num_cpus_per_worker=16,
+		)
 		# 
 		# config.env
 		self.algo_config.env=env_registration_name
