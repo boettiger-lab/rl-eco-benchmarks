@@ -239,17 +239,13 @@ def dyn_fn(X, Y, Z):
 				) - p["dH"] * Z +  p["sigma_z"] * Z  * np.random.normal()
 	])
 
-_config_ray = {
-	'metadata': _metadata,
-	'dyn_fn': _dyn_fn,
-}
 
 RT = ray_trainer(
 	algo_name="ppo", 
 	config={
-	'metadata': metadata,
-	'dyn_fn': dyn_fn,
-},
+		'metadata': metadata,
+		'dyn_fn': dyn_fn,
+	},
 )
 agent = RT.train(iterations=20)
 
