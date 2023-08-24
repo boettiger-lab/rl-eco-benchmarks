@@ -99,7 +99,7 @@ class eco_env(gym.Env):
 		#
 		# check for early end
 		terminated = False
-		if any(self.pop < self.metadata.extinct_thresh):
+		if any(self.pop < self.metadata.extinct_thresh) or (self.timestep >= self.metadata.tmax):
 			reward += self.metadata.penalty_fn(self.timestep)
 			terminated = True
 		#
@@ -181,6 +181,7 @@ class ray_eco_env(gym.Env):
 
 		self.observation_space = self.env.observation_space
 		self.action_space = self.env.action_space
+		self.metadata = self.env.metadata
 
 	def reset(self):
 		return self.env.reset()
@@ -188,9 +189,6 @@ class ray_eco_env(gym.Env):
 	def step(self, action):
 		return self.env.step(action)
 
-	@property
-	def metadata(self):
-		return self.env.metadata
 	#
 	# checks
 
