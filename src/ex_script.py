@@ -356,7 +356,7 @@ def workflow(algo: str):
 	for r in range(5):
 		plot = plot_episode(
 			episode_data.loc[episode_data.rep == r][
-				['t', 'x_cull', 'y_cull', 'x', 'y', 'z']
+				['t', 'y_cull', 'z_cull', 'x', 'y', 'z']
 			]
 			)
 		plot.save(
