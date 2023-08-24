@@ -230,11 +230,11 @@ def dyn_fn(X, Y, Z):
 	p = params
 	#
 	return np.float32([
-		X + (p["r_x"] * X * (1 - (X + p["tau_xy"] * Y) / p["K"])
+		X + (p["r_x"] * X * (1 - X / p["K"])
             - (1 - p["D"]) * p["beta"] * Z * (X**2) / (p["v0"]**2 + X**2)
             + p["sigma_x"] * X * np.random.normal()
             ),
-		Y + (p["r_y"] * Y * (1 - (Y + p["tau_yx"]* X ) / p["K"] )
+		Y + (p["r_y"] * Y * (1 - Y / p["K"] )
 				- (1 + p["D"]) * p["beta"] * Z * (Y**2) / (p["v0"]**2 + Y**2)
 				+ p["sigma_y"] * Y * np.random.normal()
 				),
