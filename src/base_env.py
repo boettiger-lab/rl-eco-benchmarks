@@ -87,7 +87,7 @@ class eco_env(gym.Env):
 		# implement action effects
 		reward = self.utility_fn(effort, self.pop)
 		effects, self.pop = self.perform_action(self.pop, effort)
-		print(f"population: {self.pop}")
+		# print(f"population: {self.pop}")
 		#
 		# natural dynamics
 		self.pop = self.env_dyn_obj.dyn_fn(
@@ -172,8 +172,8 @@ class ray_eco_env(gym.Env):
 		self.check_config()
 		self.env = eco_env(
 			metadata=self.config['metadata'],
-			dyn_fn=self.config['dyn_fn'],
 			utility_fn=self.config['dyn_fn'],
+			dyn_fn=self.config['dyn_fn'],
 			dyn_params=self.config.get('dyn_params', {}),
 			non_stationary=self.config.get('non_stationary', False),
 			non_stationarities=self.config.get('non_stationarities', {}),
