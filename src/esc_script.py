@@ -80,12 +80,14 @@ env_config = {
 
 env = ray_eco_env(config=env_config)
 
-EscObj = escapement_policy(
+EscObj_handle = escapement_policy.remote(
 	n_sp=env.metadata.n_sp,
 	n_act=env.metadata.n_act,
 	controlled_sp=env.metadata.controlled_species,
 	max_esc=env.metadata.var_bound,
 	)
 
-EscObj.optimize(env, verbose=True)
+best_esc_fn_ref = EscObj_handle.optimize.remote(env, verbose=True)
+
+best_esc_fn = ray.get(object_ref)
 

@@ -3,6 +3,7 @@ from typing import List
 
 import ray
 
+@ray.remote
 class escapement_policy:
 
 	def __init__(
@@ -120,4 +121,6 @@ class escapement_policy:
 
 		self.optimized_esc = best_dict['esc']
 		self.optimized_policy_fn = self.policy_factory(self.optimized_esc)
+
+		return self.optimized_policy_fn
 
