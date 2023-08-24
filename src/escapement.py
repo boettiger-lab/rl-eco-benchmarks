@@ -20,6 +20,7 @@ class escapement_policy:
 		else:
 			self.controlled_sp=controlled_sp
 		self.max_esc=max_esc
+		self.numeric_threshold = numeric_threshold
 		#
 		# to be overwritten later:
 		self.optimized_esc = None
