@@ -219,7 +219,7 @@ params = {
 	"tau_yx": np.float32(0),
 	"tau_xy": np.float32(0),
 	"alpha": np.float32(1), 
-	"dH": np.float32(0.01),
+	"dH": np.float32(0.03),
 	"sigma_x": np.float32(0.05),
 	"sigma_y": np.float32(0.05),
 	"sigma_z": np.float32(0.05),
