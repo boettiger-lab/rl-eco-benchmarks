@@ -225,7 +225,7 @@ params = {
 	"D": np.float32(0.),
 	"tau_yx": np.float32(0),
 	"tau_xy": np.float32(0),
-	"alpha": np.float32(0.5), 
+	"alpha": np.float32(0.7), 
 	"dH": np.float32(0.01),
 	"sigma_x": np.float32(0.05),
 	"sigma_y": np.float32(0.05),
@@ -263,6 +263,7 @@ with open(os.path.join("..", "data", "params.json"), 'w') as params_file:
 	json.dump(
 		{
 		'params': {key: str(value) for key, value in params.items()}, 
+		'metadata': {key: str(value) for key, value in metadata.items()}, 
 		'iterations': iterations,
 		}, 
 		params_file)
