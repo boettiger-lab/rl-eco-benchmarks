@@ -280,7 +280,7 @@ def workflow(algo: str):
 			algo_name=algo, 
 			config=env_config,
 		)
-		agent = RT.train(iterations=30)
+		agent = RT.train(iterations=5)
 
 	except Exception as e:
 		print("\n\n"+f"#################### failed for {algo}! #################### "+"\n\n")
