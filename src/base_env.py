@@ -125,18 +125,19 @@ class eco_env(gym.Env):
 
 	def extract_harvest(self, pop, effort):
 		effort_dict = dict(zip(self.metadata.harvested_sp, effort)) # {sp_index: harvest_effort}
-		harvest_arr = np.float32([pop[i] * effort_dict[i] for i in self.metadata.harvested_sp])
+		harvests = {i: pop[i] * effort_dict[i] for i in self.metadata.harvested_sp}
+		# harvest_arr = np.float32([pop[i] * effort_dict[i] for i in self.metadata.harvested_sp])
 		new_pop = np.clip(
 			np.float32(
 				[
-					pop[i] - harvest_arr[i] if i in self.metadata.harvested_sp else pop[i]
+					pop[i] - harvests[i] if i in self.metadata.harvested_sp else pop[i]
 					for i in range(self.n_sp)
 				]
 			),
 			self.n_sp * [0],
 			self.n_sp * [self.var_bound]
 		)
-		return harvest_arr, new_pop
+		return harvests, new_pop #harvest_arr, new_pop
 
 	def compute_profit(self, effort_arr, harvest_arr):
 		return sum(harvest_arr * self.metadata.prices - effort_arr * self.metadata.costs)
