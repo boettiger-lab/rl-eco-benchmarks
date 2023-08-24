@@ -137,7 +137,7 @@ class eco_env(gym.Env):
 			self.n_sp * [0],
 			self.n_sp * [self.var_bound]
 		)
-		return harvests, new_pop #harvest_arr, new_pop
+		return list(harvests.values()), new_pop #harvest_arr, new_pop
 
 	def compute_profit(self, effort_arr, harvest_arr):
 		return sum(harvest_arr * self.metadata.prices - effort_arr * self.metadata.costs)
