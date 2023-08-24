@@ -277,7 +277,8 @@ for t in range(TMAX):
 	observation, reward, terminated, done, info = env.step([0] * metadata['n_act'])
 	#
 	# notice that for some utility-functions reward can be non-zero even if action is zero
-	unctrl_data.append([t, *pop, reward])
+	episode_reward += reward
+	unctrl_data.append([t, *pop, episode_reward])
 
 	if done or terminated:
 		break
@@ -285,7 +286,7 @@ for t in range(TMAX):
 unctrl_df = pd.DataFrame(unctrl_data, columns = ["t", "X", "Y", "Z", "reward"])
 
 unctrl_plt = ggplot(
-		unctrl_df.melt(["t"]),
+		unctrl_df[["t", "X", "Y", "Z"]].melt(["t"]),
 		aes("t", "value", color="variable"),
 		) + geom_line()
 
@@ -293,6 +294,7 @@ unctrl_plt.save(
 			os.path.join("..", "data", f"unctrl.png")
 			)
 
+print(f"uncontrolled reward = {episode_reward}")
 
 
 
