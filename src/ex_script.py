@@ -190,6 +190,11 @@ TMAX = 800
 def utility_fn(effort, pop, cull_cost=0.001):
 	return 0.5 * pop[0] - cull_cost * sum(effort)
 
+def penalty_fn(t):
+	""" penalty for ending episode at t<TMAX steps. """
+	global TMAX
+	return - 5 * TMAX / (t+1)
+
 metadata = {
 	#
 	# structure of ctrl problem
@@ -255,7 +260,12 @@ env_config = {
 iterations = 50
 
 with open(os.path.join("..", "data", "params.json"), 'w') as params_file:
-	json.dump({'metadata': metadata, 'params': params, 'iterations': iterations}, params_file)
+	json.dump(
+		{
+		'params': {key: str(value) for key, value in params.items()}, 
+		'iterations': iterations,
+		}, 
+		params_file)
 
 #### Algo testing:
 
