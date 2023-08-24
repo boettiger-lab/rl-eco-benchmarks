@@ -87,6 +87,7 @@ class eco_env(gym.Env):
 		# implement action effects
 		reward = self.utility_fn(effort, self.pop)
 		effects, self.pop = self.perform_action(self.pop, effort)
+		print(f"population: {self.pop}")
 		#
 		# natural dynamics
 		self.pop = self.env_dyn_obj.dyn_fn(
