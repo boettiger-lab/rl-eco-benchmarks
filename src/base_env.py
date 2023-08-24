@@ -141,7 +141,7 @@ class eco_env(gym.Env):
 		return list(effects.values()), new_pop #harvest_arr, new_pop
 
 	def compute_profit(self, effort_arr, harvest_arr):
-		return raise Warning("compute_profit is deprecated!")
+		raise Warning("compute_profit is deprecated!")
 
 	def pop_to_state(self, pop):
 		""" from pop-space [0, self.var_bound] to  state-space [-1, 1]. """
