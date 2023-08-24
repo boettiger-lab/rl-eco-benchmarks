@@ -191,7 +191,7 @@ metadata = {
 	'name': 'minicourse_challenge', 
 	'n_sp':  3,
 	'n_act': 2,
-	'_harvested_sp': [0,1],
+	'_harvested_sp': [1,2],
 	#
 	# about episodes
 	'init_pop': np.float32([0.5, 0.5, 0.2]),
@@ -260,7 +260,7 @@ ALGO_SET = {
 
 def workflow(algo: str):
 
-	print(f"Working on {algo} now...")
+	print(f"Working on {algo} now...\n\n")
 
 	####################################################################
 	########################### TRAINING ###############################
@@ -275,8 +275,9 @@ def workflow(algo: str):
 		)
 		agent = RT.train(iterations=500)
 
-	except:
-		print(f"failed for {algo}!"+"\n\n")
+	except Exception as e:
+		print("\n\n"+f"#################### failed for {algo}! #################### "+"\n\n")
+		print(str(e))
 		return {"algo": [algo], "mean_rew": "failed", "std_rew": "failed"}
 
 	print("Done training.")
@@ -307,7 +308,7 @@ def workflow(algo: str):
 			episode_reward += reward
 			if terminated or done:
 				break
-		df = pd.DataFrame(df, columns=['t', 'reward', 'x_cull', 'y_cull', 'x', 'y', 'z'])
+		df = pd.DataFrame(df, columns=['t', 'reward', 'y_cull', 'z_cull', 'x', 'y', 'z'])
 		#
 		return df, episode_reward
 
