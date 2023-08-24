@@ -96,7 +96,7 @@ class envMetadata(base_metadata):
 		#
 		assert self.n_act <= self.n_sp, "n_act must be at most n_sp"
 		#
-		assert self.n_act == len(self.harvested_sp), "harvested_sp does not match n_act"
+		assert self.n_act == len(self.ctrl_species), "harvested_sp does not match n_act"
 		#
 		assert self.n_sp == len(self.init_pop), "init pop does not match n_sp"
 
