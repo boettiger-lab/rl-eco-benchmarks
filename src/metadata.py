@@ -56,7 +56,7 @@ class envMetadata(base_metadata):
 	name: Optional[str] = "test_env"
 	n_sp: Optional[int] = 3
 	n_act: Optional[int] = 3
-	_harvested_sp: Optional[Union[List[int], None]] = None 
+	controlled_species: Optional[Union[List[int], None]] = None 
 	#
 	# about episodes
 	init_pop: np.ndarray = np.float32([0.5, 0.5, 0.5])
@@ -67,26 +67,26 @@ class envMetadata(base_metadata):
 	#
 	# about dynamics / control
 	var_bound: Optional[float] = 2.
-	_costs: Optional[Union[np.ndarray, None]] = None 
-	_prices: Optional[Union[np.ndarray, None]] = None
+	# _costs: Optional[Union[np.ndarray, None]] = None 
+	# _prices: Optional[Union[np.ndarray, None]] = None
 
 	def __post_init__(self):
 		# harvested default:
 		if self._harvested_sp is None:
-			object.__setattr__(self, 'harvested_sp', [i for i in range(self.n_act)])
+			object.__setattr__(self, 'ctrl_species', [i for i in range(self.n_act)])
 		else:
-			object.__setattr__(self, 'harvested_sp', self._harvested_sp.copy())
+			object.__setattr__(self, 'ctrl_species', self.controlled_species.copy())
 
-		# economical defaults:
-		if self._costs is None:
-			object.__setattr__(self, 'costs', np.zeros(self.n_act, dtype=np.float32))
-		else:
-			object.__setattr__(self, 'costs', self._costs.copy())
-		#
-		if self._prices is None:
-			object.__setattr__(self, 'prices', np.ones(self.n_act, dtype=np.float32))
-		else:
-			object.__setattr__(self, 'prices', self._prices.copy())
+		# # economical defaults:
+		# if self._costs is None:
+		# 	object.__setattr__(self, 'costs', np.zeros(self.n_act, dtype=np.float32))
+		# else:
+		# 	object.__setattr__(self, 'costs', self._costs.copy())
+		# #
+		# if self._prices is None:
+		# 	object.__setattr__(self, 'prices', np.ones(self.n_act, dtype=np.float32))
+		# else:
+		# 	object.__setattr__(self, 'prices', self._prices.copy())
 
 		self.run_checks()
 
@@ -97,8 +97,6 @@ class envMetadata(base_metadata):
 		assert self.n_act <= self.n_sp, "n_act must be at most n_sp"
 		#
 		assert self.n_act == len(self.harvested_sp), "harvested_sp does not match n_act"
-		assert self.n_act == len(self.costs), "costs list does not match n_act"
-		assert self.n_act == len(self.prices), "relative_prices list does not match n_act"
 		#
 		assert self.n_sp == len(self.init_pop), "init pop does not match n_sp"
 

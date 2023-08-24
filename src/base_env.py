@@ -24,15 +24,16 @@ class eco_env(gym.Env):
 		non_stationary: bool = False, 
 		non_stationarities: Dict[str, Callable] = {},
 		act_to_eff_filter: Callable = lambda act: (act+1)/2,
+		utility_fn: Callable = lambda effort, pop, *args, **kwargs: sum(effort * pop)
 		):
-
-
 
 		self.metadata = envMetadata(
 			**metadata, 
 			)
 
 		self.act_to_eff_filter = act_to_eff_filter
+
+		self.utility_fn = utility_fn
 
 		self.env_dyn_obj = dynamical_system(
 			n=self.metadata.n_sp,
@@ -82,9 +83,9 @@ class eco_env(gym.Env):
 		action = np.clip(action, self.n_act * [-1], self.n_act * [1])
 		effort = self.action_to_effort(action)
 		#
-		# implement harvests
-		harvest_arr, self.pop = self.extract_harvest(self.pop, effort)
-		reward = self.compute_profit(effort, harvest_arr)
+		# implement action effects
+		reward = self.utility_fn(self.pop, effort)
+		effects, self.pop = self.perform_action(self.pop, effort)
 		#
 		# natural dynamics
 		self.pop = self.env_dyn_obj.dyn_fn(
@@ -117,30 +118,30 @@ class eco_env(gym.Env):
 		self.pop = self.state_to_pop(self.state)
 		#
 		# info
-		info = {"actions": action, "harvests": harvest_arr, "reward": reward, }
+		info = {"actions": action, "effects": effects, "reward": reward, }
 		return self.state, reward, terminated, False, info
 
 	# 
 	# extra methods
 
-	def extract_harvest(self, pop, effort):
-		effort_dict = dict(zip(self.metadata.harvested_sp, effort)) # {sp_index: harvest_effort}
-		harvests = {i: pop[i] * effort_dict[i] for i in self.metadata.harvested_sp}
+	def perform_action(self, pop, effort):
+		effort_dict = dict(zip(self.metadata.ctrl_species, effort)) # {sp_index: harvest_effort}
+		effects = {i: pop[i] * effort_dict[i] for i in self.metadata.ctrl_species}
 		# harvest_arr = np.float32([pop[i] * effort_dict[i] for i in self.metadata.harvested_sp])
 		new_pop = np.clip(
 			np.float32(
 				[
-					pop[i] - harvests[i] if i in self.metadata.harvested_sp else pop[i]
+					pop[i] - effects[i] if i in self.metadata.ctrl_species else pop[i]
 					for i in range(self.n_sp)
 				]
 			),
 			self.n_sp * [0],
 			self.n_sp * [self.var_bound]
 		)
-		return list(harvests.values()), new_pop #harvest_arr, new_pop
+		return list(effects.values()), new_pop #harvest_arr, new_pop
 
 	def compute_profit(self, effort_arr, harvest_arr):
-		return sum(harvest_arr * self.metadata.prices - effort_arr * self.metadata.costs)
+		return raise Warning("compute_profit is deprecated!")
 
 	def pop_to_state(self, pop):
 		""" from pop-space [0, self.var_bound] to  state-space [-1, 1]. """

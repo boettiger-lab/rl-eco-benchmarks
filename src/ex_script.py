@@ -185,13 +185,16 @@ from ray_trainer_api import ray_trainer
 
 TMAX = 800
 
+def utility_fn(effort, pop, cull_cost=0.001):
+	return 0.5 * pop[0] - cull_cost * sum(effort)
+
 metadata = {
 	#
 	# structure of ctrl problem
 	'name': 'minicourse_challenge', 
 	'n_sp':  3,
 	'n_act': 2,
-	'_harvested_sp': [1,2],
+	'controlled_species': [1,2],
 	#
 	# about episodes
 	'init_pop': np.float32([0.5, 0.5, 0.2]),
@@ -202,8 +205,8 @@ metadata = {
 	'extinct_thresh': 0.005,
 	'penalty_fn': lambda t: - 5 * TMAX / (t+1),
 	'var_bound': 4,
-	'_costs': np.zeros(2, dtype=np.float32),
-	'_prices': np.ones(2, dtype=np.float32),
+	# '_costs': np.zeros(2, dtype=np.float32),
+	# '_prices': np.ones(2, dtype=np.float32),
 }
 
 params = {
@@ -271,6 +274,7 @@ def workflow(algo: str):
 			config={
 				'metadata': metadata,
 				'dyn_fn': dyn_fn,
+				'utility_fn': utility_fn,
 			},
 		)
 		agent = RT.train(iterations=10_000)
