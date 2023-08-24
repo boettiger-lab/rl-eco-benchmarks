@@ -217,7 +217,7 @@ metadata = {
 }
 
 params = {
-	"r_x": np.float32(0.15),
+	"r_x": np.float32(0.14),
 	"r_y": np.float32(0.2),
 	"K": np.float32(1),
 	"beta": np.float32(0.1),
@@ -225,7 +225,7 @@ params = {
 	"D": np.float32(0.),
 	"tau_yx": np.float32(0),
 	"tau_xy": np.float32(0),
-	"alpha": np.float32(0.7), 
+	"alpha": np.float32(0.5), 
 	"dH": np.float32(0.01),
 	"sigma_x": np.float32(0.05),
 	"sigma_y": np.float32(0.05),
