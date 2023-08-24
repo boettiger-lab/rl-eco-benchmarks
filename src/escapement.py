@@ -8,13 +8,16 @@ class escapement_policy:
 	def __init__(
 		n_sp: int,
 		n_act: int,
-		controlled_sp: List = list(range(n_act)),
+		controlled_sp: List = None,
 		max_esc: float = 10, # maximum escapement (used to bound esc optimization)
 		numeric_threshold: float = 0.001,
 		):
 		self.n_sp=n_sp
 		self.n_act=n_act
-		self.controlled_sp=controlled_sp
+		if controlled_sp is None:
+			self.controlled_sp = list(range(n_act))
+		else:
+			self.controlled_sp=controlled_sp
 		self.max_esc=max_esc
 		#
 		# to be overwritten later:

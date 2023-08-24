@@ -1,8 +1,12 @@
 from escapement import escapement_policy
 from base_env import ray_eco_env
 
+import numpy as np
+
 #
 # setting up the env
+
+TMAX=800
 
 metadata = {
 	#
