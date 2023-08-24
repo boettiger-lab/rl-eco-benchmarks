@@ -3,6 +3,7 @@ from typing import List
 
 import ray
 
+@ray.remote
 class escapement_policy:
 
 	def __init__(
@@ -56,7 +57,6 @@ class escapement_policy:
 		""" [0,1] to [-1,1] space """
 		return effort * 2 - 1
 
-	@ray.remote
 	def sample_policy_reward(self, esc_vec, env):
 		policy = self.policy_factory(esc_vec)
 		episode_reward = 0
