@@ -273,7 +273,7 @@ def workflow(algo: str):
 				'dyn_fn': dyn_fn,
 			},
 		)
-		agent = RT.train(iterations=2)
+		agent = RT.train(iterations=100)
 
 	except Exception as e:
 		print("\n\n"+f"#################### failed for {algo}! #################### "+"\n\n")
