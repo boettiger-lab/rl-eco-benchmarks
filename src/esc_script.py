@@ -8,6 +8,14 @@ import numpy as np
 
 TMAX=800
 
+def utility_fn(effort, pop, cull_cost=0.001):
+	return 0.5 * pop[0] - cull_cost * sum(effort)
+
+def penalty_fn(t):
+	""" penalty for ending episode at t<TMAX steps. """
+	global TMAX
+	return - 5 * TMAX / (t+1)
+
 metadata = {
 	#
 	# structure of ctrl problem
