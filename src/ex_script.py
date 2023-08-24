@@ -330,6 +330,7 @@ def workflow(algo: str):
 	rewards = []
 	episodes = []
 	for i in range(100):
+		print(i, end="\r")
 		ep_df, ep_rew = generate_episode(agent, env)
 		rewards.append(ep_rew)
 		ep_df["rep"] = i
