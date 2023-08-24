@@ -259,7 +259,7 @@ env_config = {
 				'utility_fn': utility_fn,
 			}
 
-iterations = 50
+iterations = 200
 
 with open(os.path.join(DATA_DIR, "params.json"), 'w') as params_file:
 	json.dump(
