@@ -72,7 +72,7 @@ class envMetadata(base_metadata):
 
 	def __post_init__(self):
 		# harvested default:
-		if self.ctrl_species is None:
+		if self.controlled_species is None:
 			object.__setattr__(self, 'ctrl_species', [i for i in range(self.n_act)])
 		else:
 			object.__setattr__(self, 'ctrl_species', self.controlled_species.copy())
