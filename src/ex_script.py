@@ -199,7 +199,7 @@ metadata = {
 	'tmax': TMAX,
 	#
 	# about dynamics / control
-	'extinct_thresh': 0.05,
+	'extinct_thresh': 0.005,
 	'penalty_fn': lambda t: - 5 * TMAX / (t+1),
 	'var_bound': 4,
 	'_costs': np.zeros(2, dtype=np.float32),
