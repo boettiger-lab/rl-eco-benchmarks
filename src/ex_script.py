@@ -265,17 +265,20 @@ def workflow(algo: str):
 
 	print(f"Working on {algo} now...\n\n")
 
-	####################################################################
-	########################### TRAINING ###############################
-	####################################################################
-	try:
-		RT = ray_trainer(
-			algo_name=algo, 
-			config={
+	env_config = {
 				'metadata': metadata,
 				'dyn_fn': dyn_fn,
 				'utility_fn': utility_fn,
-			},
+			}
+
+	####################################################################
+	########################### TRAINING ###############################
+	####################################################################
+
+	try:
+		RT = ray_trainer(
+			algo_name=algo, 
+			config=env_config,
 		)
 		agent = RT.train(iterations=30)
 
@@ -329,7 +332,7 @@ def workflow(algo: str):
 
 	print("Generating data...")
 
-	env = ray_eco_env(config={'metadata': metadata,'dyn_fn': dyn_fn})
+	env = ray_eco_env(config=env_config)
 
 	rewards = []
 	episodes = []
