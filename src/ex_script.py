@@ -287,7 +287,7 @@ def workflow(algo: str):
 		print(str(e))
 		return {"algo": [algo], "mean_rew": "failed", "std_rew": "failed"}
 
-	print("Done training.")
+	print(f"Done training {algo}.")
 
 	####################################################################
 	################### EVALUATION AND PLOTTING ########################
