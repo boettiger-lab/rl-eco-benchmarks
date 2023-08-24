@@ -19,12 +19,12 @@ class eco_env(gym.Env):
 	def __init__(
 		self, 
 		metadata: dict,
+		utility_fn: Callable,
 		dyn_fn: Callable, 
 		dyn_params: Dict[str, Union[int, float, np.float32, np.float64]] = {}, 
 		non_stationary: bool = False, 
 		non_stationarities: Dict[str, Callable] = {},
 		act_to_eff_filter: Callable = lambda act: (act+1)/2,
-		utility_fn: Callable = lambda effort, pop, *args, **kwargs: sum(effort * pop)
 		):
 
 		self.metadata = envMetadata(
