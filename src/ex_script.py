@@ -373,7 +373,10 @@ def workflow(algo: str):
 	return algo_eval
 
 evals_ = []
+algos_tested = []
 for algo in ALGO_SET:
+	print(f"Have already tested: {algos_tested}. {len(ALGO_SET) - len(algos_tested)} algos to go.")
+	algos_tested.append(algo)
 	algo_eval = workflow(algo)
 	evals_.append(pd.DataFrame(algo_eval))
 
