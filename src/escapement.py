@@ -6,6 +6,7 @@ import ray
 class escapement_policy:
 
 	def __init__(
+		self,
 		n_sp: int,
 		n_act: int,
 		controlled_sp: List = None,
