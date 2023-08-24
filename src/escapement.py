@@ -3,7 +3,6 @@ from typing import List
 
 import ray
 
-@ray.remote
 class escapement_policy:
 
 	def __init__(
@@ -72,9 +71,10 @@ class escapement_policy:
 		return episode_reward
 
 	def evaluate_policy(self, esc_vec, env, N=50):
-		return ray.get(
-			[self.sample_policy_reward.remote(esc_vec, env) for _ in range(N)]
-			)
+		# return ray.get(
+		# 	[self.sample_policy_reward.remote(esc_vec, env) for _ in range(N)]
+		# 	)
+		return [self.sample_policy_reward(esc_vec, env) for _ in range(N)]
 
 	def rand_policy_search(self, env, num_samples=1_000, verbose=False):
 		"""
