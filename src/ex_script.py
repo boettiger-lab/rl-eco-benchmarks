@@ -181,6 +181,8 @@ from util import dict_pretty_print
 #####################################################################
 print("\n\n" + "ray_trainer test:" + "\n\n")
 
+import json
+
 from ray_trainer_api import ray_trainer
 
 TMAX = 800
@@ -219,7 +221,7 @@ params = {
 	"tau_yx": np.float32(0),
 	"tau_xy": np.float32(0),
 	"alpha": np.float32(1), 
-	"dH": np.float32(0.03),
+	"dH": np.float32(0.01),
 	"sigma_x": np.float32(0.05),
 	"sigma_y": np.float32(0.05),
 	"sigma_z": np.float32(0.05),
@@ -249,6 +251,11 @@ env_config = {
 				'dyn_fn': dyn_fn,
 				'utility_fn': utility_fn,
 			}
+
+iterations = 50
+
+with open(os.path.join("..", "data", "params.json"), 'w'):
+	json.dump({'metadata': metadata, 'params': params, 'iterations': iterations}, fp)
 
 #### Algo testing:
 
@@ -304,6 +311,7 @@ def workflow(algo: str):
 	print(f"Working on {algo} now...\n\n")
 
 	global env_config
+	global iterations
 
 	# env_config = {
 	# 			'metadata': metadata,
@@ -320,7 +328,7 @@ def workflow(algo: str):
 			algo_name=algo, 
 			config=env_config,
 		)
-		agent = RT.train(iterations=50)
+		agent = RT.train(iterations=iterations)
 
 	except Exception as e:
 		print("\n\n"+f"#################### failed for {algo}! #################### "+"\n\n")
