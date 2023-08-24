@@ -102,10 +102,11 @@ class escapement_policy:
 			if verbose:
 				if i == 0:
 					print("Current best:\n" 
-								"-------------\n")
+								"-------------")
 				print(
 							f"esc = {current_best}, "
-							f"avg = {best_avg:.3f} +/- {best_std:.3f}",
+							f"avg = {best_avg:.3f} +/- {best_std:.3f}, "
+							f"sample nr. {i}",
 							end="\r",
 					)
 		return {'esc': current_best, 'avg_rew': best_avg, 'std_rew': best_std}
