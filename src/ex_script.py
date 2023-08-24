@@ -186,6 +186,8 @@ import json
 from ray_trainer_api import ray_trainer
 
 TMAX = 800
+DATA_DIR = os.path.join("..", "data")
+os.makedirs(DATA_DIR, exist_ok=True)
 
 def utility_fn(effort, pop, cull_cost=0.001):
 	return 0.5 * pop[0] - cull_cost * sum(effort)
@@ -259,7 +261,7 @@ env_config = {
 
 iterations = 50
 
-with open(os.path.join("..", "data", "params.json"), 'w') as params_file:
+with open(os.path.join(DATA_DIR, "params.json"), 'w') as params_file:
 	json.dump(
 		{
 		'params': {key: str(value) for key, value in params.items()}, 
@@ -310,7 +312,7 @@ unctrl_plt = ggplot(
 		) + geom_line()
 
 unctrl_plt.save(
-			os.path.join("..", "data", f"unctrl.png")
+			os.path.join(DATA_DIR, f"unctrl.png")
 			)
 
 print(f"uncontrolled reward = {episode_reward}")
@@ -323,12 +325,7 @@ def workflow(algo: str):
 
 	global env_config
 	global iterations
-
-	# env_config = {
-	# 			'metadata': metadata,
-	# 			'dyn_fn': dyn_fn,
-	# 			'utility_fn': utility_fn,
-	# 		}
+	global DATA_DIR
 
 	####################################################################
 	########################### TRAINING ###############################
@@ -409,10 +406,10 @@ def workflow(algo: str):
 
 	print("Saving data...")
 
-	data_dir = os.path.join("..", "data", algo)
-	os.makedirs(data_dir, exist_ok=True)
+	algo_dir = os.path.join(DATA_DIR, algo)
+	os.makedirs(algo_dir, exist_ok=True)
 	episode_data.to_csv(
-		os.path.join(data_dir, "episodes.csv")
+		os.path.join(algo_dir, "episodes.csv")
 		)
 
 	#
@@ -427,7 +424,7 @@ def workflow(algo: str):
 			]
 			)
 		plot.save(
-			os.path.join(data_dir, f"ep_{r}.png")
+			os.path.join(algo_dir, f"ep_{r}.png")
 			)
 
 	algo_eval = {"algo": [algo], "mean_rew": np.mean(rewards), "std_rew": np.std(rewards)}
@@ -451,60 +448,3 @@ for algo in ALGO_SET:
 evals_df = pd.concat(evals_)
 print(evals_df.head(7))
 evals_df.to_csv(os.path.join("..", "data", "summary.csv"))
-
-#### Algo testing:
-
-# _algo_set = {
-# 	'a2c',
-# 	'a3c',
-# 	'appo',
-# 	'ddppo',
-# 	'ppo',
-# 	'maml',
-# 	# 'apex',
-# 	# 'dqn',
-# 	'ddpg',
-# 	'td3',
-# 	'ars',
-# }
-
-# _failed_init = []
-# _failed_train = []
-# _init_exceptions = []
-# _train_exceptions = []
-# for _algo in _algo_set:
-# 	print("\n\n" + f"working on {_algo}" + "\n\n")
-# 	try:
-# 		RT = ray_trainer(
-# 			algo_name=_algo, 
-# 			config=_config_ray,
-# 		)
-# 	except Exception as e:
-# 		_failed_init.append({'algo': _algo, 'exception': str(e)})
-# 		print("\n\n"+f"failed to initialize {_algo}. Exception thrown: " + "\n" + str(e))
-
-# 	try:
-# 		agent = RT.train(iterations=2)
-# 	except Exception as e:
-# 		_failed_train.append({'algo': _algo, 'exception': str(e)})
-# 		print("\n\n"+f"failed to train {_algo}. Exception thrown: " + "\n" + str(e))
-
-# print("\n\n"+"init exceptions:"+"\n\n")
-# for fi in _failed_init:
-# 	dict_pretty_print(fi)
-
-# print("\n\n"+"train exceptions:"+"\n\n")
-# for ft in _failed_train:
-# 	dict_pretty_print(ft)
-
-
-# for idx, fi in enumerate(_failed_init):
-# 	print(f"{idx}: failed to initialize {fi}")
-
-# for idx, ft in enumerate(_failed_train):
-# 	print(f"{idx}: failed to train {ft}")
-
-# for idx, ie in enumerate(_init_exceptions):
-# 	print(f"{idx}: ")
-
-
