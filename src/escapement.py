@@ -94,7 +94,7 @@ class escapement_policy:
 			rew_histogram = self.evaluate_policy(esc_vec, env)
 			avg_rew = np.mean(rew_histogram)
 			std_rew = np.std(rew_histogram)
-			if avg_rew > best_rew:
+			if avg_rew > best_avg:
 				current_best = esc_vec
 				best_avg = avg_rew
 				best_std = std_rew
