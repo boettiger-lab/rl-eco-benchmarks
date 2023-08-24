@@ -18,6 +18,7 @@ class eco_env(gym.Env):
 
 	def __init__(
 		self, 
+		*,
 		metadata: dict,
 		utility_fn: Callable,
 		dyn_fn: Callable, 
