@@ -90,5 +90,5 @@ EscObj_handle = escapement_policy.remote(
 
 best_esc_fn_ref = EscObj_handle.optimize.remote(env, verbose=True)
 
-best_esc_fn = ray.get(object_ref)
+best_esc_fn = ray.get(best_esc_fn_ref)
 
