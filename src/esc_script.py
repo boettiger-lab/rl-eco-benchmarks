@@ -2,6 +2,7 @@ from escapement import escapement_policy
 from base_env import ray_eco_env
 
 import numpy as np
+import ray
 
 #
 # setting up the env
