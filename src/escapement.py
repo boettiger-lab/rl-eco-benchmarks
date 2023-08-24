@@ -109,7 +109,7 @@ class escapement_policy:
 					)
 		return {'esc': current_best, 'avg_rew': best_avg, 'std_rew': best_std}
 
-	def optimize(env, method: str = "rand", verbose=False):
+	def optimize(self, env, method: str = "rand", verbose=False):
 		
 		if method != "rand":
 			raise Warning(f"{type(self).__name__}: Only optimization method currently available is 'rand'.")
