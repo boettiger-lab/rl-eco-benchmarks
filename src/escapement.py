@@ -114,7 +114,7 @@ class escapement_policy:
 		if method != "rand":
 			raise Warning(f"{type(self).__name__}: Only optimization method currently available is 'rand'.")
 		
-		best_dict = self.rand_policy_search(self, env, verbose=verbose)
+		best_dict = self.rand_policy_search(env, verbose=verbose)
 
 		self.optimized_esc = best_dict['esc']
 		self.optimized_policy_fn = self.policy_factory(self.optimized_esc)
