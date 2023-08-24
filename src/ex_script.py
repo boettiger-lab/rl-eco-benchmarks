@@ -254,8 +254,8 @@ env_config = {
 
 iterations = 50
 
-with open(os.path.join("..", "data", "params.json"), 'w'):
-	json.dump({'metadata': metadata, 'params': params, 'iterations': iterations}, fp)
+with open(os.path.join("..", "data", "params.json"), 'w') as params_file:
+	json.dump({'metadata': metadata, 'params': params, 'iterations': iterations}, params_file)
 
 #### Algo testing:
 
