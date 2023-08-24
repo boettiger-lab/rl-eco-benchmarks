@@ -215,7 +215,7 @@ params = {
 	"K": np.float32(1),
 	"beta": np.float32(0.5),
 	"v0":  np.float32(0.1),
-	"D": np.float32(0.7),
+	"D": np.float32(0.),
 	"tau_yx": np.float32(0),
 	"tau_xy": np.float32(0),
 	"alpha": np.float32(1), 
@@ -235,12 +235,12 @@ def dyn_fn(X, Y, Z):
             + p["sigma_x"] * X * np.random.normal()
             ),
 		Y + (p["r_y"] * Y * (1 - (Y + p["tau_yx"]* X ) / p["K"] )
-				- p["D"] * p["beta"] * Z * (Y**2) / (p["v0"]**2 + Y**2)
+				- (1 + p["D"]) * p["beta"] * Z * (Y**2) / (p["v0"]**2 + Y**2)
 				+ p["sigma_y"] * Y * np.random.normal()
 				),
 		Z + p["alpha"] * p["beta"] * Z * (
 				(1-p["D"]) * (X**2) / (p["v0"]**2 + X**2)
-				+ p["D"] * (Y**2) / (p["v0"]**2 + Y**2)
+				+ (1 + p["D"])  * (Y**2) / (p["v0"]**2 + Y**2)
 				) - p["dH"] * Z +  p["sigma_z"] * Z  * np.random.normal()
 	])
 
