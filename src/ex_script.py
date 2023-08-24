@@ -273,7 +273,7 @@ unctrl_data = []
 episode_reward = 0
 observation, _ = env.reset()
 for t in range(TMAX):
-	pop = env.state_to_pop(observation)
+	pop = env.env.state_to_pop(observation)
 	observation, reward, terminated, done, info = env.step([0] * metadata['n_act'])
 	#
 	# notice that for some utility-functions reward can be non-zero even if action is zero
