@@ -213,12 +213,12 @@ params = {
 	"r_x": np.float32(0.13),
 	"r_y": np.float32(0.2),
 	"K": np.float32(1),
-	"beta": np.float32(.1),
+	"beta": np.float32(0.5),
 	"v0":  np.float32(0.1),
 	"D": np.float32(0.7),
 	"tau_yx": np.float32(0),
 	"tau_xy": np.float32(0),
-	"alpha": np.float32(.3), 
+	"alpha": np.float32(1), 
 	"dH": np.float32(0.03),
 	"sigma_x": np.float32(0.05),
 	"sigma_y": np.float32(0.05),
@@ -244,6 +244,12 @@ def dyn_fn(X, Y, Z):
 				) - p["dH"] * Z +  p["sigma_z"] * Z  * np.random.normal()
 	])
 
+env_config = {
+				'metadata': metadata,
+				'dyn_fn': dyn_fn,
+				'utility_fn': utility_fn,
+			}
+
 #### Algo testing:
 
 ALGO_SET = {
@@ -260,16 +266,47 @@ ALGO_SET = {
 	'ars',
 }
 
+#
+# uncontrolled
+env = ray_eco_env(config=env_config)
+unctrl_data = []
+episode_reward = 0
+observation, _ = env.reset()
+for t in range(TMAX):
+	pop = env.state_to_pop(observation)
+	observation, reward, terminated, done, info = env.step([0] * metadata['n_act'])
+	#
+	# notice that for some utility-functions reward can be non-zero even if action is zero
+	unctrl_data.append([t, *pop, reward])
+
+	if done or terminated:
+		break
+
+unctrl_df = pd.DataFrame(unctrl_data, columns = ["t", "X", "Y", "Z", "reward"])
+
+unctrl_plt = ggplot(
+		unctrl_df.melt(["t"]),
+		aes("t", "value", color="variable"),
+		) + geom_line()
+
+unctrl_plt.save(
+			os.path.join("..", "data", f"unctrl.png")
+			)
+
+
+
 
 def workflow(algo: str):
 
 	print(f"Working on {algo} now...\n\n")
 
-	env_config = {
-				'metadata': metadata,
-				'dyn_fn': dyn_fn,
-				'utility_fn': utility_fn,
-			}
+	global env_config
+
+	# env_config = {
+	# 			'metadata': metadata,
+	# 			'dyn_fn': dyn_fn,
+	# 			'utility_fn': utility_fn,
+	# 		}
 
 	####################################################################
 	########################### TRAINING ###############################
