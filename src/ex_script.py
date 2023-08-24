@@ -450,6 +450,7 @@ for algo in ALGO_SET:
 
 evals_df = pd.concat(evals_)
 print(evals_df.head(7))
+evals_df.to_csv(os.path.join("..", "data", "summary.csv"))
 
 #### Algo testing:
 
