@@ -3,7 +3,7 @@ from typing import List
 
 import ray
 
-@ray.remote
+@ray.remote(num_gpus=2,num_cpus=100)
 class escapement_policy:
 
 	def __init__(
