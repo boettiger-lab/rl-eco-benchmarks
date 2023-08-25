@@ -26,17 +26,19 @@ def generate_episode(agent, env):
 		episode_reward += reward
 		if terminated or done:
 			break
-	df = pd.DataFrame(df, columns=['t', 'reward', 'x_cull', 'y_cull', 'x', 'y', 'z'])
+	df = pd.DataFrame(df, columns=['t', 'reward', 'effort1', 'effort2', 'x', 'y', 'z']), episode_reward
 
 	return df
 
 def generate_multiple_episodes(agent, env, N):
 	episodes = []
+	rewards = []
 	for i in range(N):
-		ep = generate_episode(agent, env)
+		ep, rew = generate_episode(agent, env)
 		ep["rep"] = i
 		episodes.append(ep)
-	return pd.concat(episodes)
+		rewards.append(rew)
+	return pd.concat(episodes), rewards
 
 
 ################################################################################
