@@ -56,7 +56,7 @@ params = {
 	"K": np.float32(1),
 	"beta": np.float32(0.1),
 	"v0":  np.float32(0.1),
-	"D": np.float32(0.),
+	"D": np.float32(-0.1),
 	"tau_yx": np.float32(0),
 	"tau_xy": np.float32(0),
 	"alpha": np.float32(1), 
