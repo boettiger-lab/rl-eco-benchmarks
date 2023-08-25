@@ -104,19 +104,19 @@ with open(os.path.join(DATA_DIR, "params.json"), 'w') as params_file:
 
 #### Algo testing:
 
-ALGO_SET = {
+ALGO_SET = [
 	# 'a2c',
+	'ddpg',
+	'ddppo',
+	'td3',
+	'ars',
 	'a3c',
 	'appo',
-	'ddppo',
 	'ppo',
 	# 'maml',
 	# 'apex',
 	# 'dqn',
-	'ddpg',
-	'td3',
-	'ars',
-}
+]
 
 #
 # uncontrolled
