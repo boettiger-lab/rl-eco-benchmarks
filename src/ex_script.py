@@ -259,11 +259,13 @@ def workflow(algo: str):
 			os.path.join(algo_dir, f"ep_{r}.png")
 			)
 
-	algo_eval = {"algo": [algo], "mean_rew": np.mean(rewards), "std_rew": np.std(rewards)}
+	mean_rew_str = f"{np.mean(rewards):.3f}"
+	stdev_rew_str = f"{np.std(rewards):.3f}"
+	algo_eval = {"algo": [algo], "mean_rew": mean_rew_str, "std_rew": stdev_rew_str}
 
 	print(
 		"\n\n"+
-		f"{algo} evaluation reward = {np.mean(rewards):.3f} +/- {np.std(rewards):.3f}"+
+		f"{algo} evaluation reward = {mean_rew_str} +/- {stdev_rew_str}"+
 		"\n\n"
 		)
 
