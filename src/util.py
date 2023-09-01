@@ -10,7 +10,7 @@ def iter_pretty_print(iterable_obj):
     print("[")
     idx=0
     for x in iterable_obj:
-      print(f"{x:.3f}, ")
+      print(f"{x:.3f}, ", end="")
       if idx % 10 ==0:
         print("\n")
       idx+=1
