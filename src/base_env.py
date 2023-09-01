@@ -68,7 +68,7 @@ class eco_env(gym.Env):
 
 	def reset(self, *, seed=42, options=None):
 		self.timestep = 0
-		reset_pert = self.reset_sigma * np.random.normal(size=3)
+		reset_pert = self.reset_sigma * np.random.normal(size=self.metadata.n_sp)
 		self.pop = self.init_pop + reset_pert
 		self.state = self.pop_to_state(self.pop)
 		info = {
@@ -96,7 +96,6 @@ class eco_env(gym.Env):
 			params=self.env_dyn_obj.dyn_params,
 			t=self.timestep,
 		)
-		print(self.pop)
 		#
 		# check for early end
 		terminated = False
