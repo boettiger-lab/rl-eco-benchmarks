@@ -96,6 +96,7 @@ class eco_env(gym.Env):
 			params=self.env_dyn_obj.dyn_params,
 			t=self.timestep,
 		)
+		print(self.pop)
 		#
 		# check for early end
 		terminated = False
