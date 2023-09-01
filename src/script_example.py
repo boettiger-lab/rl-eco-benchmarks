@@ -21,6 +21,7 @@ os.makedirs(DATA_DIR, exist_ok=True)
 # ###################################
 
 def utility_fn(effort, pop, cull_cost=0.001):
+	""" reward in each time step """
 	return 0.5 * pop[0] - cull_cost * sum(effort)
 
 def penalty_fn(t):
@@ -49,7 +50,7 @@ metadata = {
 	# '_prices': np.ones(2, dtype=np.float32),
 }
 
-params = {
+params = { # dynamic parameters used by dyn_fn
 	"r_x": np.float32(0.12),
 	"r_y": np.float32(0.2),
 	"K": np.float32(1),
@@ -66,6 +67,7 @@ params = {
 }
 
 def dyn_fn(X, Y, Z):
+	""" the dynamics of the system """
 	global params
 	p = params
 	#
