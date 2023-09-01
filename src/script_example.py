@@ -2,11 +2,9 @@ import json
 import numpy as np
 import os
 import pandas as pd
-from plotnine import ggplot, aes, geom_line
+from plotnine import ggplot, aes, geom_line # later for plotting evaluation
 
-from base_env import eco_env, ray_eco_env
-from env_factories import env_factory, threeSp_1_factory
-from dyn_fns import threeSp_1
+from base_env import ray_eco_env
 from util import dict_pretty_print
 from ray_trainer_api import ray_trainer
 
