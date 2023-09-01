@@ -28,7 +28,7 @@ def ray_algos_iter_test(
 		try:
 			RT = ray_trainer(
 				algo_name=algo, 
-				config=env_config,
+				config=ray_config,
 			)
 			agent = RT.train(iterations=iterations)
 			print(agent.evaluate())
