@@ -78,7 +78,7 @@ def dyn_fn(X, Y, Z):
 		Y + (p["r_y"] * Y * (1 - Y / p["K"] )
 				- (1 + p["D"]) * p["beta"] * Z * (Y**2) / (p["v0"]**2 + Y**2)
 				+ p["sigma_y"] * Y * np.random.normal()
-				),
+				), 
 		Z + p["alpha"] * p["beta"] * Z * (
 				(1-p["D"]) * (X**2) / (p["v0"]**2 + X**2)
 				+ (1 + p["D"])  * (Y**2) / (p["v0"]**2 + Y**2)

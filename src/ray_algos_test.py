@@ -21,7 +21,6 @@ def ray_algos_iter_test(
 	ray_config: Dict[str, Any], 
 	iterations: int, 
 	algo_list: List[str] = ALGO_LIST,
-	n_eval: int = 20,
 ):
 	benchmarks = {}
 	for algo in algo_list:
