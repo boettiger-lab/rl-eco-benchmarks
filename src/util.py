@@ -4,7 +4,7 @@ from collections.abc import Iterable
 from numbers import Number
 
 def iter_pretty_print(iterable_obj):
-  if len(iterable_obj) < 11:
+  if (len(iterable_obj) < 11) or (len(iterable_obj) > 500):
     print("[", *[ f"{x:.3f}, " for x in iterable_obj ] ,"]")
   else:
     print("[")
