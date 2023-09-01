@@ -20,7 +20,7 @@ ALGO_LIST = [
 def ray_algos_iter_test(
 	ray_config: Dict[str, Any], 
 	iterations: int, 
-	algo_list: List[str],
+	algo_list: List[str] = ALGO_LIST,
 	n_eval: int = 20,
 ):
 	benchmarks = {}
@@ -31,10 +31,12 @@ def ray_algos_iter_test(
 				config=ray_config,
 			)
 			agent = RT.train(iterations=iterations)
-			print(agent.evaluate())
+			benchmarks[algo] = agent.evaluate()
 			# benchmarks[algo] = generate_multiple_episodes(agent)
 
 		except Exception as e:
 			print("\n\n"+f"#################### failed for {algo}! #################### "+"\n\n")
 			print(str(e))
-			return {"algo": [algo], "mean_rew": "failed", "std_rew": "failed"}
+			benchmarks[algo] = "failed run."
+
+	return benchmarks
