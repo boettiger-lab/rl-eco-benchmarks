@@ -17,7 +17,7 @@ class hyperparam:
 		if self.val_type_str == 'categorical':
 			assert len(self.value_list > 0), "a categorical hyperparam needs a value_list property"
 		if self.val_type_str != 'categorical':
-			assert (low_bound != None) and (high_bound != None), "int and float hyperparams need low_bound and high_bound properties"
+			assert (self.low_bound != None) and (self.high_bound != None), "int and float hyperparams need low_bound and high_bound properties"
 
 	def sample_fn(self):
 		""" returns function which samples the hyperparameter.  
@@ -25,11 +25,11 @@ class hyperparam:
 		note: *args, **kwargs added because the backend sometimes likes to
 		pass some arguments (e.g., 'spec') which have no bearing in the sampling...
 		"""
-		if val_type_str == 'categorical':
-			return lambda *args, **kwargs: np.random.choice(value_list)
-		if val_type_str == 'int':
+		if self.val_type_str == 'categorical':
+			return lambda *args, **kwargs: np.random.choice(self.value_list)
+		if self.val_type_str == 'int':
 			return lambda *args, **kwargs: np.random.randint(self.low_bound, self.high_bound)
-		if val_type_str == 'float':
+		if self.val_type_str == 'float':
 			return lambda *args, **kwargs: np.random.rand(self.low_bound, self.high_bound)
 
 def make_hyperparams(hp_dicts_list):
