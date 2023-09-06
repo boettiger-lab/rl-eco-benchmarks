@@ -69,7 +69,7 @@ def sb2_tuning(
 		}
 
 	analysis = run(
-		algo_name,
+		algo_name.capitalize(),
 		name="{}_seed{}".format(
 			env_name, str(seed)
 		),
