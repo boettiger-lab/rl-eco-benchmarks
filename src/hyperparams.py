@@ -28,9 +28,9 @@ class hyperparam:
 		if self.val_type_str == 'categorical':
 			return lambda *args, **kwargs: np.random.choice(self.value_list)
 		if self.val_type_str == 'int':
-			return lambda *args, **kwargs: np.random.randint(self.low_bound, self.high_bound)
+			return lambda *args, **kwargs:  np.random.randint(low=self.low_bound, high=self.high_bound+1) # make high_bound *inclusive*
 		if self.val_type_str == 'float':
-			return lambda *args, **kwargs: np.random.rand(self.low_bound, self.high_bound)
+			return lambda *args, **kwargs: self.low_bound + self.high_bound * np.random.rand()
 
 def make_hyperparams(hp_dicts_list):
 	"""
