@@ -35,7 +35,7 @@ class ray_trainer:
 		# env
 		tune.register_env(
 			env_registration_name, 
-			lambda env_config: ray_env_factory(env_config=env_config)
+			lambda : ray_env_factory(env_config=config)
 		)
 		#
 		# algo
