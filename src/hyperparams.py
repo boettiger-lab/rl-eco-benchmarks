@@ -47,5 +47,5 @@ def make_hyperparams(hp_dicts_list):
 	]
 	"""
 	return [
-		hyperparams(**hp_single_dict) for hp_single_dict in hp_dicts_list
+		hyperparam(**hp_single_dict) for hp_single_dict in hp_dicts_list
 	]
