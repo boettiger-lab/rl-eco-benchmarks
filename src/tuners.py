@@ -60,6 +60,8 @@ def sb2_tuning(
 			},
 		)
 
+	print("PB2 defined\n")
+
 	hyperparam_mutations = {
 		hp.name: hp.sample_fn() for hp in hyperparams_list
 		}
@@ -67,6 +69,8 @@ def sb2_tuning(
 	hp_mutations_ = {
 		name: sample_from(sample_fn) for name, sample_fn in hyperparam_mutations.items()
 		}
+
+	print("hp mutations sampled\n")
 
 	analysis = run(
 		algo_name.upper(),
@@ -94,6 +98,8 @@ def sb2_tuning(
 			**hp_mutations_,
 		},
 	)
+
+	print("ran simulations\n")
 
 	# 
 	# gather results

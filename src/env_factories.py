@@ -8,7 +8,4 @@ def env_factory(**env_config):
 	return eco_env(**env_config)
 
 def ray_env_factory(env_config):
-	print("\n ############ \nENV CONFIG:\n\n")
-	dict_pretty_print(env_config)
-	print("############")
 	return ray_eco_env(env_config)
