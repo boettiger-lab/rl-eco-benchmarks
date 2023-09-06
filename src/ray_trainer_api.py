@@ -38,7 +38,7 @@ class ray_trainer:
 			env_registration_name, 
 			lambda env_config: ray_env_factory(env_config=env_config)
 		)
-		print("here")
+		print("here too.")
 		#
 		# algo
 		self.algo_name = algo_name
