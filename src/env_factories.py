@@ -7,4 +7,6 @@ def env_factory(**env_config):
 	return eco_env(**env_config)
 
 def ray_env_factory(env_config):
+	print(env_config)
+	assert False, "was here."
 	return eco_env(**env_config)
