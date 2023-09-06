@@ -73,7 +73,7 @@ params = {
 env_config = {
 				'metadata': metadata,
 				'dyn_fn': dyn_fn,
-				'params': params,
+				'dyn_params': params,
 				'utility_fn': utility_fn,
 			}
 
