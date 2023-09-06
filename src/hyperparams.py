@@ -12,11 +12,11 @@ class hyperparam:
 	value_list: 'optional, only needed if val_type_str == categorical' = field(default_factory=list)
 
 	def __post_init__(self):
-		if val_type_str not in ['categorical', 'int', 'float']:
+		if self.val_type_str not in ['categorical', 'int', 'float']:
 			raise Warning("The only values val_type_str can take are 'categorical', 'int' and 'float'.")			
-		if val_type_str == 'categorical':
+		if self.val_type_str == 'categorical':
 			assert len(self.value_list > 0), "a categorical hyperparam needs a value_list property"
-		if val_type_str != 'categorical':
+		if self.val_type_str != 'categorical':
 			assert (low_bound != None) and (high_bound != None), "int and float hyperparams need low_bound and high_bound properties"
 
 	def sample_fn(self):
