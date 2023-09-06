@@ -32,6 +32,12 @@ class ray_trainer:
 		env_registration_name: str = 'my_env',
 	):
 		#
+		# env
+		tune.register_env(
+			env_registration_name, 
+			lambda env_config: ray_env_factory(env_config=env_config)
+		)
+		#
 		# algo
 		self.algo_name = algo_name
 		self.algo_config = self._make_config()
@@ -73,12 +79,6 @@ class ray_trainer:
 		#
 		# agent
 		self.agent = self.algo_config.build()
-		#
-		# env
-		tune.register_env(
-			env_registration_name, 
-			lambda env_config: ray_env_factory(env_config=env_config)
-		)
 		#
 		# shorthands
 		self.env_name = self.algo_config.env 
