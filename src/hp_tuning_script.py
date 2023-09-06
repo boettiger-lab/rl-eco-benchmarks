@@ -4,6 +4,9 @@ import pandas as pd
 
 from ray_trainer_api import ray_trainer
 
+from ray.rllib import _register_all
+_register_all()
+
 #
 # Ecology / control:
 
