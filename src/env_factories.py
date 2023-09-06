@@ -11,5 +11,4 @@ def ray_env_factory(env_config):
 	print("\n ############ \nENV CONFIG:\n\n")
 	dict_pretty_print(env_config)
 	print("############")
-	assert False, "was here."
-	return eco_env(**env_config)
+	return ray_eco_env(env_config)
