@@ -20,6 +20,7 @@ from hyperparams import make_hyperparams
 def sb2_tuning(
 	algo_name, 
 	env_name,
+	env_config,
 	hp_dicts_list, # see 'make_hyperparams' for required structure
 	num_workers=1,#20,
 	num_samples=1,#50,
@@ -83,6 +84,7 @@ def sb2_tuning(
 		stop={criteria: criteria_max},
 		config={
 			"env": env_name,
+			"env_config": env_config,
 			"log_level": "INFO",
 			"seed": seed,
 			"kl_coeff": 1.0,

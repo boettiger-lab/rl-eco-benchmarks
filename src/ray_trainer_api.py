@@ -128,6 +128,7 @@ class ray_trainer:
 		return sb2_tuning(
 			algo_name=self.algo_name,
 			env_name=self.env_name,
+			env_config=self.algo_config.env_config,
 			hp_dicts_list=hp_dicts_list,
 			**kwargs,
 			)
