@@ -75,13 +75,14 @@ def sb2_tuning(
 
 	analysis = run(
 		algo_name.upper(),
-		name="{}_seed{}".format(
-			env_name, str(seed)
+		name="{}_{}_seed{}".format(
+			algo_name, env_name, str(seed)
 		),
 		scheduler=pb2,
 		verbose=1,
 		num_samples=num_samples,
 		stop={criteria: criteria_max},
+		log_to_file=True,
 		config={
 			"env": env_name,
 			"env_config": env_config,
