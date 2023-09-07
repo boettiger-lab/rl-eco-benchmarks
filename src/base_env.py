@@ -183,7 +183,7 @@ class ray_eco_env(gym.Env):
 		self.action_space = self.env.action_space
 		self.metadata = self.env.metadata
 
-	def reset(self, *, seed, options=None):
+	def reset(self, *, seed=42, options=None):
 		return self.env.reset()
 
 	def step(self, action):
