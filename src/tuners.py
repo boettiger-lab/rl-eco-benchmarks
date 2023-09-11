@@ -57,7 +57,9 @@ def sb2_tuning(
 		perturbation_interval=perturbation_interval,
 		quantile_fraction=quantile_fraction,
 		hyperparam_bounds={
-			hp.name: [hp.low_bound, hp.high_bound] for hp in hyperparams_list
+			hp.name: [hp.low_bound, hp.high_bound] 
+			for hp in hyperparams_list
+			if hp.val_type_str in ['float', 'int']
 			},
 		)
 
