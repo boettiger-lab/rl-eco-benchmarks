@@ -15,7 +15,7 @@ class hyperparam:
 		if self.val_type_str not in ['categorical', 'int', 'float', 'bool', 'step_schedule']:
 			raise Warning("The only values val_type_str can take are 'categorical', 'int', 'float', 'bool'.")			
 		if self.val_type_str == 'categorical':
-			assert len(self.value_list > 0), "a categorical hyperparam needs a value_list property"
+			assert len(self.value_list) > 0, "a categorical hyperparam needs a value_list property"
 		if self.val_type_str in ['int', 'float']:
 			assert (self.low_bound != None) and (self.high_bound != None), "int and float hyperparams need low_bound and high_bound properties"
 
