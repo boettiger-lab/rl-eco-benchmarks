@@ -9,6 +9,7 @@ from ray.tune import run, sample_from
 from ray.tune.schedulers.pb2 import PB2
 
 from hyperparams import make_hyperparams
+from util import dict_pretty_print
 
 # docs: 
 # https://docs.ray.io/en/latest/tune/api/doc/ (cont.)
@@ -49,6 +50,8 @@ def sb2_tuning(
 	# 	)
 
 	hyperparams_list = make_hyperparams(hp_dicts_list)
+
+	dict_pretty_print(hyperparams_list)
 
 	pb2 = PB2(
 		time_attr=criteria,
