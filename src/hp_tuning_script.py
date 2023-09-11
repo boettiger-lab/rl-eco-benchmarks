@@ -96,10 +96,6 @@ hp_dicts_list = [
 	'high_bound': 0.9997,
 	},
 	{
-	'name': 'use_kl_loss',
-	'val_type_str': 'bool',
-	},
-	{
 	'name': 'lambda',
 	'val_type_str': 'float',
 	'low_bound': 0.9,
