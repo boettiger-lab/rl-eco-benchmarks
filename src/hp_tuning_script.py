@@ -7,6 +7,9 @@ from ray_trainer_api import ray_trainer
 from ray.rllib import _register_all
 _register_all()
 
+DATA_DIR = os.path.join("..", "data", "hp_tuning")
+os.makedirs(DATA_DIR, exist_ok=True)
+
 #
 # Ecology / control:
 
@@ -85,14 +88,49 @@ RT = ray_trainer(
 	config=env_config,
 )
 
+hp_dicts_list = [
+	{
+	'name': 'gamma',
+	'val_type_str': 'float',
+	'low_bound': 0.8,
+	'high_bound': 0.9997,
+	},
+	{
+	'name': 'use_kl_loss',
+	'val_type_str': 'bool',
+	},
+	{
+	'name': 'lambda',
+	'val_type_str': 'float',
+	'low_bound': 0.9,
+	'high_bound': 1,
+	},
+	{
+	'name': 'kl_target',
+	'val_type_str': 'float',
+	'low_bound': 0.0003,
+	'high_bound': 0.003,
+	},
+	{
+	'name': 'clip_param',
+	'val_type_str': 'categorical',
+	'value_list': [0.1, 0.2, 0.3],
+	}
+]
+
 tuning_df = RT.tune_hyper_params(
-	hp_dicts_list=[
-		{
-		'name':'lr', 
-		'val_type_str':'float',
-		'low_bound': 0.0001,
-		'high_bound': 0.005,
-		}
-	]
+	hp_dicts_list=hp_dicts_list
 	)
+
+
+tuning_df.to_csv(os.path.join(DATA_DIR, 'ppo_tuning_results.csv'))
+
+# [
+# 	{
+# 	'name':'lr', 
+# 	'val_type_str':'float',
+# 	'low_bound': 0.0001,
+# 	'high_bound': 0.005,
+# 	}
+# ]
 
