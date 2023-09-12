@@ -51,7 +51,8 @@ def sb2_tuning(
 
 	hyperparams_list = make_hyperparams(hp_dicts_list)
 
-	dict_pretty_print(hyperparams_list)
+	for hp in hyperparams_list:
+		dict_pretty_print(hp)
 
 	pb2 = PB2(
 		time_attr=criteria,
