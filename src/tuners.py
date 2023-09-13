@@ -133,6 +133,7 @@ def sb2_tuning(
 
 	#debugging
 	print(list(all_dfs.values())[0].columns)
+	dict_pretty_print(hp_mutations_)
 
 	"""
 	source:
