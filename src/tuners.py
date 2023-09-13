@@ -89,7 +89,7 @@ def sb2_tuning(
 		config={
 			"env": env_name,
 			"env_config": env_config,
-			"log_level": "INFO",
+			"log_level": "DEBUG",
 			"seed": seed,
 			"kl_coeff": 1.0,
 			"num_gpus": torch.cuda.device_count(),
