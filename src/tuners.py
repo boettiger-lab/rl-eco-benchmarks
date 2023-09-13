@@ -23,8 +23,8 @@ def sb2_tuning(
 	env_name,
 	env_config,
 	hp_dicts_list, # see 'make_hyperparams' for required structure
-	num_workers=20,
-	num_samples=50,
+	num_workers=10,
+	num_samples=20,
 	perturbation_interval=50_000,
 	seed=42,
 	horizon=1000,
@@ -118,18 +118,19 @@ def sb2_tuning(
 		- 'thins out' df
 		- adds 'Agent' column 
 		"""
-		df = df[
+		df_cp = df[
 						[
 							"timesteps_total",
 							"episodes_total",
 							"episode_reward_mean",
 							# "info/learner/default_policy/cur_kl_coeff",
 						]
-					]
-		df.loc["Agent"] = i
-		return df
+					].copy()
+		df_cp.loc["Agent"] = i
+		return df_cp
 
 	all_dfs = analysis.trial_dataframes
+	print(all_dfs)
 	"""
 	source:
 	@property
