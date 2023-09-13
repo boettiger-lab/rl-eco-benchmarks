@@ -118,6 +118,8 @@ tuning_df = RT.tune_hyper_params(
 	hp_dicts_list=hp_dicts_list
 	)
 
+print(tuning_df)
+
 
 tuning_df.to_csv(os.path.join(DATA_DIR, 'ppo_tuning_results.csv'))
 
