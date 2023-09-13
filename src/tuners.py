@@ -14,7 +14,7 @@ from util import dict_pretty_print
 # docs: 
 # https://docs.ray.io/en/latest/tune/api/doc/ (cont.)
 # ray.tune.schedulers.pb2.PB2.html#:~:text= (cont.)
-# Implements%20the%20Population%20Based%20Bandit, (cont.)
+# Implements%20the%20Popultion%20Based%20Bandit,a (cont.)
 # selected%20using%20GP%2Dbandit%20optimization. (end)
 
 
@@ -81,6 +81,7 @@ def sb2_tuning(
 		name="{}_{}_seed{}".format(
 			algo_name, env_name, str(seed)
 		),
+		metric="episode_reward_mean",
 		scheduler=pb2,
 		verbose=1,
 		num_samples=num_samples,
