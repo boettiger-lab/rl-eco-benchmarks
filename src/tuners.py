@@ -115,7 +115,7 @@ def sb2_tuning(
 
 	#
 	# factor out utility function
-	def process_df(df, i):
+	def process_df(df):
 		"""
 		- 'thins out' df
 		- adds 'Agent' column 
@@ -124,32 +124,37 @@ def sb2_tuning(
 						[
 							"timesteps_total",
 							"episodes_total",
+							"episode_reward_min",
 							"episode_reward_mean",
+							"episode_reward_max",
+							"config/gamma",
+							"config/lr",
 							# "info/learner/default_policy/cur_kl_coeff",
 						]
 					].copy()
-		df_cp.loc["Agent"] = i
 		return df_cp
 
-	all_dfs = analysis.trial_dataframes
+	# all_dfs = analysis.trial_dataframes
 
 	#debugging
-	iter_pretty_print(analysis.best_result_df.columns)
-	# print(list(all_dfs.values())[0].columns)
+	# iter_pretty_print(analysis.best_result_df.columns)
+
+
+	# names = list(all_dfs.keys())[:num_samples] # just take num_samples
+
+	# df = (
+	# 	pd.concat(
+	# 		[process_df(all_dfs[name], i) for i, name in enumerate(names)]
+	# 	)
+	# 	.reset_index(drop=True)
+	# )
 
 	"""
 	source:
 	@property
-	def trial_dataframes(self) -> Dict[str, DataFrame]:
+	def best_result_df(self) -> DataFrame:
 	"""
-	names = list(all_dfs.keys())[:num_samples] # just take num_samples
-
-	df = (
-		pd.concat(
-			[process_df(all_dfs[name], i) for i, name in enumerate(names)]
-		)
-		.reset_index(drop=True)
-	)
-
+	df = process_df(analysis.best_result_df)
+	print(df)
 	return df
 	
