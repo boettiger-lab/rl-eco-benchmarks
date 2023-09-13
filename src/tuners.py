@@ -53,7 +53,7 @@ def sb2_tuning(
 
 	pb2 = PB2(
 		time_attr=criteria,
-		metric="episode_reward_mean",
+		# metric="episode_reward_mean",
 		mode="max",
 		perturbation_interval=perturbation_interval,
 		quantile_fraction=quantile_fraction,
