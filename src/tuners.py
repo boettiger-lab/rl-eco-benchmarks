@@ -134,7 +134,7 @@ def sb2_tuning(
 	all_dfs = analysis.trial_dataframes
 
 	#debugging
-	print(analysis.best_trial())
+	print(analysis.best_trial)
 	# print(list(all_dfs.values())[0].columns)
 	dict_pretty_print(hp_mutations_)
 
