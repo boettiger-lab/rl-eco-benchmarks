@@ -112,7 +112,7 @@ hp_dicts_list = [
 # 	'val_type_str': 'categorical',
 # 	'value_list': [0.1, 0.2, 0.3],
 # 	}
-# ]
+]
 
 tuning_df = RT.tune_hyper_params(
 	hp_dicts_list=hp_dicts_list
