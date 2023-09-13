@@ -54,7 +54,7 @@ def sb2_tuning(
 	pb2 = PB2(
 		time_attr=criteria,
 		# metric="episode_reward_mean",
-		mode="max",
+		# mode="max",
 		perturbation_interval=perturbation_interval,
 		quantile_fraction=quantile_fraction,
 		hyperparam_bounds={
@@ -82,6 +82,7 @@ def sb2_tuning(
 			algo_name, env_name, str(seed)
 		),
 		metric="episode_reward_mean",
+		mode="max",
 		scheduler=pb2,
 		verbose=1,
 		num_samples=num_samples,
