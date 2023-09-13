@@ -34,6 +34,9 @@ def sb2_tuning(
 	ff_net_sizes: List[int] = [32, 32],
 	):
 
+	hp_names = [hp["name"] for hp in hp_dicts_list]
+	output_names = [f"config/{hp_name}" for hp_name in hp_names]
+
 	# only consider pb2 here
 	# 	
 	# pbt = PopulationBasedTraining(
@@ -127,8 +130,7 @@ def sb2_tuning(
 							"episode_reward_min",
 							"episode_reward_mean",
 							"episode_reward_max",
-							"config/gamma",
-							"config/lr",
+							*output_names,
 							# "info/learner/default_policy/cur_kl_coeff",
 						]
 					].copy()
