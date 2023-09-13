@@ -126,7 +126,7 @@ def sb2_tuning(
 							# "info/learner/default_policy/cur_kl_coeff",
 						]
 					]
-		df["Agent"] = i
+		df.loc["Agent"] = i
 		return df
 
 	all_dfs = analysis.trial_dataframes
