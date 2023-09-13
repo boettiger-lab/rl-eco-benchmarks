@@ -23,14 +23,14 @@ def sb2_tuning(
 	env_name,
 	env_config,
 	hp_dicts_list, # see 'make_hyperparams' for required structure
-	num_workers=2,
-	num_samples=2,
+	num_workers=64,
+	num_samples=256,
 	perturbation_interval=50_000,
 	seed=42,
 	horizon=1000,
 	quantile_fraction=0.25,
 	criteria="timesteps_total",
-	criteria_max=100,
+	criteria_max=2_000_000,
 	ff_net_sizes: List[int] = [32, 32],
 	):
 
@@ -156,7 +156,5 @@ def sb2_tuning(
 	@property
 	def best_result_df(self) -> DataFrame:
 	"""
-	df = process_df(analysis.best_result_df)
-	print(df)
-	return df
+	return process_df(analysis.best_result_df)
 	
