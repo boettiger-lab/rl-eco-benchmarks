@@ -123,7 +123,7 @@ def sb2_tuning(
 							"timesteps_total",
 							"episodes_total",
 							"episode_reward_mean",
-							"info/learner/default_policy/cur_kl_coeff",
+							# "info/learner/default_policy/cur_kl_coeff",
 						]
 					]
 		df["Agent"] = i
