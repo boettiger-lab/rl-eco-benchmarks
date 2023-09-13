@@ -9,7 +9,7 @@ from ray.tune import run, sample_from
 from ray.tune.schedulers.pb2 import PB2
 
 from hyperparams import make_hyperparams
-from util import dict_pretty_print
+from util import dict_pretty_print, iter_pretty_print
 
 # docs: 
 # https://docs.ray.io/en/latest/tune/api/doc/ (cont.)
@@ -134,7 +134,7 @@ def sb2_tuning(
 	all_dfs = analysis.trial_dataframes
 
 	#debugging
-	print(analysis.best_result_df.columns)
+	iter_pretty_print(analysis.best_result_df.columns)
 	# print(list(all_dfs.values())[0].columns)
 
 	"""
