@@ -130,7 +130,10 @@ def sb2_tuning(
 		return df_cp
 
 	all_dfs = analysis.trial_dataframes
-	print(all_dfs)
+
+	#debugging
+	print(list(all_dfs.values())[0].columns)
+
 	"""
 	source:
 	@property
