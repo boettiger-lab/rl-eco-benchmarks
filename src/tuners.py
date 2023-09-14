@@ -118,10 +118,9 @@ def sb2_tuning(
 
 	#
 	# factor out utility function
-	def process_df(df):
+	def process_df(df, output_names):
 		"""
 		- 'thins out' df
-		- adds 'Agent' column 
 		"""
 		df_cp = df[
 						[
@@ -156,5 +155,5 @@ def sb2_tuning(
 	@property
 	def best_result_df(self) -> DataFrame:
 	"""
-	return process_df(analysis.best_result_df)
+	return process_df(analysis.best_result_df, output_names)
 	
