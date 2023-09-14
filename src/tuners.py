@@ -23,14 +23,14 @@ def sb2_tuning(
 	env_name,
 	env_config,
 	hp_dicts_list, # see 'make_hyperparams' for required structure
-	num_workers=1,
-	num_samples=1,
+	num_workers=10,
+	num_samples=100,
 	perturbation_interval=50_000,
 	seed=42,
 	horizon=1000,
 	quantile_fraction=0.25,
 	criteria="timesteps_total",
-	criteria_max=100,
+	criteria_max=2_000_000,
 	ff_net_sizes: List[int] = [32, 32],
 	):
 
