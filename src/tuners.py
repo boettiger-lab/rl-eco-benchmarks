@@ -23,8 +23,8 @@ def sb2_tuning(
 	env_name,
 	env_config,
 	hp_dicts_list, # see 'make_hyperparams' for required structure
-	num_workers=2,
-	num_samples=2,
+	num_workers=1,
+	num_samples=1,
 	perturbation_interval=50_000,
 	seed=42,
 	horizon=1000,
