@@ -107,11 +107,11 @@ hp_dicts_list = [
 	# 'low_bound': 0.0003,
 	# 'high_bound': 0.003,
 	# },
-	# {
-	# 'name': 'clip_param',
-	# 'val_type_str': 'categorical',
-	# 'value_list': [0.1, 0.2, 0.3],
-	# }
+	{
+	'name': 'clip_param',
+	'val_type_str': 'categorical',
+	'value_list': [0.1, 0.2, 0.3],
+	}
 ]
 
 tuning_df = RT.tune_hyper_params(
