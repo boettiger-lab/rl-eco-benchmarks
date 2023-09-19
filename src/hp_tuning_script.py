@@ -95,12 +95,12 @@ hp_dicts_list = [
 	'low_bound': 0.8,
 	'high_bound': 0.9997,
 	},
-	# {
-	# 'name': 'lambda',
-	# 'val_type_str': 'float',
-	# 'low_bound': 0.9,
-	# 'high_bound': 1,
-	# },
+	{
+	'name': 'lambda',
+	'val_type_str': 'float',
+	'low_bound': 0.9,
+	'high_bound': 1,
+	},
 	# {
 	# 'name': 'kl_target',
 	# 'val_type_str': 'float',
