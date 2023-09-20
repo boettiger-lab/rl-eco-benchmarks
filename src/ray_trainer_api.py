@@ -51,26 +51,25 @@ class ray_trainer:
 		#
 		# computational resources
 		self.algo_config.num_envs_per_worker=50
-		self.cpus_to_use = os.cpu_count() // 2
 		if algo_name == "ars":
 			# at most one gpu for ars
 			self.algo_config = self.algo_config.resources(
 				num_gpus=min(1, torch.cuda.device_count()), 
 				num_gpus_per_worker=0.5,
-				num_cpus_per_worker=10,
+				num_cpus_per_worker=4,
 			)
 		elif algo_name == "ddppo":
 			# no gpus for ddppo since all the parallelization happens inside workers
 			self.algo_config = self.algo_config.resources(
 				num_gpus=0, 
 				num_gpus_per_worker=0.5,
-				num_cpus_per_worker=10,
+				num_cpus_per_worker=4,
 			)
 		else:
 			self.algo_config = self.algo_config.resources(
 				num_gpus=torch.cuda.device_count(), 
 				num_gpus_per_worker=0.5,
-				num_cpus_per_worker=10,
+				num_cpus_per_worker=4,
 			)
 		# 
 		# config.env
