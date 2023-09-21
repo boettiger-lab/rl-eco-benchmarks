@@ -117,8 +117,8 @@ hp_dicts_list = [
 tuning_df = RT.tune_hyper_params(
 	hp_dicts_list=hp_dicts_list,
 	num_workers=10,
-	num_samples=20,
-	criteria_max=10_000,
+	num_samples=50,
+	criteria_max=100_000,
 	)
 
 print(tuning_df)
