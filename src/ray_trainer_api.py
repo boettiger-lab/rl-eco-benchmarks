@@ -52,9 +52,9 @@ class ray_trainer:
 		# computational resources
 		self.algo_config.num_envs_per_worker=50
 		if algo_name == "ars":
-			# at most one gpu for ars
-			self.gpus_per_learner = 0.2
+			# at most one gpu for ars -- use only cpus (cannot use both)
 			self.cpus_per_learner = 5
+			self.gpus_per_learner = 0
 
 			self.algo_config = self.algo_config.resources(
 				num_gpus=min(1, torch.cuda.device_count()), 
@@ -70,8 +70,9 @@ class ray_trainer:
 				num_cpus_per_learner_worker=self.cpus_per_learner,
 			)
 		else:
-			self.gpus_per_learner = 0.2
-			self.cpus_per_learner = 5
+			# try only using gpus (can only use one choice, gpu or cpu)
+			self.gpus_per_learner = 0.4
+			self.cpus_per_learner = 0
 
 			self.algo_config = self.algo_config.resources(
 				num_gpus=torch.cuda.device_count(), 
