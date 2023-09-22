@@ -23,6 +23,7 @@ def sb2_tuning(
 	env_name,
 	env_config,
 	hp_dicts_list, # see 'make_hyperparams' for required structure
+	computational_resources={},
 	num_workers=10,
 	num_samples=100,
 	perturbation_interval=50_000,
@@ -106,6 +107,7 @@ def sb2_tuning(
 			},
 			"num_sgd_iter": 10,
 			"sgd_minibatch_size": 128,
+			**computational_resources,
 			**hp_mutations_,
 		},
 	)

@@ -53,23 +53,30 @@ class ray_trainer:
 		self.algo_config.num_envs_per_worker=50
 		if algo_name == "ars":
 			# at most one gpu for ars
+			self.gpus_per_learner = 0.2
+			self.cpus_per_learner = 5
+
 			self.algo_config = self.algo_config.resources(
 				num_gpus=min(1, torch.cuda.device_count()), 
-				num_gpus_per_worker=0.5,
-				num_cpus_per_worker=3,
+				num_gpus_per_learner_worker=self.gpus_per_learner,
+				num_cpus_per_learner_worker=self.cpus_per_learner,
 			)
 		elif algo_name == "ddppo":
 			# no gpus for ddppo since all the parallelization happens inside workers
+			self.cpus_per_learner = 5
+			self.gpus_per_learner = 0
+
 			self.algo_config = self.algo_config.resources(
-				num_gpus=0, 
-				num_gpus_per_worker=0.5,
-				num_cpus_per_worker=3,
+				num_cpus_per_learner_worker=self.cpus_per_learner,
 			)
 		else:
+			self.gpus_per_learner = 0.2
+			self.cpus_per_learner = 5
+
 			self.algo_config = self.algo_config.resources(
 				num_gpus=torch.cuda.device_count(), 
-				num_gpus_per_worker=0.5,
-				num_cpus_per_worker=3,
+				num_gpus_per_learner_worker=self.gpus_per_learner,
+				num_cpus_per_learner_worker=self.cpus_per_learner,
 			)
 		# 
 		# config.env
@@ -124,11 +131,17 @@ class ray_trainer:
 			hp_dicts_list: see sb2_tuning implementation for required structure
 			**kwargs: see sb2_tuning optional kwargs
 		"""
+		computational_resources = {
+		"num_gpus_per_learner_worker": self.gpus_per_learner,
+		"num_cpus_per_learner_worker": self.cpus_per_learner,
+		}
+
 		return sb2_tuning(
 			algo_name=self.algo_name,
 			env_name=self.env_name,
 			env_config=self.algo_config.env_config,
 			hp_dicts_list=hp_dicts_list,
+			computational_resources = computational_resources,
 			**kwargs,
 			)
 		
