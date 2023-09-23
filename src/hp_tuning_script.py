@@ -84,7 +84,7 @@ env_config = {
 			}
 
 RT = ray_trainer(
-	algo_name="ppo", 
+	algo_name="ddppo", 
 	config=env_config,
 )
 
