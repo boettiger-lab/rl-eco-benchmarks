@@ -141,6 +141,7 @@ class ray_trainer:
 		computational_resources = {
 		"num_gpus": self.num_gpus,
 		"num_gpus_per_learner_worker": self.gpus_per_learner,
+		"num_gpus_per_worker":1,
 		"num_cpus_per_learner_worker": self.cpus_per_learner,
 		}
 
