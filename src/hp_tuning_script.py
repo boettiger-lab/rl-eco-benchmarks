@@ -83,11 +83,6 @@ env_config = {
 				'utility_fn': utility_fn,
 			}
 
-RT = ray_trainer(
-	algo_name="ddpg", 
-	config=env_config,
-)
-
 ppo_hp_dicts_list = [
 	{
 	'name': 'gamma',
@@ -116,21 +111,15 @@ ppo_hp_dicts_list = [
 
 ddppo_hp_dicts_list = [
 	{
-	'name': 'gamma',
+	'name': 'lr',
 	'val_type_str': 'float',
-	'low_bound': 0.8,
-	'high_bound': 0.9997,
+	'low_bound': 0.0001,
+	'high_bound': 0.001,
 	},
 	{
-	'name': 'lambda',
-	'val_type_str': 'float',
-	'low_bound': 0.9,
-	'high_bound': 1,
-	},
-	{
-	'name': 'clip_param',
+	'name': 'keep_local_weights_in_sync',
 	'val_type_str': 'categorical',
-	'value_list': [0.1, 0.2, 0.3],
+	'value_list': [True, False],
 	},
 ]
 
@@ -154,8 +143,13 @@ ddpg_hp_dicts_list = [
 	},
 ]
 
+RT = ray_trainer(
+	algo_name="ddppo", 
+	config=env_config,
+)
+
 tuning_df = RT.tune_hyper_params(
-	hp_dicts_list=ddpg_hp_dicts_list,
+	hp_dicts_list=ddppo_hp_dicts_list,
 	num_workers=10,
 	num_samples=50,
 	criteria_max=500_000,
