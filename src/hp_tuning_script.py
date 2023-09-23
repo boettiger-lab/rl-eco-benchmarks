@@ -131,7 +131,27 @@ ddppo_hp_dicts_list = [
 	'name': 'clip_param',
 	'val_type_str': 'categorical',
 	'value_list': [0.1, 0.2, 0.3],
-	}
+	},
+]
+
+ddpg_hp_dicts_list = [
+	{
+	'name': 'twin_q',
+	'val_type_str': 'categorical',
+	'value_list': [True, False],
+	},
+	{
+	'name': 'actor_lr',
+	'val_type_str': 'float',
+	'low_bound': 0.00002,
+	'high_bound': 0.0005,
+	},
+	{
+	'name': 'critic_lr',
+	'val_type_str': 'float',
+	'low_bound': 0.0002,
+	'high_bound': 0.005,
+	},
 ]
 
 tuning_df = RT.tune_hyper_params(
