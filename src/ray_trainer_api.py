@@ -21,6 +21,7 @@ from ray.rllib.algorithms.ppo import PPOConfig
 
 from env_factories import env_factory, ray_env_factory
 from tuners import sb2_tuning
+from util import dict_pretty_print
 
 class ray_trainer:
 	""" an RL agent training on one of ray's algorithms. """
@@ -142,6 +143,8 @@ class ray_trainer:
 		"num_gpus_per_learner_worker": self.gpus_per_learner,
 		"num_cpus_per_learner_worker": self.cpus_per_learner,
 		}
+
+		dict_pretty_print(computational_resources)
 
 		return sb2_tuning(
 			algo_name=self.algo_name,
