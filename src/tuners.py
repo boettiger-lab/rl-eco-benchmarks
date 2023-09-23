@@ -98,7 +98,7 @@ def sb2_tuning(
 			"log_level": "DEBUG",
 			"seed": seed,
 			"kl_coeff": 1.0,
-			"num_gpus": torch.cuda.device_count(),
+			# "num_gpus": torch.cuda.device_count(), -> now in computational_resources
 			"horizon": horizon,
 			"observation_filter": "MeanStdFilter",
 			"model": {

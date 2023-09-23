@@ -55,9 +55,10 @@ class ray_trainer:
 			# at most one gpu for ars -- use only cpus (cannot use both)
 			self.cpus_per_learner = 5
 			self.gpus_per_learner = 0
+			self.num_gpus=min(1, torch.cuda.device_count())
 
 			self.algo_config = self.algo_config.resources(
-				num_gpus=min(1, torch.cuda.device_count()), 
+				num_gpus=self.num_gpus, 
 				num_gpus_per_learner_worker=self.gpus_per_learner,
 				num_cpus_per_learner_worker=self.cpus_per_learner,
 			)
@@ -65,6 +66,7 @@ class ray_trainer:
 			# no gpus for ddppo since all the parallelization happens inside workers
 			self.cpus_per_learner = 5
 			self.gpus_per_learner = 0
+			self.num_gpus=0 #paralellization happens in worker
 
 			self.algo_config = self.algo_config.resources(
 				num_cpus_per_learner_worker=self.cpus_per_learner,
@@ -73,9 +75,10 @@ class ray_trainer:
 			# try only using gpus (can only use one choice, gpu or cpu)
 			self.gpus_per_learner = 0.4
 			self.cpus_per_learner = 0
+			self.num_gpus=torch.cuda.device_count()
 
 			self.algo_config = self.algo_config.resources(
-				num_gpus=torch.cuda.device_count(), 
+				num_gpus=self.num_gpus, 
 				num_gpus_per_learner_worker=self.gpus_per_learner,
 				num_cpus_per_learner_worker=self.cpus_per_learner,
 			)
@@ -133,6 +136,7 @@ class ray_trainer:
 			**kwargs: see sb2_tuning optional kwargs
 		"""
 		computational_resources = {
+		"num_gpus": self.num_gpus,
 		"num_gpus_per_learner_worker": self.gpus_per_learner,
 		"num_cpus_per_learner_worker": self.cpus_per_learner,
 		}
