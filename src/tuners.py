@@ -80,6 +80,11 @@ def sb2_tuning(
 
 	print("hp mutations sampled\n")
 
+	if algo_name.upper() == "PPO":
+		kl_coeff_dict = {"kl_coeff":1}
+	else:
+		kl_coeff_dict = {}
+
 	analysis = run(
 		algo_name.upper(),
 		name="{}_{}_seed{}".format(
@@ -97,7 +102,6 @@ def sb2_tuning(
 			"env_config": env_config,
 			"log_level": "DEBUG",
 			"seed": seed,
-			"kl_coeff": 1.0,
 			# "num_gpus": torch.cuda.device_count(), -> now in computational_resources
 			"horizon": horizon,
 			"observation_filter": "MeanStdFilter",
@@ -107,6 +111,7 @@ def sb2_tuning(
 			},
 			"num_sgd_iter": 10,
 			"sgd_minibatch_size": 128,
+			**kl_coeff_dict,
 			**computational_resources,
 			**hp_mutations_,
 		},
