@@ -66,7 +66,7 @@ class ray_trainer:
 			# no gpus for ddppo since all the parallelization happens inside workers
 			self.cpus_per_learner = 5
 			self.gpus_per_learner = 0
-			self.num_gpus=0 #paralellization happens in worker
+			self.num_gpus=1 #paralellization happens in worker
 
 			self.algo_config = self.algo_config.resources(
 				num_cpus_per_learner_worker=self.cpus_per_learner,
