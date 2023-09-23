@@ -88,7 +88,7 @@ RT = ray_trainer(
 	config=env_config,
 )
 
-hp_dicts_list = [
+ppo_hp_dicts_list = [
 	{
 	'name': 'gamma',
 	'val_type_str': 'float',
@@ -114,8 +114,28 @@ hp_dicts_list = [
 	}
 ]
 
+ddppo_hp_dicts_list = [
+	{
+	'name': 'gamma',
+	'val_type_str': 'float',
+	'low_bound': 0.8,
+	'high_bound': 0.9997,
+	},
+	{
+	'name': 'lambda',
+	'val_type_str': 'float',
+	'low_bound': 0.9,
+	'high_bound': 1,
+	},
+	{
+	'name': 'clip_param',
+	'val_type_str': 'categorical',
+	'value_list': [0.1, 0.2, 0.3],
+	}
+]
+
 tuning_df = RT.tune_hyper_params(
-	hp_dicts_list=hp_dicts_list,
+	hp_dicts_list=ddppo_hp_dicts_list,
 	num_workers=10,
 	num_samples=50,
 	criteria_max=500_000,
