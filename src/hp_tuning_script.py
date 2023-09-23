@@ -155,7 +155,7 @@ ddpg_hp_dicts_list = [
 ]
 
 tuning_df = RT.tune_hyper_params(
-	hp_dicts_list=ddppo_hp_dicts_list,
+	hp_dicts_list=ddpg_hp_dicts_list,
 	num_workers=10,
 	num_samples=50,
 	criteria_max=500_000,
