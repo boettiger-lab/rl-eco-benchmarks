@@ -139,7 +139,7 @@ class ray_trainer:
 			**kwargs: see sb2_tuning optional kwargs
 		"""
 		computational_resources = {
-		"num_gpus": self.num_gpus,
+		# "num_gpus": self.num_gpus,
 		"num_gpus_per_learner_worker": self.gpus_per_learner,
 		"num_cpus_per_learner_worker": self.cpus_per_learner,
 		}
