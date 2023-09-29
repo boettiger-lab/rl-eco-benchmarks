@@ -126,8 +126,7 @@ ddppo_hp_dicts_list = [
 ddpg_hp_dicts_list = [
 	{
 	'name': 'twin_q',
-	'val_type_str': 'categorical',
-	'value_list': [True, False],
+	'val_type_str': 'bool',
 	},
 	{
 	'name': 'actor_lr',
@@ -141,15 +140,53 @@ ddpg_hp_dicts_list = [
 	'low_bound': 0.0002,
 	'high_bound': 0.005,
 	},
+	{
+	'name': 'actor_hiddens',
+	'val_type_str': 'categorical',
+	'value_list': [[400,300], [400,200], [300,300], [500,300], [500,200]]
+	},
+	{
+	'name': 'critic_hiddens',
+	'val_type_str': 'categorical',
+	'value_list': [[400,300], [400,200], [300,300], [500,300], [500,200]]
+	},
+	{
+	'name': 'policy_delay',
+	'val_type_str': 'categorical',
+	'value_list': [1,2,3,4],
+	},
+	{
+	'name': 'tau',
+	'val_type_str': 'float',
+	'low_bound': 0.001,
+	'high_bound': 0.01,
+	},
+	{
+	'name': 'l2_reg',
+	'val_type_str': 'float',
+	'low_bound': 0,
+	'high_bound': 0.1,
+	},
 ]
 
+td3_hp_dicts_list = ddpg_hp_dicts_list
+
+hyperparameters = {
+	'ppo': ppo_hp_dicts_list,
+	'ddppo': ddppo_hp_dicts_list,
+	'ddpg': ddpg_hp_dicts_list,
+	'td3': td3_hp_dicts_list,
+}
+
+algo = "ppo"
+
 RT = ray_trainer(
-	algo_name="ddppo", 
+	algo_name=algo, 
 	config=env_config,
 )
 
 tuning_df = RT.tune_hyper_params(
-	hp_dicts_list=ddppo_hp_dicts_list,
+	hp_dicts_list=ppo_hp_dicts_list,
 	num_workers=10,
 	num_samples=50,
 	criteria_max=500_000,
@@ -158,7 +195,7 @@ tuning_df = RT.tune_hyper_params(
 print(tuning_df)
 
 
-tuning_df.to_csv(os.path.join(DATA_DIR, 'ppo_tuning_results.csv'))
+tuning_df.to_csv(os.path.join(DATA_DIR, f'{algo}_tuning_results.csv'))
 
 # [
 # 	{
