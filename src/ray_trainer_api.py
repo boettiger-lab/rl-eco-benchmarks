@@ -76,8 +76,8 @@ class ray_trainer:
 			)
 		else:
 			# try only using gpus (can only use one choice, gpu or cpu)
-			self.gpus_per_learner = 0.4
-			self.cpus_per_learner = 0
+			self.gpus_per_learner = 0
+			self.cpus_per_learner = 5
 			self.num_gpus=torch.cuda.device_count()
 
 			self.algo_config = self.algo_config.resources(
