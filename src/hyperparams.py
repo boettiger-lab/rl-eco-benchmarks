@@ -12,7 +12,7 @@ class hyperparam:
 	value_list: 'optional, only needed if val_type_str == categorical' = field(default_factory=list)
 
 	def __post_init__(self):
-		if self.val_type_str not in ['categorical', 'int', 'float', 'bool', 'step_schedule']:
+		if self.val_type_str not in ['categorical', 'categorical_lists', 'int', 'float', 'bool', 'step_schedule']:
 			raise Warning("The only values val_type_str can take are 'categorical', 'int', 'float', 'bool'.")			
 		if self.val_type_str == 'categorical':
 			assert len(self.value_list) > 0, "a categorical hyperparam needs a value_list property"
@@ -27,6 +27,8 @@ class hyperparam:
 		"""
 		if self.val_type_str == 'categorical':
 			return lambda *args, **kwargs: np.random.choice(self.value_list)
+		if self.val_type_str == 'categorical_lists':
+			return lambda *args, **kwargs: self.value_list[np.random.randint(0, len(self.value_list))]
 		if self.val_type_str == 'int':
 			return lambda *args, **kwargs:  np.random.randint(low=self.low_bound, high=self.high_bound+1) # make high_bound *inclusive*
 		if self.val_type_str == 'float':

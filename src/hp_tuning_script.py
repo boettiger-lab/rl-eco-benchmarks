@@ -142,12 +142,12 @@ ddpg_hp_dicts_list = [
 	},
 	{
 	'name': 'actor_hiddens',
-	'val_type_str': 'categorical',
+	'val_type_str': 'categorical_lists',
 	'value_list': [[400,300], [400,200], [300,300], [500,300], [500,200]]
 	},
 	{
 	'name': 'critic_hiddens',
-	'val_type_str': 'categorical',
+	'val_type_str': 'categorical_lists',
 	'value_list': [[400,300], [400,200], [300,300], [500,300], [500,200]]
 	},
 	{
