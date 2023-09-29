@@ -178,7 +178,7 @@ hyperparameters = {
 	'td3': td3_hp_dicts_list,
 }
 
-algo = "ppo"
+algo = "td3"
 
 RT = ray_trainer(
 	algo_name=algo, 
@@ -186,7 +186,7 @@ RT = ray_trainer(
 )
 
 tuning_df = RT.tune_hyper_params(
-	hp_dicts_list=ppo_hp_dicts_list,
+	hp_dicts_list=hyperparameters[algo],
 	num_workers=10,
 	num_samples=50,
 	criteria_max=500_000,
