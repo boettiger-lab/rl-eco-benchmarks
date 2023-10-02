@@ -132,13 +132,19 @@ ddpg_hp_dicts_list = [
 	'name': 'actor_lr',
 	'val_type_str': 'float',
 	'low_bound': 0.00002,
-	'high_bound': 0.0005,
+	'high_bound': 0.0001,
 	},
 	{
 	'name': 'critic_lr',
 	'val_type_str': 'float',
 	'low_bound': 0.0002,
-	'high_bound': 0.005,
+	'high_bound': 0.001,
+	},
+	{
+	'name': 'lr',
+	'val_type_str': 'float',
+	'low_bound': 0.0001,
+	'high_bound': 0.001,
 	},
 	{
 	'name': 'actor_hiddens',
