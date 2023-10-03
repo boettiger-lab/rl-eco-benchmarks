@@ -184,7 +184,7 @@ hyperparameters = {
 	'td3': td3_hp_dicts_list,
 }
 
-algo = "td3"
+algo = "ddpg"
 
 RT = ray_trainer(
 	algo_name=algo, 
