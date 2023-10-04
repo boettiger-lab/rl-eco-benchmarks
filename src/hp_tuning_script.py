@@ -213,12 +213,12 @@ ddpg_hp_dicts_list = [
 	'low_bound': 0.001,
 	'high_bound': 0.01,
 	},
-	# {
-	# 'name': 'l2_reg',
-	# 'val_type_str': 'float',
-	# 'low_bound': 0,
-	# 'high_bound': 0.1,
-	# },
+	{
+	'name': 'l2_reg',
+	'val_type_str': 'float',
+	'low_bound': 0,
+	'high_bound': 0.1,
+	},
 ]
 
 td3_hp_dicts_list = ddpg_hp_dicts_list
