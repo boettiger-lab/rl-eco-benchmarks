@@ -10,6 +10,10 @@ _register_all()
 DATA_DIR = os.path.join("..", "data", "hp_tuning")
 os.makedirs(DATA_DIR, exist_ok=True)
 
+algo_to_tune = input("algorithm to tune (appo, ddppo, ddpg, td3)")
+if algo_to_tune not in ('appo', 'ddppo', 'ddpg', 'td3'):
+	raise Warning("Algorithm name not allowed.")
+
 #
 # Ecology / control:
 
@@ -110,6 +114,7 @@ ppo_hp_dicts_list = [
 ]
 
 ddppo_hp_dicts_list = [
+	*ppo_hp_dicts_list,
 	{
 	'name': 'lr',
 	'val_type_str': 'float',
@@ -226,7 +231,7 @@ hyperparameters = {
 	'td3': td3_hp_dicts_list,
 }
 
-algo = "appo"
+algo = algo_to_tune
 
 RT = ray_trainer(
 	algo_name=algo, 
