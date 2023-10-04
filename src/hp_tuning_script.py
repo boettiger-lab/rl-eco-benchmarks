@@ -124,10 +124,7 @@ ddppo_hp_dicts_list = [
 ]
 
 appo_hp_dicts_list = [
-	{
-	'name': 'vtrace',
-	'val_type_str':'bool',
-	},
+
 	{
 	'name': 'use_critic',
 	'val_type_str': 'bool',
@@ -233,8 +230,8 @@ RT = ray_trainer(
 
 tuning_df = RT.tune_hyper_params(
 	hp_dicts_list=hyperparameters[algo],
-	num_workers=7,
-	num_samples=7,
+	num_workers=5,
+	num_samples=10,
 	criteria_max=500_000,
 	)
 
