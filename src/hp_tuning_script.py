@@ -157,11 +157,6 @@ appo_hp_dicts_list = [
 	'value_list': [1,2,3],
 	},
 	{
-	'name': 'minibatch_size',
-	'val_type_str': 'categorical',
-	'value_list': [250, 500, 750, 1000]
-	},
-	{
 	'name': 'lr',
 	'val_type_str': 'float',
 	'low_bound': 0.00005,
