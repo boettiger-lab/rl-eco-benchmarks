@@ -124,13 +124,12 @@ ddppo_hp_dicts_list = [
 ]
 
 appo_hp_dicts_list = [
-
 	{
 	'name': 'use_critic',
 	'val_type_str': 'bool',
 	},
 	{
-	'name': 'lambda_',
+	'name': 'lambda',
 	'val_type_str': 'float',
 	'low_bound': 0.92,
 	'high_bound': 1.,
