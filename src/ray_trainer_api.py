@@ -138,11 +138,11 @@ class ray_trainer:
 			hp_dicts_list: see sb2_tuning implementation for required structure
 			**kwargs: see sb2_tuning optional kwargs
 		"""
-		computational_resources = {
-		"num_gpus": self.num_gpus,
-		"num_gpus_per_learner_worker": self.gpus_per_learner,
-		"num_cpus_per_learner_worker": self.cpus_per_learner,
-		}
+		# computational_resources = {
+		# "num_gpus": self.num_gpus,
+		# "num_gpus_per_learner_worker": self.gpus_per_learner,
+		# "num_cpus_per_learner_worker": self.cpus_per_learner,
+		# }
 
 		# dict_pretty_print(computational_resources)
 
@@ -151,7 +151,7 @@ class ray_trainer:
 			env_name=self.env_name,
 			env_config=self.algo_config.env_config,
 			hp_dicts_list=hp_dicts_list,
-			computational_resources = computational_resources,
+			# computational_resources = computational_resources,
 			**kwargs,
 			)
 		
