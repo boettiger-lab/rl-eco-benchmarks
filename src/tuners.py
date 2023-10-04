@@ -100,7 +100,7 @@ def sb2_tuning(
 		config={
 			"env": env_name,
 			"env_config": env_config,
-			"log_level": "INFO",
+			"log_level": "WARNING",
 			"seed": seed,
 			# "num_gpus": torch.cuda.device_count(), -> now in computational_resources
 			"horizon": horizon,
