@@ -233,11 +233,18 @@ RT = ray_trainer(
 	config=env_config,
 )
 
+# note on criteria: 
+#
+# can take values 
+#
+# 'timestep_total', 
+
 tuning_df = RT.tune_hyper_params(
 	hp_dicts_list=hyperparameters[algo],
 	num_workers=5,
 	num_samples=10,
-	criteria_max=500_000,
+	criteria="time_total_s", 
+	criteria_max=1000,
 	)
 
 print(tuning_df)
