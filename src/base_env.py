@@ -71,11 +71,12 @@ class eco_env(gym.Env):
 		reset_pert = self.reset_sigma * np.random.normal(size=self.metadata.n_sp)
 		self.pop = self.init_pop + reset_pert
 		self.state = self.pop_to_state(self.pop)
-		info = {
-			"init pop mean": self.init_pop, 
-			"init pop perturbation": reset_pert,
-			"init state realized": self.state,
-		}
+		# info = {
+		# 	"init pop mean": self.init_pop, 
+		# 	"init pop perturbation": reset_pert,
+		# 	"init state realized": self.state,
+		# }
+		info = {}
 		return self.state, info
 
 	def step(self, action):

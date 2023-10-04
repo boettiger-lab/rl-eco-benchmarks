@@ -149,7 +149,17 @@ appo_hp_dicts_list = [
 	'low_bound': 0.001,
 	'high_bound': 0.01,
 	},
-
+	{
+	'name': 'gamma',
+	'val_type_str': 'float',
+	'low_bound': 0.8,
+	'high_bound': 0.9999,
+	},
+	{
+	'name': 'num_sgd_iter',
+	'val_type_str': 'categorical',
+	'value_list': [1,2,3],
+	},
 ]
 
 ddpg_hp_dicts_list = [
