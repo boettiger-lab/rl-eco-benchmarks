@@ -208,6 +208,7 @@ td3_hp_dicts_list = ddpg_hp_dicts_list
 
 hyperparameters = {
 	'ppo': ppo_hp_dicts_list,
+	'appo': appo_hp_dicts_list,
 	'ddppo': ddppo_hp_dicts_list,
 	'ddpg': ddpg_hp_dicts_list,
 	'td3': td3_hp_dicts_list,
