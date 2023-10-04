@@ -120,7 +120,8 @@ class eco_env(gym.Env):
 		self.pop = self.state_to_pop(self.state)
 		#
 		# info
-		info = {"actions": action, "effects": effects, "reward": reward, }
+		# info = {"actions": action, "effects": effects, "reward": reward, }
+		info = {}
 		return self.state, reward, terminated, False, info
 
 	# 
