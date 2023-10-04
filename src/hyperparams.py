@@ -32,7 +32,7 @@ class hyperparam:
 		if self.val_type_str == 'int':
 			return lambda *args, **kwargs:  np.random.randint(low=self.low_bound, high=self.high_bound+1) # make high_bound *inclusive*
 		if self.val_type_str == 'float':
-			return lambda *args, **kwargs: self.low_bound + self.high_bound * np.random.rand()
+			return lambda *args, **kwargs: self.low_bound + (self.high_bound-self.low_bound) * np.random.rand()
 		if self.val_type_str == 'bool':
 			return lambda *args, **kwargs: np.random.choice([True, False])
 		if self.val_type_str == 'step_schedule':
