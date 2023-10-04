@@ -123,6 +123,35 @@ ddppo_hp_dicts_list = [
 	},
 ]
 
+appo_hp_dicts_list = [
+	{
+	'name': 'vtrace',
+	'val_type_str':'bool',
+	},
+	{
+	'name': 'use_critic',
+	'val_type_str': 'bool',
+	},
+	{
+	'name': 'lambda_',
+	'val_type_str': 'float',
+	'low_bound': 0.92,
+	'high_bound': 1.,
+	},
+	{
+	'name': 'clip_param',
+	'val_type_str': 'categorical',
+	'value_list': [0.1, 0.2, 0.3],
+	},
+	{
+	'name': 'tau',
+	'val_type_str': 'float',
+	'low_bound': 0.001,
+	'high_bound': 0.01,
+	},
+
+]
+
 ddpg_hp_dicts_list = [
 	{
 	'name': 'twin_q',
@@ -184,7 +213,7 @@ hyperparameters = {
 	'td3': td3_hp_dicts_list,
 }
 
-algo = "ddpg"
+algo = "appo"
 
 RT = ray_trainer(
 	algo_name=algo, 
