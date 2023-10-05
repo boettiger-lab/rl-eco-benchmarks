@@ -249,7 +249,7 @@ tuning_df = RT.tune_hyper_params(
 	num_workers=5,
 	num_samples=10,
 	criteria="time_total_s", 
-	criteria_max=1000,
+	criteria_max=2500,
 	)
 
 print(tuning_df)
