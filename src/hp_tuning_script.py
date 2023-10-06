@@ -89,28 +89,34 @@ env_config = {
 
 ppo_hp_dicts_list = [
 	{
-	'name': 'gamma',
+	'name': 'lr',
 	'val_type_str': 'float',
-	'low_bound': 0.8,
-	'high_bound': 0.9997,
+	'low_bound': 0.00005,
+	'high_bound': 0.001, 
 	},
-	{
-	'name': 'lambda',
-	'val_type_str': 'float',
-	'low_bound': 0.9,
-	'high_bound': 1,
-	},
-	{
-	'name': 'kl_target',
-	'val_type_str': 'float',
-	'low_bound': 0.0003,
-	'high_bound': 0.003,
-	},
-	{
-	'name': 'clip_param',
-	'val_type_str': 'categorical',
-	'value_list': [0.1, 0.2, 0.3],
-	}
+	# {
+	# 'name': 'gamma',
+	# 'val_type_str': 'float',
+	# 'low_bound': 0.8,
+	# 'high_bound': 0.9997,
+	# },
+	# {
+	# 'name': 'lambda',
+	# 'val_type_str': 'float',
+	# 'low_bound': 0.9,
+	# 'high_bound': 1,
+	# },
+	# {
+	# 'name': 'kl_target',
+	# 'val_type_str': 'float',
+	# 'low_bound': 0.0003,
+	# 'high_bound': 0.003,
+	# },
+	# {
+	# 'name': 'clip_param',
+	# 'val_type_str': 'categorical',
+	# 'value_list': [0.1, 0.2, 0.3],
+	# }
 ]
 
 ddppo_hp_dicts_list = [
