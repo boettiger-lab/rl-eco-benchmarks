@@ -81,7 +81,7 @@ def sb2_tuning(
 	print("hp mutations sampled\n")
 
 	if algo_name.upper() == "PPO":
-		kl_coeff_dict = {"kl_coeff":1}
+		kl_coeff_dict = {"kl_coeff":1.}
 	else:
 		kl_coeff_dict = {}
 
