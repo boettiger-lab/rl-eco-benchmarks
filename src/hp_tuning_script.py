@@ -271,6 +271,24 @@ RT = ray_trainer(
 'time_total_s'
 'episodes_total',
 'training_iteration',
+'agent_timesteps_total',
+'episode_reward_max',
+'episode_reward_min',
+'episode_reward_mean',
+'episode_len_mean',
+'episodes_this_iter',
+'num_faulty_episodes',
+'num_healthy_workers',
+'num_in_flight_async_reqs',
+'num_remote_worker_restarts',
+'num_agent_steps_sampled',
+'num_agent_steps_trained',
+'num_env_steps_sampled',
+'num_env_steps_trained',
+'num_env_steps_sampled_this_iter',
+'num_env_steps_trained_this_iter',
+'num_env_steps_sampled_throughput_per_sec',
+'num_env_steps_trained_throughput_per_sec',
 """
 
 computational_resources = {
@@ -283,8 +301,8 @@ tuning_df = RT.tune_hyper_params(
 	hp_dicts_list=hyperparameters[algo],
 	num_workers=5,
 	num_samples=10,
-	criteria="timesteps_total", 
-	criteria_max=100,
+	criteria="episode_reward_mean", 
+	criteria_max=300,
 	computational_resources=computational_resources,
 	)
 
