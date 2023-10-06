@@ -315,7 +315,7 @@ computational_resources = {
 
 tuning_df = RT.tune_hyper_params(
 	hp_dicts_list=hyperparameters[algo],
-	num_workers=30,
+	num_workers=20,
 	num_samples=30,
 	criteria="episode_reward_mean", 
 	criteria_max=300.,
