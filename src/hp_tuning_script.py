@@ -94,23 +94,23 @@ ppo_hp_dicts_list = [
 	'low_bound': 0.8,
 	'high_bound': 0.9997,
 	},
-	# {
-	# 'name': 'lambda',
-	# 'val_type_str': 'float',
-	# 'low_bound': 0.9,
-	# 'high_bound': 1,
-	# },
+	{
+	'name': 'lambda',
+	'val_type_str': 'float',
+	'low_bound': 0.9,
+	'high_bound': 1,
+	},
 	{
 	'name': 'kl_target',
 	'val_type_str': 'float',
 	'low_bound': 0.0003,
 	'high_bound': 0.003,
 	},
-	# {
-	# 'name': 'clip_param',
-	# 'val_type_str': 'categorical',
-	# 'value_list': [0.1, 0.2, 0.3],
-	# }
+	{
+	'name': 'clip_param',
+	'val_type_str': 'categorical',
+	'value_list': [0.1, 0.2, 0.3],
+	}
 ]
 
 ddppo_hp_dicts_list = [
@@ -279,6 +279,7 @@ tuning_df = RT.tune_hyper_params(
 	num_samples=10,
 	criteria="timestep_total", 
 	criteria_max=100,
+	computational_resources=computational_resources,
 	)
 
 print(tuning_df)
