@@ -267,12 +267,18 @@ RT = ray_trainer(
 #
 # 'timestep_total', 'time_total_s'
 
+computational_resources = {
+		"num_gpus": 128,
+		"num_gpus_per_learner_worker": 0.4,
+		"num_cpus_per_learner_worker": 0,
+		}
+
 tuning_df = RT.tune_hyper_params(
 	hp_dicts_list=hyperparameters[algo],
-	num_workers=3,
-	num_samples=3,
-	criteria="time_total_s", 
-	criteria_max=5_000,
+	num_workers=5,
+	num_samples=10,
+	criteria="timestep_total", 
+	criteria_max=100,
 	)
 
 print(tuning_df)
