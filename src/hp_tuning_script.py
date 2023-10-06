@@ -302,7 +302,7 @@ tuning_df = RT.tune_hyper_params(
 	num_workers=5,
 	num_samples=10,
 	criteria="episode_reward_mean", 
-	criteria_max=300,
+	criteria_max=300.,
 	computational_resources=computational_resources,
 	)
 
