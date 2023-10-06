@@ -91,32 +91,42 @@ ppo_hp_dicts_list = [
 	{
 	'name': 'lr',
 	'val_type_str': 'float',
-	'low_bound': 0.00005,
-	'high_bound': 0.001, 
+	'low_bound': 1e-5,
+	'high_bound': 5e-4, 
 	},
-	# {
-	# 'name': 'gamma',
-	# 'val_type_str': 'float',
-	# 'low_bound': 0.8,
-	# 'high_bound': 0.9997,
-	# },
-	# {
-	# 'name': 'lambda',
-	# 'val_type_str': 'float',
-	# 'low_bound': 0.9,
-	# 'high_bound': 1,
-	# },
-	# {
-	# 'name': 'kl_target',
-	# 'val_type_str': 'float',
-	# 'low_bound': 0.0003,
-	# 'high_bound': 0.003,
-	# },
-	# {
-	# 'name': 'clip_param',
-	# 'val_type_str': 'categorical',
-	# 'value_list': [0.1, 0.2, 0.3],
-	# }
+	{
+	'name': 'gamma',
+	'val_type_str': 'float',
+	'low_bound': 0.8,
+	'high_bound': 0.9999,
+	},
+	{
+	'name': 'lambda',
+	'val_type_str': 'float',
+	'low_bound': 0.9,
+	'high_bound': 1.,
+	},
+	{
+	'name': 'kl_target',
+	'val_type_str': 'float',
+	'low_bound': 0.0003,
+	'high_bound': 0.003,
+	},
+	{
+	'name': 'kl_coeff',
+	'val_type_str': 'categorical',
+	'value_list': [0.25, 0.3, 0.35]
+	},
+	{
+	'name': 'clip_param',
+	'val_type_str': 'categorical',
+	'value_list': [0.1, 0.2, 0.3],
+	},
+	{
+	'name': 'vf_clip_param',
+	'val_type_str': 'categorical',
+	'value_list': [0.1, 1., 10., 100., 500.],
+	},
 ]
 
 ddppo_hp_dicts_list = [
