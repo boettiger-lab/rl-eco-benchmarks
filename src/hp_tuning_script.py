@@ -224,7 +224,7 @@ ddpg_hp_dicts_list = [
 # temporal difference methods need lower lr's for stability
 td3_hp_dicts_list = [
 *[
-	hp for hp in ddpg_hp_dicts_list if hp[name] not in ['lr', 'actor_lr', 'critic_lr']
+	hp for hp in ddpg_hp_dicts_list if hp['name'] not in ['lr', 'actor_lr', 'critic_lr']
 ],
 {
 	'name': 'actor_lr',
