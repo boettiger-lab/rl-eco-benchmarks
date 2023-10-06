@@ -269,10 +269,10 @@ RT = ray_trainer(
 
 tuning_df = RT.tune_hyper_params(
 	hp_dicts_list=hyperparameters[algo],
-	num_workers=40,
-	num_samples=40,
+	num_workers=20,
+	num_samples=20,
 	criteria="time_total_s", 
-	criteria_max=20_000,
+	criteria_max=5_000,
 	)
 
 print(tuning_df)
