@@ -98,7 +98,7 @@ problem_summary = {
 # ######## INIT & TRAIN ALGO ########
 # ###################################
 
-ITERATIONS = 5_000
+ITERATIONS = 100
 ALGO = "ppo"
 
 RT = ray_trainer( # wrapper class around ray RLLib algorithms.
