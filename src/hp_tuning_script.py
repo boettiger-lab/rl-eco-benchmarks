@@ -88,24 +88,24 @@ env_config = {
 			}
 
 ppo_hp_dicts_list = [
-	{
-	'name': 'gamma',
-	'val_type_str': 'float',
-	'low_bound': 0.8,
-	'high_bound': 0.9997,
-	},
-	{
-	'name': 'lambda',
-	'val_type_str': 'float',
-	'low_bound': 0.9,
-	'high_bound': 1,
-	},
-	{
-	'name': 'kl_target',
-	'val_type_str': 'float',
-	'low_bound': 0.0003,
-	'high_bound': 0.003,
-	},
+	# {
+	# 'name': 'gamma',
+	# 'val_type_str': 'float',
+	# 'low_bound': 0.8,
+	# 'high_bound': 0.9997,
+	# },
+	# {
+	# 'name': 'lambda',
+	# 'val_type_str': 'float',
+	# 'low_bound': 0.9,
+	# 'high_bound': 1,
+	# },
+	# {
+	# 'name': 'kl_target',
+	# 'val_type_str': 'float',
+	# 'low_bound': 0.0003,
+	# 'high_bound': 0.003,
+	# },
 	{
 	'name': 'clip_param',
 	'val_type_str': 'categorical',
@@ -269,10 +269,10 @@ RT = ray_trainer(
 
 tuning_df = RT.tune_hyper_params(
 	hp_dicts_list=hyperparameters[algo],
-	num_workers=20,
-	num_samples=0,
-	criteria="timestep_total", 
-	criteria_max=300_000,
+	num_workers=3,
+	num_samples=3,
+	criteria="time_total_s", 
+	criteria_max=5_000,
 	)
 
 print(tuning_df)
