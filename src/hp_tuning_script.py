@@ -221,7 +221,30 @@ ddpg_hp_dicts_list = [
 	},
 ]
 
-td3_hp_dicts_list = ddpg_hp_dicts_list
+# temporal difference methods need lower lr's for stability
+td3_hp_dicts_list = [
+*[
+	hp for hp in ddpg_hp_dicts_list if hp[name] not in ['lr', 'actor_lr', 'critic_lr']
+],
+{
+	'name': 'actor_lr',
+	'val_type_str': 'float',
+	'low_bound': 1e-5,
+	'high_bound': 5e-5,
+	},
+	{
+	'name': 'critic_lr',
+	'val_type_str': 'float',
+	'low_bound': 5e-5,
+	'high_bound': 1e-4,
+	},
+	{
+	'name': 'lr',
+	'val_type_str': 'float',
+	'low_bound': 1e-5,
+	'high_bound': 1e-4,
+	},
+]
 
 hyperparameters = {
 	'ppo': ppo_hp_dicts_list,
@@ -246,10 +269,10 @@ RT = ray_trainer(
 
 tuning_df = RT.tune_hyper_params(
 	hp_dicts_list=hyperparameters[algo],
-	num_workers=30,
+	num_workers=40,
 	num_samples=40,
 	criteria="time_total_s", 
-	criteria_max=12_000,
+	criteria_max=20_000,
 	)
 
 print(tuning_df)
