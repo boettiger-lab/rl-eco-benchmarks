@@ -10,8 +10,8 @@ _register_all()
 DATA_DIR = os.path.join("..", "data", "hp_tuning")
 os.makedirs(DATA_DIR, exist_ok=True)
 
-algo_to_tune = input("algorithm to tune (appo, ddppo, ddpg, td3): ")
-if algo_to_tune not in ('appo', 'ddppo', 'ddpg', 'td3'):
+algo_to_tune = input("algorithm to tune (appo, ddppo, ddpg, ppo, td3): ")
+if algo_to_tune not in ('appo', 'ddppo', 'ddpg', 'ppo', 'td3'):
 	raise Warning("Algorithm name not allowed.")
 
 #
