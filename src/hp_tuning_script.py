@@ -309,13 +309,13 @@ RT = ray_trainer(
 
 computational_resources = {
 		"num_gpus": 128,
-		"num_gpus_per_learner_worker": 0.4,
-		"num_cpus_per_learner_worker": 0,
+		"num_gpus_per_learner_worker": 0,
+		"num_cpus_per_learner_worker": 3,
 		}
 
 tuning_df = RT.tune_hyper_params(
 	hp_dicts_list=hyperparameters[algo],
-	num_workers=5,
+	num_workers=10,
 	num_samples=10,
 	criteria="episode_reward_mean", 
 	criteria_max=300.,
