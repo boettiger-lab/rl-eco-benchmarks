@@ -265,7 +265,13 @@ RT = ray_trainer(
 #
 # can take values 
 #
-# 'timestep_total', 'time_total_s'
+# 
+"""
+'timesteps_total', 
+'time_total_s'
+'episodes_total',
+'training_iteration',
+"""
 
 computational_resources = {
 		"num_gpus": 128,
@@ -277,7 +283,7 @@ tuning_df = RT.tune_hyper_params(
 	hp_dicts_list=hyperparameters[algo],
 	num_workers=5,
 	num_samples=10,
-	criteria="timestep_total", 
+	criteria="timesteps_total", 
 	criteria_max=100,
 	computational_resources=computational_resources,
 	)
