@@ -115,7 +115,7 @@ ppo_hp_dicts_list = [
 	{
 	'name': 'kl_coeff',
 	'val_type_str': 'categorical',
-	'value_list': [0.25, 0.3, 0.35]
+	'value_list': [0.2, 0.3, 0.4]
 	},
 	{
 	'name': 'clip_param',
@@ -130,7 +130,7 @@ ppo_hp_dicts_list = [
 ]
 
 ddppo_hp_dicts_list = [
-	*[hp for hp in ppo_hp_dicts_list if hp['name'] != 'kl_target'],
+	*[hp for hp in ppo_hp_dicts_list if hp['name'] not in ['kl_target', 'kl_coeff']],
 	{
 	'name': 'lr',
 	'val_type_str': 'float',
