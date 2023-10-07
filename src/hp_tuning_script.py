@@ -308,7 +308,7 @@ RT = ray_trainer(
 """
 
 computational_resources = {
-		"num_gpus": 128,
+		"num_gpus": 2,
 		"num_gpus_per_learner_worker": 0,
 		"num_cpus_per_learner_worker": 2,
 		}
