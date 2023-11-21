@@ -1,27 +1,33 @@
-# 
-# A simple example of the interface
-# 
-
+import json
 import numpy as np
 import os
+import pandas as pd
+from plotnine import ggplot, aes, geom_line # later for plotting evaluation
 
+from base_env import ray_eco_env
+from util import dict_pretty_print
 from ray_trainer_api import ray_trainer
-from data_generation import generate_multiple_episodes
 
-#
-# make dir
+# ###################################
+# ############# GLOBALS #############
+# ###################################
 
-DATA_DIR = os.path.join("..", "data", "example")
+TMAX = 800
+DATA_DIR = os.path.join("..", "data")
 os.makedirs(DATA_DIR, exist_ok=True)
 
-#
-# Ecology / control:
+# ###################################
+# ###### PROBLEM SPECIFICATION ######
+# ###################################
 
 def utility_fn(effort, pop, cull_cost=0.001):
+	""" reward in each time step """
 	return 0.5 * pop[0] - cull_cost * sum(effort)
 
 def penalty_fn(t):
-	return - 5 * 800 / (t+1)
+	""" penalty for ending episode at t<TMAX steps. """
+	global TMAX
+	return - 5 * TMAX / (t+1)
 
 metadata = {
 	#
@@ -34,15 +40,35 @@ metadata = {
 	# about episodes
 	'init_pop': np.float32([0.5, 0.5, 0.2]),
 	'reset_sigma': 0.01,
-	'tmax': 800,
+	'tmax': TMAX,
 	#
 	# about dynamics / control
 	'extinct_thresh': 0.03,
-	'penalty_fn': lambda t: - 5 * 800 / (t+1),
+	'penalty_fn': lambda t: - 5 * TMAX / (t+1),
 	'var_bound': 4,
+	# '_costs': np.zeros(2, dtype=np.float32),
+	# '_prices': np.ones(2, dtype=np.float32),
 }
 
-def dyn_fn(X, Y, Z, params):
+params = { # dynamic parameters used by dyn_fn
+	"r_x": np.float32(0.12),
+	"r_y": np.float32(0.2),
+	"K": np.float32(1),
+	"beta": np.float32(0.1),
+	"v0":  np.float32(0.1),
+	"D": np.float32(-0.1),
+	"tau_yx": np.float32(0),
+	"tau_xy": np.float32(0),
+	"alpha": np.float32(1), 
+	"dH": np.float32(0.1),
+	"sigma_x": np.float32(0.05),
+	"sigma_y": np.float32(0.05),
+	"sigma_z": np.float32(0.05),
+}
+
+def dyn_fn(X, Y, Z):
+	""" the dynamics of the system """
+	global params
 	p = params
 	#
 	return np.float32([
@@ -53,37 +79,18 @@ def dyn_fn(X, Y, Z, params):
 		Y + (p["r_y"] * Y * (1 - Y / p["K"] )
 				- (1 + p["D"]) * p["beta"] * Z * (Y**2) / (p["v0"]**2 + Y**2)
 				+ p["sigma_y"] * Y * np.random.normal()
-				),
+				), 
 		Z + p["alpha"] * p["beta"] * Z * (
 				(1-p["D"]) * (X**2) / (p["v0"]**2 + X**2)
 				+ (1 + p["D"])  * (Y**2) / (p["v0"]**2 + Y**2)
 				) - p["dH"] * Z +  p["sigma_z"] * Z  * np.random.normal()
 	])
 
-params = {
-	"r_x": np.float32(0.12),
-	"r_y": np.float32(0.2),
-	"K": np.float32(1),
-	"beta": np.float32(0.1),
-	"v0":  np.float32(0.1),
-	"D": np.float32(0.),
-	"tau_yx": np.float32(0),
-	"tau_xy": np.float32(0),
-	"alpha": np.float32(1), 
-	"dH": np.float32(0.1),
-	"sigma_x": np.float32(0.05),
-	"sigma_y": np.float32(0.05),
-	"sigma_z": np.float32(0.05),
-}
-
-
+# summarize problem into a dict (the syntax that our interface uses):
 #
-# do some RL
-
-env_config = {
+problem_summary = {
 				'metadata': metadata,
 				'dyn_fn': dyn_fn,
-				'params': params,
 				'utility_fn': utility_fn,
 			}
 
@@ -97,38 +104,17 @@ train_config = {
 	}
 }
 
+# ###################################
+# ######## INIT & TRAIN ALGO ########
+# ###################################
 
-RT = ray_trainer(
-	algo_name="ppo", 
-	config=env_config,
+ITERATIONS = 100
+ALGO = "ppo"
+
+RT = ray_trainer( # wrapper class around ray RLLib algorithms.
+	algo_name=ALGO, 
+	config=problem_summary,
 	train_cfg=train_config,
 )
-agent = RT.train(iterations=250)
-
-
-#
-# evaluate
-
-env = ray_eco_env(config=env_config)
-episodes, rewards = generate_multiple_episodes(agent, env, N=50)
-
-print("\n\n"+f"evaluation rewards = {np.mean(rewards)} +/- {np.std(rewards)}"+"\n\n")
-
-first_ep = episodes.loc[episodes.rep==0]
-
-dynamics_plt = ggplot(
-	first_ep[['t', 'reward', 'x', 'y', 'z']].melt(["t"]),
-	aes("t", "value", color="variable"),
-	) + geom_line()
-
-dynamics_plt.save("../data/example/dynamics.png")
-
-ctrl_plt = ggplot(
-	first_ep[['t', 'effort1', 'effort2']].melt(["t"]),
-	aes("t", "value", color="variable"),
-	) + geom_line()
-
-ctrl_plt.save("../data/example/ctrl.png")
-
-
+agent = RT.train(iterations=ITERATIONS)
 
