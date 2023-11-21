@@ -31,7 +31,7 @@ class ray_trainer:
 		algo_name, 
 		config, 
 		env_registration_name: str = 'my_env',
-		training_cfg: dict = {},
+		train_cfg: dict = {},
 	):
 		#
 		# env
