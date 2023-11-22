@@ -100,7 +100,7 @@ train_config = {
 		"use_lstm": True,
 		"lstm_cell_size": 64,
 		"max_seq_len": 10,
-		"lstm_use_prev_action": True,
+		# "lstm_use_prev_action": True,
 	}
 }
 
