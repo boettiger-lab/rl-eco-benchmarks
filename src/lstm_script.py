@@ -96,7 +96,7 @@ problem_summary = {
 
 train_config = {
 	"model": {
-		"fcnet_hiddens": [64, 64],
+		# "fcnet_hiddens": [64, 64],
 		"use_lstm": True,
 		"lstm_cell_size": 64,
 		"max_seq_len": 10,
