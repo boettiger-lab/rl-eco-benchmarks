@@ -104,8 +104,8 @@ train_config = {
 		"custom_model_config": {
 			"num_frames": 10,
 		},
-		"use_lstm": True,
-		"lstm_cell_size": 64,
+		# "use_lstm": True,
+		# "lstm_cell_size": 64,
 		# "max_seq_len": 10,
 		# "lstm_use_prev_action": True,
 	},
