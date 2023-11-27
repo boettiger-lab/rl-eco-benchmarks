@@ -103,7 +103,7 @@ env = base_env.eco_env(**problem_summary)
 
 train_config = {
 	"env": env,
-	"rl_module" : {
+	"rl_module": {
 		"_enable_rl_module_api": False,
 	}
 	"training": {
