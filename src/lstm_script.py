@@ -102,6 +102,12 @@ import base_env
 
 train_config = {
 	"env": base_env.eco_env(**problem_summary),
+	"rl_module": {
+		"_enable_rl_module_api": False,
+	}
+	"training": {
+		"_enable_learner_api": False,
+	}
 	"model": {
 		"vf_share_layers": True,
 		"custom_model": "frame_stack_model",
