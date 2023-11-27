@@ -99,9 +99,12 @@ train_config = {
 		# "fcnet_hiddens": [64, 64],
 		"use_lstm": True,
 		"lstm_cell_size": 64,
-		"max_seq_len": 10,
-		# "_time_major": True,
+		# "max_seq_len": 10,
+		"_time_major": True,
 		# "lstm_use_prev_action": True,
+		"custom_model_config": {
+			"num_frames": 10,
+		},
 	}
 }
 
