@@ -94,7 +94,7 @@ problem_summary = {
 				'utility_fn': utility_fn,
 			}
 
-from base_env import ecoenv
+import base_env.ecoenv as ecoenv
 
 train_config = {
 	"env": ecoenv(**problem_summary),
