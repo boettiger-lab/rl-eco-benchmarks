@@ -4,6 +4,10 @@ import os
 import pandas as pd
 from plotnine import ggplot, aes, geom_line # later for plotting evaluation
 
+from ray.rllib.examples.models.trajectory_view_utilizing_models import \
+	FrameStackingCartPoleModel, TorchFrameStackingCartPoleModel
+from ray.rllib.models.catalog import ModelCatalog
+
 from base_env import ray_eco_env
 from util import dict_pretty_print
 from ray_trainer_api import ray_trainer
@@ -117,6 +121,13 @@ train_config = {
 # ###################################
 
 from ray import tune
+import ray
+
+ray.init(num_cpus=3)
+
+ModelCatalog.register_custom_model(
+	"frame_stack_model", TorchFrameStackingCartPoleModel
+)
 
 stop = {
 	"training_iteration": 200,
