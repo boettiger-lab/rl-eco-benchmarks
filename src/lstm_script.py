@@ -113,6 +113,8 @@ train_config = {
 		# "max_seq_len": 10,
 		# "lstm_use_prev_action": True,
 	},
+	"num_sgd_iter": 5,
+	"vf_loss_coeff": 0.0001,
 	"framework": "torch",
 }
 
@@ -123,10 +125,8 @@ train_config = {
 from ray import tune
 import ray
 
-print("init")
 ray.init(num_cpus=3)
 
-print("register")
 ModelCatalog.register_custom_model(
 	"frame_stack_model", TorchFrameStackingCartPoleModel
 )
@@ -135,7 +135,6 @@ stop = {
 	"training_iteration": 200,
 }
 
-print("to run")
 results = tune.run(
 	"PPO", config=train_config, stop=stop, verbose=2, checkpoint_at_end=True
 )
