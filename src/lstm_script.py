@@ -97,7 +97,7 @@ problem_summary = {
 import base_env
 
 train_config = {
-	"env": base_env.ecoenv(**problem_summary),
+	"env": base_env.eco_env(**problem_summary),
 	"model": {
 		"vf_share_layers": True,
 		"custom_model": "frame_stack_model",
