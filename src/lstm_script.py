@@ -123,8 +123,10 @@ train_config = {
 from ray import tune
 import ray
 
+print("init")
 ray.init(num_cpus=3)
 
+print("register")
 ModelCatalog.register_custom_model(
 	"frame_stack_model", TorchFrameStackingCartPoleModel
 )
@@ -132,6 +134,8 @@ ModelCatalog.register_custom_model(
 stop = {
 	"training_iteration": 200,
 }
+
+print("to run")
 results = tune.run(
 	"PPO", config=train_config, stop=stop, verbose=2, checkpoint_at_end=True
 )
