@@ -122,7 +122,7 @@ stop = {
 	"training_iteration": 200,
 }
 results = tune.run(
-	args.run, config=train_config, stop=stop, verbose=2, checkpoint_at_end=True
+	"PPO", config=train_config, stop=stop, verbose=2, checkpoint_at_end=True
 )
 
 # ITERATIONS = 100
