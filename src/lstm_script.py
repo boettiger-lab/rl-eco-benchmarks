@@ -94,31 +94,44 @@ problem_summary = {
 				'utility_fn': utility_fn,
 			}
 
+from base_env import ecoenv
+
 train_config = {
+	"env": ecoenv(**problem_summary),
 	"model": {
-		# "fcnet_hiddens": [64, 64],
-		"use_lstm": True,
-		"lstm_cell_size": 64,
-		# "max_seq_len": 10,
-		"_time_major": True,
-		# "lstm_use_prev_action": True,
+		"vf_share_layers": True,
+		"custom_model": "frame_stack_model",
 		"custom_model_config": {
 			"num_frames": 10,
 		},
-	}
+		"use_lstm": True,
+		"lstm_cell_size": 64,
+		# "max_seq_len": 10,
+		# "lstm_use_prev_action": True,
+	},
+	"framework": "torch",
 }
 
 # ###################################
 # ######## INIT & TRAIN ALGO ########
 # ###################################
 
-ITERATIONS = 100
-ALGO = "ppo"
+from ray import tune
 
-RT = ray_trainer( # wrapper class around ray RLLib algorithms.
-	algo_name=ALGO, 
-	config=problem_summary,
-	train_cfg=train_config,
+stop = {
+	"training_iteration": 200,
+}
+results = tune.run(
+	args.run, config=train_config, stop=stop, verbose=2, checkpoint_at_end=True
 )
-agent = RT.train(iterations=ITERATIONS)
+
+# ITERATIONS = 100
+# ALGO = "ppo"
+
+# RT = ray_trainer( # wrapper class around ray RLLib algorithms.
+# 	algo_name=ALGO, 
+# 	config=problem_summary,
+# 	train_cfg=train_config,
+# )
+# agent = RT.train(iterations=ITERATIONS)
 
