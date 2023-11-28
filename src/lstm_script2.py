@@ -150,7 +150,8 @@ if __name__ == "__main__":
         if args.framework != "torch" else TorchFrameStackingCartPoleModel)
 
     config = {
-        "env": env,
+        "env": base_env.eco_env,
+        "env_config": problem_summary,
         "model": {
             "vf_share_layers": True,
             "custom_model": "frame_stack_model",
