@@ -103,7 +103,7 @@ problem_summary = {
             }
 
 import base_env
-env = base_env.ray_eco_env(**problem_summary)
+# env = base_env.ray_eco_env(problem_summary)
 
 ###
 
