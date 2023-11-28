@@ -148,7 +148,6 @@ if __name__ == "__main__":
     config = (
         ppo.PPOConfig()
         .environment(base_env.ray_eco_env)
-        .env_config(problem_summary)
         .framework("torch")
         .training(
             model={
@@ -163,6 +162,7 @@ if __name__ == "__main__":
             }
         )
     )
+    config.env_config = problem_summary
     algo = config.build()
     algo.train()
     algo.stop()
