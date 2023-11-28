@@ -10,6 +10,11 @@ from ray.rllib.utils.framework import try_import_tf, try_import_torch
 from ray.rllib.utils.test_utils import check_learning_achieved
 from ray import tune
 
+from ray.rllib.models.torch.misc import SlimFC
+from ray.rllib.policy.view_requirement import ViewRequirement
+from ray.rllib.utils.tf_utils import one_hot
+from ray.rllib.utils.torch_utils import one_hot as torch_one_hot
+
 tf1, tf, tfv = try_import_tf()
 torch, nn = try_import_torch()
 
