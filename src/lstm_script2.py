@@ -21,8 +21,8 @@ tf1, tf, tfv = try_import_tf()
 # ###################################
 
 TMAX = 800
-DATA_DIR = os.path.join("..", "data")
-os.makedirs(DATA_DIR, exist_ok=True)
+# DATA_DIR = os.path.join("..", "data")
+# os.makedirs(DATA_DIR, exist_ok=True)
 
 # ###################################
 # ###### PROBLEM SPECIFICATION ######
