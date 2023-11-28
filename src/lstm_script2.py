@@ -6,7 +6,7 @@ from ray.rllib.examples.env.stateless_cartpole import StatelessCartPole
 from ray.rllib.examples.models.trajectory_view_utilizing_models import \
     FrameStackingCartPoleModel, TorchFrameStackingCartPoleModel
 from ray.rllib.models.catalog import ModelCatalog
-from ray.rllib.utils.framework import try_import_tf
+from ray.rllib.utils.framework import try_import_tf, try_import_torch
 from ray.rllib.utils.test_utils import check_learning_achieved
 from ray import tune
 
