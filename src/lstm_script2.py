@@ -15,7 +15,7 @@ from ray.rllib.policy.view_requirement import ViewRequirement
 from ray.rllib.utils.tf_utils import one_hot
 from ray.rllib.utils.torch_utils import one_hot as torch_one_hot
 
-tf1, tf, tfv = try_import_tf()
+# tf1, tf, tfv = try_import_tf()
 torch, nn = try_import_torch()
 
 from ray.rllib.models.torch.torch_modelv2 import TorchModelV2
@@ -189,7 +189,7 @@ parser.add_argument(
 parser.add_argument(
     "--framework",
     choices=["tf", "tf2", "tfe", "torch"],
-    default="tf",
+    default="torch",
     help="The DL framework specifier.")
 parser.add_argument(
     "--as-test",
