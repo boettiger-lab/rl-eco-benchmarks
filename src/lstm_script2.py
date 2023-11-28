@@ -103,7 +103,7 @@ problem_summary = {
             }
 
 import base_env
-env = base_env.eco_env(**problem_summary)
+env = base_env.ray_eco_env(**problem_summary)
 
 ###
 
@@ -150,7 +150,7 @@ if __name__ == "__main__":
         if args.framework != "torch" else TorchFrameStackingCartPoleModel)
 
     config = {
-        "env": base_env.eco_env,
+        "env": base_env.ray_eco_env,
         "env_config": problem_summary,
         "model": {
             "vf_share_layers": True,
