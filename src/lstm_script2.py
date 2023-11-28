@@ -120,7 +120,7 @@ class FrameStackingEco(TorchModelV2, nn.Module):
         self, obs_space, action_space, num_outputs, model_config, name, num_frames=3
     ):
         nn.Module.__init__(self)
-        super().__init__(
+        super(FrameStackingEco, self).__init__(
             obs_space, action_space, None, model_config, name
         )
 
