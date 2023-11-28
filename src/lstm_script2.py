@@ -145,9 +145,9 @@ if __name__ == "__main__":
 
     num_frames = 16
 
-    # ModelCatalog.register_custom_model(
-    #     "frame_stack_model", FrameStackingCartPoleModel
-    #     if args.framework != "torch" else TorchFrameStackingCartPoleModel)
+    ModelCatalog.register_custom_model(
+        "frame_stack_model", FrameStackingCartPoleModel
+        if args.framework != "torch" else TorchFrameStackingCartPoleModel)
 
     config = {
         "env": base_env.ray_eco_env,
